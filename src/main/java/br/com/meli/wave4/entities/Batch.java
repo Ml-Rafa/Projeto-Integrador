@@ -28,6 +28,10 @@ public class Batch {
     @JoinColumn(name = "inbound_order_id", nullable = false)
     private InboundOrder inboundOrder;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "stock_id", referencedColumnName = "id", nullable = false)
+    private Stock stock;
+
     private Double currentTemperature;
     private Double minimumTemperature;
     private Integer initialQuantity;

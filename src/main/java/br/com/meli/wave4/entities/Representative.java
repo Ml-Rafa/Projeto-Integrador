@@ -1,6 +1,7 @@
 package br.com.meli.wave4.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,5 +20,8 @@ public class Representative extends User{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "warehouse_id",referencedColumnName = "id")
     private Warehouse warehouse;
+
+    @OneToOne(mappedBy = "representative")
+    private Stock stock;
 
 }
