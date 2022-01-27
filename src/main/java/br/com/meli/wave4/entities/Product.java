@@ -24,6 +24,9 @@ public class Product {
     @OneToOne(mappedBy = "product")
     private Batch batch;
 
+    @ManyToOne
+    @JoinColumn(name = "seller_id", nullable = false)
+    private Seller seller;
 
     private Integer lotNumber;
     private Integer quantityStock;
