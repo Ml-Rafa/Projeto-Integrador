@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -18,4 +21,7 @@ public class Warehouse {
 
     @Column(name = "geographic_area")
     private String geographicArea;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "warehouse")
+    Set<Section> sectionSet = new HashSet<>();
 }
