@@ -28,4 +28,8 @@ public class InboundOrderService {
         return product.getSectionTypeRefrigerated().equals(section.getStorageType());
     }
 
+    public Integer verifyAvailableArea(Section section) {
+        return null;
+    }
+
 }
