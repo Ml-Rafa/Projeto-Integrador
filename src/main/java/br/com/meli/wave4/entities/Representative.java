@@ -1,7 +1,6 @@
 package br.com.meli.wave4.entities;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Representative extends User{
+public class Representative extends User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface SectionRepository extends JpaRepository<Section ,Integer> {
+public interface SectionRepository extends JpaRepository<Section,Integer> {
 
     Optional<Section> findBySectionCode(Integer sectionCode);
 }

@@ -21,3 +21,16 @@ INSERT INTO section (temperature, storage_type, max_capacity, available_capacity
 INSERT INTO section (temperature, storage_type, max_capacity, available_capacity, warehouse_id) VALUES (10.0, 'REFRIGERATED', 300, 300, 5);
 INSERT INTO section (temperature, storage_type, max_capacity, available_capacity, warehouse_id) VALUES (-5.0, 'FROZEN', 500, 500, 6);
 INSERT INTO section (temperature, storage_type, max_capacity, available_capacity, warehouse_id) VALUES (10.0, 'REFRIGERATED', 450, 450, 6);
+
+--SELLER
+
+INSERT INTO seller (name, document) VALUES ('Supermercado Guanabara', '132.2312/1212-00');
+INSERT INTO seller (name, document) VALUES ('DescontoAki Açougue', '241.6346/9382-01');
+INSERT INTO seller (name, document) VALUES ('Carlito Frios', '978.0001/2430-45');
+
+--PRODUCT
+
+INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, quantity_stock) VALUES ('Frango Congelado', 2, null, 2, null);
+INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, quantity_stock) VALUES ('Pao de Queijo Congelado', 2, null, 1, null);
+INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, quantity_stock) VALUES ('Manteiga', 1, null, 3, null);
+INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, quantity_stock) VALUES ('Iogurte', 1, null, 1, null);

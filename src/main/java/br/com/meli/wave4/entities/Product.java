@@ -18,17 +18,18 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String name;
     private TypeRefrigeration sectionTypeRefrigerated;
     private LocalDate dateValid;
 
-    @OneToOne(mappedBy = "product")
-    private Batch batch;
+//    @OneToOne(mappedBy = "product")
+//    private Batch batch;
 
     @ManyToOne
     @JoinColumn(name = "seller_id", nullable = false)
     private Seller seller;
 
-    private Integer batchNumber;
+//    private Integer batchNumber;
     private Integer quantityStock;
 
 
