@@ -29,6 +29,10 @@ public class Warehouse {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "warehouse")
     Set<Section> sectionSet = new HashSet<>();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "stock_id", referencedColumnName = "id")
+    private Stock stock;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
