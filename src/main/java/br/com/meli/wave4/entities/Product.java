@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Builder
@@ -23,7 +20,9 @@ public class Product {
     private Integer id;
     private TypeRefrigeration sectionTypeRefrigerated;
     private LocalDate dateValid;
-//    private Batch batch;
+
+    @OneToOne(mappedBy = "product")
+    private Batch batch;
     private Integer lotNumber;
     private Integer quantityStock;
 
