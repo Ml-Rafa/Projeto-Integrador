@@ -23,7 +23,7 @@ public class Product {
     private Long id;
     private TypeRefrigeration sectionTypeRefrigerated;
     private LocalDate dateValid;
-    //private Batch Batch;
+    //private Batch batch;
     private Integer lotNumber;
     private Integer quantityStock;
 
