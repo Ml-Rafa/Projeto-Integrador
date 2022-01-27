@@ -1,5 +1,13 @@
 package br.com.meli.wave4.services;
 
+import br.com.meli.wave4.entities.Section;
+import br.com.meli.wave4.entities.Warehouse;
+import br.com.meli.wave4.repositories.WarehouseRepository;
+import org.springframework.stereotype.Service;
+
+import org.springframework.web.bind.annotation.PutMapping;
+
+
 import br.com.meli.wave4.entities.Product;
 import br.com.meli.wave4.entities.Section;
 import br.com.meli.wave4.entities.Warehouse;
@@ -16,6 +24,7 @@ import br.com.meli.wave4.repositories.SectionRepository;
 import br.com.meli.wave4.repositories.WarehouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.util.Optional;
 
@@ -52,5 +61,16 @@ public class InboundOrderService {
         return warehouse !=null;
 
     }
+
+//    public boolean verifSection(Integer sectionCode) {
+////
+//        Section.findBySectionCode(sectionCode);
+//        if (sectionCode == null) {
+//            return false;
+//        }
+//        return true;
+//
+//    }
+
 
 }
