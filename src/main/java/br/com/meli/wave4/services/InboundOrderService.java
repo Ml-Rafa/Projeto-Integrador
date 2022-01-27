@@ -38,9 +38,9 @@ public class InboundOrderService {
     SectionRepository sectionRepository;
 
 
-    public Boolean checkProductSection(Integer sectionCode, Integer productId ){
+    public Boolean checkProductSection(Integer sectionCode, Integer productId) {
 
-        Product product =  productRepository.findById(productId).orElse(new Product());
+        Product product = productRepository.findById(productId).orElse(new Product());
 
         Section section = sectionRepository.findBySectionCode(sectionCode).orElse(new Section());
 
@@ -64,15 +64,15 @@ public class InboundOrderService {
         return true;
     }
 
-//    public boolean verifSection(Integer sectionCode) {
-////
-//        Section.findBySectionCode(sectionCode);
-//        if (sectionCode == null) {
-//            return false;
-//        }
-//        return true;
+    public boolean verifSection(Integer sectionCode) {
 //
-//    }
+        Section section = sectionRepository.findBySectionCode(sectionCode).orElse(null);
 
+        if (section != null) {
+            return true;
+        }
+        return false;
+
+    }
 
 }
