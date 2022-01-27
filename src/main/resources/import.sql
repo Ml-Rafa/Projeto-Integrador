@@ -1,0 +1,1 @@
+INSERT INTO warehouse (geographic_area) VALUES ('Brasil');
