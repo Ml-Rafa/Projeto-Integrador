@@ -28,7 +28,7 @@ public class Product {
     @JoinColumn(name = "seller_id", nullable = false)
     private Seller seller;
 
-    private Integer lotNumber;
+    private Integer batchNumber;
     private Integer quantityStock;
 
 

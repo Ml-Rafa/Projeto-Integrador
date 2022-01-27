@@ -21,6 +21,7 @@ public class Section {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer sectionCode;
     private Double temperature;
+    private String storageType;
     private Double maxCapacity;
     private Double availableCapacity;
     @ManyToOne
