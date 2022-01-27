@@ -37,6 +37,9 @@ public class InboundOrderService {
     @Autowired
     SectionRepository sectionRepository;
 
+    @Autowired
+    WarehouseRepository warehouseRepository;
+
 
     public Boolean checkProductSection(Integer sectionCode, Integer productId) {
 
@@ -51,17 +54,12 @@ public class InboundOrderService {
         return null;
     }
 
+    public Boolean verifyWarehouse(Integer id) {
 
-    @Autowired
-    WarehouseRepository warehouseRepository;
+        Warehouse warehouse = warehouseRepository.findById(id).orElse(null);
 
-    public boolean verifyWarehouse(Warehouse warehouse) {
+        return warehouse !=null;
 
-        Warehouse warehouseExists = this.warehouseRepository.getById(warehouse.getId());
-
-        Optional<Warehouse> byId = this.warehouseRepository.findById(warehouse.getId());
-
-        return true;
     }
 
     public boolean verifSection(Integer sectionCode) {
