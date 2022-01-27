@@ -13,11 +13,11 @@ import java.util.Optional;
 public class InboundOrderService {
 
 
-    Section section;
+//    Section section;
 
     public boolean verifSection(Integer sectionCode) {
 //
-        Section.findByCode(sectionCode);
+        Section.findBySectionCode(sectionCode);
         if (sectionCode == null) {
             return false;
         }

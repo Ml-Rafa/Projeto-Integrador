@@ -29,6 +29,4 @@ public class Section {
     @OneToMany(mappedBy = "section")
     private List<InboundOrder> inboundOrderList = new ArrayList<>();
 
-    public static void findByCode(Integer sectionCode) {
-    }
 }
