@@ -1,5 +1,12 @@
 package br.com.meli.wave4.services;
 
+import br.com.meli.wave4.entities.Product;
+import br.com.meli.wave4.entities.Section;
+import br.com.meli.wave4.entities.Warehouse;
+import br.com.meli.wave4.repositories.ProductRepository;
+import br.com.meli.wave4.repositories.SectionRepository;
+import br.com.meli.wave4.repositories.WarehouseRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -12,6 +19,9 @@ public class InboundOrderService {
 
     @Autowired
     SectionRepository sectionRepository;
+
+    @Autowired
+    WarehouseRepository warehouseRepository;
 
 
     public Boolean checkProductSection(Integer sectionCode, Integer productId ){
@@ -28,16 +38,12 @@ public class InboundOrderService {
     }
 
 
-    @Autowired
-    WarehouseRepository warehouseRepository;
+    public Boolean verifyWarehouse(Integer id) {
 
-    public boolean verifyWarehouse(Warehouse warehouse) {
+        Warehouse warehouse = warehouseRepository.findById(id).orElse(null);
 
-        Warehouse warehouseExists = this.warehouseRepository.getById(warehouse.getId());
+        return warehouse !=null;
 
-        Optional<Warehouse> byId = this.warehouseRepository.findById(warehouse.getId());
-
-        return true;
     }
 
 }
