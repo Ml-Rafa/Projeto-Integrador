@@ -23,6 +23,9 @@ public class Warehouse {
     @Column(name = "geographic_area")
     private String geographicArea;
 
+    @OneToOne(mappedBy = "warehouse")
+    private Representative representative;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "warehouse")
     Set<Section> sectionSet = new HashSet<>();
 
