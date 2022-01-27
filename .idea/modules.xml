@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Projeto-Integrador.iml" filepath="$PROJECT_DIR$/.idea/Projeto-Integrador.iml" />
+      <module fileurl="file://$PROJECT_DIR$/frescos.iml" filepath="$PROJECT_DIR$/frescos.iml" />
     </modules>
   </component>
 </project>
