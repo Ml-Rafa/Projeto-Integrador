@@ -34,3 +34,12 @@ INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, qua
 INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, quantity_stock) VALUES ('Pao de Queijo Congelado', 2, null, 1, null);
 INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, quantity_stock) VALUES ('Manteiga', 1, null, 3, null);
 INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, quantity_stock) VALUES ('Iogurte', 1, null, 1, null);
+
+--REPRESENTATIVE
+
+INSERT INTO representative (name, document, warehouse_id) VALUES ('José Rodriguez', '123.123.123', 1);
+INSERT INTO representative (name, document, warehouse_id) VALUES ('Patrícia Santos', '234.234.234', 2);
+INSERT INTO representative (name, document, warehouse_id) VALUES ('Roberta Freitas', '345.345.345', 3);
+INSERT INTO representative (name, document, warehouse_id) VALUES ('Pablo Rogério', '456.456.456', 4);
+INSERT INTO representative (name, document, warehouse_id) VALUES ('Rodrigo Dutra', '567.567.567', 5);
+INSERT INTO representative (name, document, warehouse_id) VALUES ('Priscila Casagrande', '678.678.678', 6);
