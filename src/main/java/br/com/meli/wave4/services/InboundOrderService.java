@@ -2,6 +2,7 @@ package br.com.meli.wave4.services;
 
 import br.com.meli.wave4.entities.*;
 import br.com.meli.wave4.exceptions.*;
+import br.com.meli.wave4.repositories.InboundOrderRepository;
 import org.springframework.stereotype.Service;
 
 
@@ -26,6 +27,9 @@ public class InboundOrderService {
 
     @Autowired
     StockService stockService;
+
+    @Autowired
+    InboundOrderRepository inboundOrderRepository;
 
     public Boolean checkProductSection(Integer sectionCode, Integer productId) {
 
@@ -77,5 +81,14 @@ public class InboundOrderService {
             return null;
         }
         return inboundOrder;
+    }
+
+    public InboundOrder updateById(InboundOrder inboundOrder) {
+        InboundOrder inboundOrderUpdated = inboundOrderRepository.findById(inboundOrder.getOrderNumber()).orElse(new InboundOrder());
+        inboundOrderUpdated.setOrderDate(inboundOrder.getOrderDate());
+        inboundOrderUpdated.setSection(inboundOrder.getSection());
+        inboundOrderUpdated.setBatchStock(inboundOrder.getBatchStock());
+
+        return inboundOrderRepository.save(inboundOrderUpdated);
     }
 }
