@@ -29,6 +29,10 @@ public class Product {
     @JoinColumn(name = "seller_id", nullable = false)
     private Seller seller;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "stock_id", referencedColumnName = "id")
+    private Stock stock;
+
 //    private Integer batchNumber;
 //    id do produto está dentro do stock
 //    private Integer quantityStock;

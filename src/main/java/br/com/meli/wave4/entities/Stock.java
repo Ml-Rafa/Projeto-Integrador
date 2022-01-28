@@ -29,7 +29,7 @@ public class Stock {
     @JoinColumn(name = "representative_id", referencedColumnName = "id")
     private Representative representative;
 
-    @OneToOne
+    @OneToOne(mappedBy = "stock")
     private Product product;
     private Integer quantity;
     private LocalDate insertionDate;

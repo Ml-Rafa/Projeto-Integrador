@@ -30,10 +30,10 @@ INSERT INTO seller (name, document) VALUES ('Carlito Frios', '978.0001/2430-45')
 
 --PRODUCT
 
-INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, quantity_stock) VALUES ('Frango Congelado', 2, null, 2, null);
-INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, quantity_stock) VALUES ('Pao de Queijo Congelado', 2, null, 1, null);
-INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, quantity_stock) VALUES ('Manteiga', 1, null, 3, null);
-INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, quantity_stock) VALUES ('Iogurte', 1, null, 1, null);
+INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, stock_id) VALUES ('Frango Congelado', 2, null, 2, null);
+INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, stock_id) VALUES ('Pao de Queijo Congelado', 2, null, 1, null);
+INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, stock_id) VALUES ('Manteiga', 1, null, 3, null);
+INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, stock_id) VALUES ('Iogurte', 1, null, 1, null);
 
 --REPRESENTATIVE
 

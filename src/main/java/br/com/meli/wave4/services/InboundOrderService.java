@@ -32,9 +32,6 @@ public class InboundOrderService {
     @Autowired
     WarehouseRepository warehouseRepository;
 
-    @Autowired
-    BatchRepository batchRepository;
-
     public Boolean checkProductSection(Integer sectionCode, Integer productId) {
 
         Product product = productRepository.findById(productId).orElse(new Product());
