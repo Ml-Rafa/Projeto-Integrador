@@ -8,10 +8,11 @@ import org.springframework.stereotype.Service;
 
 import br.com.meli.wave4.entities.Section;
 import br.com.meli.wave4.entities.Warehouse;
+import br.com.meli.wave4.repositories.BatchRepository;
 import br.com.meli.wave4.repositories.ProductRepository;
 import br.com.meli.wave4.repositories.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import br.com.meli.wave4.entities.Product;
+
 
 @Service
 public class InboundOrderService {
@@ -21,6 +22,9 @@ public class InboundOrderService {
 
     @Autowired
     SectionRepository sectionRepository;
+
+    @Autowired
+    BatchRepository batchRepository;
 
     @Autowired
     WarehouseRepository warehouseRepository;
@@ -38,7 +42,13 @@ public class InboundOrderService {
         throw new SectionNotMatchTypeProductException("Setor não responsável pelo armazenamento do tipo deste produto.");
     }
 
-    public Integer verifyAvailableArea(Section section) { return null;
+    public Boolean verifyAvailableArea(Integer batchNumber, Integer sectionCode) {
+
+        Batch batch = batchRepository.findByBatchNumber(batchNumber).orElse(null);
+
+        Section section = sectionRepository.findBySectionCode(sectionCode).orElse(new Section());
+
+        return false;
     }
 
     public Boolean verifyWarehouse(Integer id) {

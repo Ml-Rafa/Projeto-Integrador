@@ -34,4 +34,6 @@ public class Section {
     @OneToMany(mappedBy = "section")
     private List<InboundOrder> inboundOrderList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL)
+    private List<Batch> batchList = new ArrayList<>();
 }

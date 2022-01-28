@@ -29,8 +29,8 @@ public class Stock {
     @JoinColumn(name = "representative_id", referencedColumnName = "id")
     private Representative representative;
 
-    @OneToOne(mappedBy = "stock")
-    private Batch batch;
+    @OneToOne
+    private Product product;
     private Integer quantity;
     private LocalDate insertionDate;
 

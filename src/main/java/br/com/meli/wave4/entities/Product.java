@@ -30,7 +30,8 @@ public class Product {
     private Seller seller;
 
 //    private Integer batchNumber;
-    private Integer quantityStock;
+//    id do produto está dentro do stock
+//    private Integer quantityStock;
 
 
 }

@@ -1,5 +1,6 @@
 package br.com.meli.wave4.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,9 +29,10 @@ public class Batch {
     @JoinColumn(name = "inbound_order_id", nullable = false)
     private InboundOrder inboundOrder;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "stock_id", referencedColumnName = "id", nullable = false)
-    private Stock stock;
+
+    @JsonBackReference
+    @ManyToOne
+    private Section section;
 
     private Double currentTemperature;
     private Double minimumTemperature;
