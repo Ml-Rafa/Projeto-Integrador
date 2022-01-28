@@ -103,7 +103,10 @@ public class InboundOrderService {
         inboundOrderUpdated.setBatchStock(inboundOrder.getBatchStock());
 
         return inboundOrderRepository.save(inboundOrderUpdated);
-    public void registerBatch(List<Batch> batch){
+
+    }
+
+    public void registerBatch(List<Batch> batch) {
 
         batchService.saveAll(batch);
     }
