@@ -1,5 +1,6 @@
 package br.com.meli.wave4.entities;
 
+import br.com.meli.wave4.DTO.InboundOrderDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,5 +27,11 @@ public class InboundOrder {
     private Section section;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "inboundOrder")
     private List<Batch> batchStock = new ArrayList<>();
+
+    public static InboundOrder convertToEntity(InboundOrderDTO inboundOrderDTO) {
+        return InboundOrder.builder()
+                .batchStock(inboundOrderDTO.getBatchStock())
+                .build();
+    }
 
 }
