@@ -31,6 +31,7 @@ public class Section {
     @ManyToOne
     @JoinColumn(name = "warehouse_id", nullable = false)
     private Warehouse warehouse;
+
     @OneToMany(mappedBy = "section")
     private List<InboundOrder> inboundOrderList = new ArrayList<>();
 

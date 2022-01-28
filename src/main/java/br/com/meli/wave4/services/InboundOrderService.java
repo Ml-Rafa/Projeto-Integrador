@@ -2,16 +2,13 @@ package br.com.meli.wave4.services;
 
 import br.com.meli.wave4.entities.*;
 import br.com.meli.wave4.exceptions.*;
-import br.com.meli.wave4.repositories.BatchRepository;
-import br.com.meli.wave4.repositories.WarehouseRepository;
+import br.com.meli.wave4.repositories.*;
 import org.springframework.stereotype.Service;
 
 
 import br.com.meli.wave4.entities.Section;
 import br.com.meli.wave4.entities.Warehouse;
 import br.com.meli.wave4.repositories.BatchRepository;
-import br.com.meli.wave4.repositories.ProductRepository;
-import br.com.meli.wave4.repositories.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -32,6 +29,9 @@ public class InboundOrderService {
     @Autowired
     WarehouseRepository warehouseRepository;
 
+    @Autowired
+    StockRepository stockRepository;
+
     public Boolean checkProductSection(Integer sectionCode, Integer productId) {
 
         Product product = productRepository.findById(productId).orElse(new Product());
@@ -44,13 +44,28 @@ public class InboundOrderService {
         throw new SectionNotMatchTypeProductException("Setor não responsável pelo armazenamento do tipo deste produto.");
     }
 
-    public Boolean verifyAvailableArea(Integer batchNumber, Integer sectionCode) {
 
-        Batch batch = batchRepository.findByBatchNumber(batchNumber).orElse(null);
+    public Integer getTotalProductsInSection(Section section){
+        return section.getBatchList().stream().mapToInt(b -> b.getCurrentQuantity()).sum();
+    }
 
+    public Integer getTotalProductsInSection(Integer sectionCode){
         Section section = sectionRepository.findBySectionCode(sectionCode).orElse(new Section());
+        return getTotalProductsInSection(section);
+    }
 
-        return false;
+    public Boolean verifyAvailableArea(Integer batchNumber, Section section) {
+
+        Batch batch = batchRepository.findByBatchNumber(batchNumber).orElse(new Batch());
+
+        Integer total = getTotalProductsInSection(section);
+        total = total + batch.getCurrentQuantity();
+
+        if (total <= section.getMaxCapacity()){
+            return true;
+        } else {
+            throw new UnavailableSpaceException("Não há espaço suficiente disponível");
+        }
     }
 
     public Boolean verifyWarehouse(Integer id) {
