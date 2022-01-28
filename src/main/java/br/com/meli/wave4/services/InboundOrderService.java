@@ -18,25 +18,25 @@ import java.util.List;
 public class InboundOrderService {
 
     @Autowired
-    ProductRepository productRepository;
+    ProductService productService;
 
     @Autowired
-    SectionRepository sectionRepository;
+    SectionService sectionService;
 
     @Autowired
-    BatchRepository batchRepository;
+    BatchService batchService;
 
     @Autowired
-    WarehouseRepository warehouseRepository;
+    WarehouseService warehouseService;
 
     @Autowired
-    StockRepository stockRepository;
+    StockService stockService;
 
     public Boolean checkProductSection(Integer sectionCode, Integer productId) {
 
-        Product product = productRepository.findById(productId).orElse(new Product());
+        Product product = productService.findById(productId);
 
-        Section section = sectionRepository.findBySectionCode(sectionCode).orElse(new Section());
+        Section section = sectionService.findBySectionCode(sectionCode);
 
         if(product.getSectionTypeRefrigerated().equals(section.getStorageType())){
             return true;
@@ -46,17 +46,17 @@ public class InboundOrderService {
 
 
     public Integer getTotalProductsInSection(Section section){
-        return section.getBatchList().stream().mapToInt(b -> b.getCurrentQuantity()).sum();
+        return section.getBatchList().stream().mapToInt(Batch::getCurrentQuantity).sum();
     }
 
     public Integer getTotalProductsInSection(Integer sectionCode){
-        Section section = sectionRepository.findBySectionCode(sectionCode).orElse(new Section());
+        Section section = sectionService.findBySectionCode(sectionCode);
         return getTotalProductsInSection(section);
     }
 
     public Boolean verifyAvailableArea(Integer batchNumber, Section section) {
 
-        Batch batch = batchRepository.findByBatchNumber(batchNumber).orElse(new Batch());
+        Batch batch = batchService.findByBatchNumber(batchNumber);
 
         Integer total = getTotalProductsInSection(section);
         total = total + batch.getCurrentQuantity();
@@ -70,7 +70,7 @@ public class InboundOrderService {
 
     public Boolean verifyWarehouse(Integer id) {
 
-        Warehouse warehouse = warehouseRepository.findById(id).orElse(null);
+        Warehouse warehouse = warehouseService.findById(id);
 
         if (warehouse == null) {
             throw new InvalidWarehouseException();
@@ -80,7 +80,7 @@ public class InboundOrderService {
     }
 
     public boolean verifySection(Integer sectionCode) {
-        Section section = sectionRepository.findBySectionCode(sectionCode).orElse(null);
+        Section section = sectionService.findBySectionCode(sectionCode);
 
         if (section == null) {
             throw new InvalidSectionException();
@@ -110,6 +110,6 @@ public class InboundOrderService {
     }
 
     public void registerBatch(Batch batch){
-        batchRepository.save(batch);
+        batchService.save(batch);
     }
 }

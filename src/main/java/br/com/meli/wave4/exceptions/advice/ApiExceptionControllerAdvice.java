@@ -1,5 +1,6 @@
 package br.com.meli.wave4.exceptions.advice;
 
+import br.com.meli.wave4.entities.Batch;
 import br.com.meli.wave4.entities.Representative;
 import br.com.meli.wave4.exceptions.*;
 import org.springframework.http.HttpStatus;
@@ -62,4 +63,6 @@ public class ApiExceptionControllerAdvice {
                 HttpStatus.BAD_REQUEST.value(), "Unregistered Product Error", "Produto não registrado em nome do vendedor", request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
+
+
 }
