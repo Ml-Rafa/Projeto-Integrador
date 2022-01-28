@@ -41,7 +41,7 @@ public class InboundOrderService {
         if(product.getSectionTypeRefrigerated().equals(section.getStorageType())){
             return true;
         }
-        throw new SectionNotMatchTypeProductException("Setor não responsável pelo armazenamento do tipo deste produto.");
+        throw new SectionNotMatchTypeProductException();
     }
 
 
@@ -73,7 +73,7 @@ public class InboundOrderService {
         Warehouse warehouse = warehouseRepository.findById(id).orElse(null);
 
         if (warehouse == null) {
-            throw new InvalidWarehouseException("Armazém inválido.");
+            throw new InvalidWarehouseException();
         }
         return true;
 
@@ -83,7 +83,7 @@ public class InboundOrderService {
         Section section = sectionRepository.findBySectionCode(sectionCode).orElse(null);
 
         if (section == null) {
-            throw new InvalidSectionException("Setor inválido.");
+            throw new InvalidSectionException();
         }
         return true;
     }
