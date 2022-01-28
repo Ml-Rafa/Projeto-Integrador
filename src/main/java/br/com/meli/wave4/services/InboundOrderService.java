@@ -2,6 +2,7 @@ package br.com.meli.wave4.services;
 
 import br.com.meli.wave4.entities.*;
 import br.com.meli.wave4.exceptions.*;
+import br.com.meli.wave4.repositories.BatchRepository;
 import br.com.meli.wave4.repositories.WarehouseRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,8 @@ import br.com.meli.wave4.repositories.ProductRepository;
 import br.com.meli.wave4.repositories.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
+import java.util.List;
 
 @Service
 public class InboundOrderService {
@@ -29,6 +32,8 @@ public class InboundOrderService {
     @Autowired
     WarehouseRepository warehouseRepository;
 
+    @Autowired
+    BatchRepository batchRepository;
 
     public Boolean checkProductSection(Integer sectionCode, Integer productId) {
 
@@ -74,8 +79,11 @@ public class InboundOrderService {
     public InboundOrder saveInboundOrder(InboundOrder inboundOrder) {
         try{
             System.out.println();
-//            verifyWarehouse();
-//            checkProductSection();
+//            verifyWarehouse(inboundOrder.getSection().getWarehouse().getId());
+//            inboundOrder.getBatchStock().forEach(el ->
+//                    checkProductSection(inboundOrder.getSection().getSectionCode(),el.getProduct().getId())
+//            );
+
 //            verifySection();
 //            verifyAvailableArea();
         } catch (UnregisteredProductException |
@@ -89,4 +97,7 @@ public class InboundOrderService {
         return inboundOrder;
     }
 
+    public void registerBatch(Batch batch){
+        batchRepository.save(batch);
+    }
 }
