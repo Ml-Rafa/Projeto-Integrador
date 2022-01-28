@@ -1,30 +1,17 @@
 package br.com.meli.wave4.services;
 
 import br.com.meli.wave4.entities.*;
+import br.com.meli.wave4.exceptions.*;
 import br.com.meli.wave4.repositories.WarehouseRepository;
-import org.hibernate.mapping.IndexBackref;
 import org.springframework.stereotype.Service;
-
-import org.springframework.web.bind.annotation.PutMapping;
 
 
 import br.com.meli.wave4.entities.Section;
 import br.com.meli.wave4.entities.Warehouse;
 import br.com.meli.wave4.repositories.ProductRepository;
 import br.com.meli.wave4.repositories.SectionRepository;
-import br.com.meli.wave4.repositories.WarehouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import br.com.meli.wave4.entities.Product;
-import br.com.meli.wave4.entities.Section;
-import br.com.meli.wave4.entities.Warehouse;
-import br.com.meli.wave4.repositories.ProductRepository;
-import br.com.meli.wave4.repositories.SectionRepository;
-import br.com.meli.wave4.repositories.WarehouseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-
-import java.util.Optional;
 
 @Service
 public class InboundOrderService {
@@ -45,33 +32,50 @@ public class InboundOrderService {
 
         Section section = sectionRepository.findBySectionCode(sectionCode).orElse(new Section());
 
-        return product.getSectionTypeRefrigerated().equals(section.getStorageType());
+        if(product.getSectionTypeRefrigerated().equals(section.getStorageType())){
+            return true;
+        }
+        throw new SectionNotMatchTypeProductException("Setor não responsável pelo armazenamento do tipo deste produto.");
     }
 
-    public Integer verifyAvailableArea(Section section) {
-        return null;
+    public Integer verifyAvailableArea(Section section) { return null;
     }
 
     public Boolean verifyWarehouse(Integer id) {
 
         Warehouse warehouse = warehouseRepository.findById(id).orElse(null);
 
-        return warehouse !=null;
+        if (warehouse == null) {
+            throw new InvalidWarehouseException("Armazém inválido.");
+        }
+        return true;
 
     }
 
-    public boolean verifSection(Integer sectionCode) {
-//
+    public boolean verifySection(Integer sectionCode) {
         Section section = sectionRepository.findBySectionCode(sectionCode).orElse(null);
 
-        if (section != null) {
-            return true;
+        if (section == null) {
+            throw new InvalidSectionException("Setor inválido.");
         }
-        return false;
-
+        return true;
     }
 
     public InboundOrder saveInboundOrder(InboundOrder inboundOrder) {
+        try{
+            System.out.println();
+//            verifyWarehouse();
+//            checkProductSection();
+//            verifySection();
+//            verifyAvailableArea();
+        } catch (UnregisteredProductException |
+                InvalidWarehouseException |
+                RepresentativeNotCorrespondentException |
+                InvalidSectionException |
+                SectionNotMatchTypeProductException |
+                UnavailableSpaceException e){
+            return null;
+        }
         return inboundOrder;
     }
 
