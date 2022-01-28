@@ -30,6 +30,9 @@ public class InboundOrder {
 
     public static InboundOrder convertToEntity(InboundOrderDTO inboundOrderDTO) {
         return InboundOrder.builder()
+                .orderNumber(inboundOrderDTO.getOrderNumber())
+                .orderDate(inboundOrderDTO.getOrderDate())
+                .section(inboundOrderDTO.getSection())
                 .batchStock(inboundOrderDTO.getBatchStock())
                 .build();
     }
