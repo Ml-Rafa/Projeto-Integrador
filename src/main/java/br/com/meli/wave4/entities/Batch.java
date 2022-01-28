@@ -29,10 +29,13 @@ public class Batch {
     @JoinColumn(name = "inbound_order_id", nullable = false)
     private InboundOrder inboundOrder;
 
-
     @JsonBackReference
     @ManyToOne
     private Section section;
+
+    @JsonBackReference
+    @ManyToOne
+    private Representative representative;
 
     private Double currentTemperature;
     private Double minimumTemperature;

@@ -34,4 +34,11 @@ public class Stock {
     private Integer quantity;
     private LocalDate insertionDate;
 
+    public Stock(Warehouse warehouse, Representative representative, Product product, Integer quantity, LocalDate insertionDate) {
+        this.warehouse = warehouse;
+        this.representative = representative;
+        this.product = product;
+        this.quantity = quantity;
+        this.insertionDate = insertionDate;
+    }
 }

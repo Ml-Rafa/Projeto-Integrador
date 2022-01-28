@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -23,4 +24,6 @@ public class Representative extends User {
     @OneToOne(mappedBy = "representative")
     private Stock stock;
 
+    @OneToMany(mappedBy = "representative", cascade = CascadeType.ALL)
+    private List<Batch> batch;
 }

@@ -28,6 +28,8 @@ public class InboundOrder {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "inboundOrder")
     private List<Batch> batchStock = new ArrayList<>();
 
+
+
     public static InboundOrder convertToEntity(InboundOrderDTO inboundOrderDTO) {
         return InboundOrder.builder()
                 .orderNumber(inboundOrderDTO.getOrderNumber())

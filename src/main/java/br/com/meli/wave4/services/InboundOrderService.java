@@ -7,8 +7,14 @@ import org.springframework.stereotype.Service;
 
 
 import br.com.meli.wave4.entities.Section;
+import br.com.meli.wave4.entities.Warehouse;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class InboundOrderService {
@@ -43,17 +49,24 @@ public class InboundOrderService {
         throw new SectionNotMatchTypeProductException();
     }
 
-//    public Integer getTotalProductsInSection(Integer sectionCode){
-//        Section section = sectionService.findBySectionCode(sectionCode);
-//        return getTotalProductsInSection(section);
-//    }
 
-    public Boolean verifyAvailableArea(Integer batchNumber, Section section) {
+    public Integer getTotalProductsInSection(Section section){
+        return getTotalProductsInSection(section.getBatchList());
+    }
 
-        Batch batch = batchService.findByBatchNumber(batchNumber);
+    public Integer getTotalProductsInSection(List<Batch> batchList){
+        return batchList.stream().mapToInt(Batch::getCurrentQuantity).sum();
+    }
 
-        Integer total = sectionService.getTotalProductsInSection(section);
-        total = total + batch.getCurrentQuantity();
+    public Integer getTotalProductsInSection(Integer sectionCode){
+        Section section = sectionService.findBySectionCode(sectionCode);
+        return getTotalProductsInSection(section);
+    }
+
+    public Boolean verifyAvailableArea(Integer quantityRequired, Section section) {
+
+        Integer total = getTotalProductsInSection(section);
+        total = total + quantityRequired;
 
         if (total <= section.getMaxCapacity()){
             return true;
@@ -90,5 +103,55 @@ public class InboundOrderService {
         inboundOrderUpdated.setBatchStock(inboundOrder.getBatchStock());
 
         return inboundOrderRepository.save(inboundOrderUpdated);
+    public void registerBatch(List<Batch> batch){
+
+        batchService.saveAll(batch);
+    }
+
+    public void registerBatch(Batch batch){
+        batchService.save(batch);
+    }
+
+    public InboundOrder create(InboundOrder inboundOrder){
+
+//      AQUI É VALIDADO SE O SETOR E O ARMAZEM SÃO VÁLIDOS
+        Section section = sectionService.findBySectionCode(inboundOrder.getSection().getSectionCode());
+
+        if (section == null){
+            throw new InvalidSectionException("Este setor não é válido!");
+        } else{
+//          AQUI ASSEGURA QUE O REPRESENTANTE ESTÁ LIGADO AO ARMAZEM
+            Representative representative = section.getWarehouse().getRepresentative();
+
+//          VALIDA SE O PRODUTO ESTÁ NO SETOR CORRETO
+            inboundOrder.getBatchStock().forEach(batch -> {
+                checkProductSection(inboundOrder.getSection().getSectionCode(), batch.getProduct().getId());
+                batch.setRepresentative(representative);
+                batch.setSection(section);
+            });
+
+//          VALIDA O ESPAÇO
+            Integer totalItens = getTotalProductsInSection(inboundOrder.getBatchStock());
+            verifyAvailableArea(totalItens, section);
+
+//          REGISTRA O LOTE
+            registerBatch(inboundOrder.getBatchStock());
+
+            //busca novamente porque a lista já está atualizada
+            Section sectionAfterInsert = sectionService.findBySectionCode(inboundOrder.getSection().getSectionCode());
+            Set<Product> productSet = new HashSet<>();
+            inboundOrder.getBatchStock().forEach(batch -> {
+                productSet.add(batch.getProduct());
+            });
+
+            productSet.forEach(product -> {
+                int totalProductStock = sectionAfterInsert.getBatchList().stream().mapToInt(Batch::getCurrentQuantity).sum();
+                Stock stock = new Stock(section.getWarehouse(), representative, product, totalProductStock, LocalDate.now());
+                stockService.save(stock);
+            });
+
+
+        }
+        return inboundOrder;
     }
 }
