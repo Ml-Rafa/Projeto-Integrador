@@ -25,6 +25,7 @@ public class InboundOrder {
     @ManyToOne
     @JoinColumn(name = "section_id", referencedColumnName = "sectionCode")
     private Section section;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "inboundOrder")
     private List<Batch> batchStock = new ArrayList<>();
 
