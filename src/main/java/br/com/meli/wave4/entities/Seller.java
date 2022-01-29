@@ -1,5 +1,6 @@
 package br.com.meli.wave4.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,7 +17,7 @@ public class Seller extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "seller")
     private Set<Product> productList = new HashSet<>();
 

@@ -31,10 +31,10 @@ public class Section {
     @ManyToOne
     @JoinColumn(name = "warehouse_id", nullable = false)
     private Warehouse warehouse;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "section")
     private List<InboundOrder> inboundOrderList = new ArrayList<>();
-
+    @JsonIgnore
     @OneToMany(mappedBy = "section", cascade = CascadeType.ALL)
     private List<Batch> batchList = new ArrayList<>();
 }

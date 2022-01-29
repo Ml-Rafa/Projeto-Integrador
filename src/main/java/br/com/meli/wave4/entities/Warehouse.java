@@ -1,5 +1,6 @@
 package br.com.meli.wave4.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,7 @@ public class Warehouse {
 
     @OneToOne(mappedBy = "warehouse")
     private Representative representative;
-
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "warehouse")
     Set<Section> sectionSet = new HashSet<>();
 
