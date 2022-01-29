@@ -1,10 +1,14 @@
 package br.com.meli.wave4.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -18,6 +22,11 @@ public class Client extends User{
     private Integer id;
     private String Address;
     private String telephone;
+    @JsonIgnore
+    @OneToMany(mappedBy = "client")
+    private List<PurchaseOrder> listPurchaseOrder = new ArrayList<>();
+
+
 
     @Override
     public boolean equals(Object o) {
