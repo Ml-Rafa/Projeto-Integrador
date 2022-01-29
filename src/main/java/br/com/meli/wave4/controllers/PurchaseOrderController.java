@@ -27,7 +27,7 @@ public class PurchaseOrderController {
                 : ResponseEntity.ok(productListPersistence);
     }
 
-    @GetMapping("/list?query_type=product_category")
+    @GetMapping("/list?category=product_category")
     public ResponseEntity<?> productListByCategory(@RequestParam TypeRefrigeration product_category) {
         List<Product> productListPersistence = productService.findAllByCategory(product_category);
         return productListPersistence.isEmpty()

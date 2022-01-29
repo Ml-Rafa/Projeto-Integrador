@@ -1,6 +1,7 @@
 package br.com.meli.wave4.entities;
 
 import br.com.meli.wave4.DTO.InboundOrderDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
