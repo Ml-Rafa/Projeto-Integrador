@@ -3,11 +3,11 @@ package br.com.meli.wave4.services;
 import br.com.meli.wave4.entities.*;
 import br.com.meli.wave4.exceptions.*;
 import br.com.meli.wave4.repositories.InboundOrderRepository;
+import br.com.meli.wave4.services.iservices.IInboundOrderService;
 import org.springframework.stereotype.Service;
 
 
 import br.com.meli.wave4.entities.Section;
-import br.com.meli.wave4.entities.Warehouse;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class InboundOrderService {
+public class InboundOrderService implements IInboundOrderService {
 
     @Autowired
     ProductService productService;
@@ -37,6 +37,7 @@ public class InboundOrderService {
     @Autowired
     InboundOrderRepository inboundOrderRepository;
 
+    @Override
     public Boolean checkProductSection(Integer sectionCode, Integer productId) {
 
         Product product = productService.findById(productId);
@@ -50,19 +51,23 @@ public class InboundOrderService {
     }
 
 
+    @Override
     public Integer getTotalProductsInSection(Section section){
         return getTotalProductsInSection(section.getBatchList());
     }
 
+    @Override
     public Integer getTotalProductsInSection(List<Batch> batchList){
         return batchList.stream().mapToInt(Batch::getCurrentQuantity).sum();
     }
 
+    @Override
     public Integer getTotalProductsInSection(Integer sectionCode){
         Section section = sectionService.findBySectionCode(sectionCode);
         return getTotalProductsInSection(section);
     }
 
+    @Override
     public Boolean verifyAvailableArea(Integer quantityRequired, Section section) {
 
         Integer total = getTotalProductsInSection(section);
@@ -75,6 +80,7 @@ public class InboundOrderService {
         }
     }
 
+    @Override
     public InboundOrder saveInboundOrder(InboundOrder inboundOrder) {
         try{
             System.out.println();
@@ -96,6 +102,7 @@ public class InboundOrderService {
         return inboundOrder;
     }
 
+    @Override
     public InboundOrder updateById(InboundOrder inboundOrder) {
         InboundOrder inboundOrderUpdated = inboundOrderRepository.findById(inboundOrder.getOrderNumber()).orElse(new InboundOrder());
         inboundOrderUpdated.setOrderDate(inboundOrder.getOrderDate());
@@ -106,15 +113,18 @@ public class InboundOrderService {
 
     }
 
+    @Override
     public void registerBatch(List<Batch> batch) {
 
         batchService.saveAll(batch);
     }
 
+    @Override
     public void registerBatch(Batch batch){
         batchService.save(batch);
     }
 
+    @Override
     public InboundOrder create(InboundOrder inboundOrder){
 
 //      AQUI É VALIDADO SE O SETOR E O ARMAZEM SÃO VÁLIDOS
