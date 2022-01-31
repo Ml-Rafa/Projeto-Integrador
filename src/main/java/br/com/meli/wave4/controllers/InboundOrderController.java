@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/fresh-products/inboundorder")
+@RequestMapping("/api/v1/fresh-products/inboundorder")
 public class InboundOrderController {
 
     @Autowired

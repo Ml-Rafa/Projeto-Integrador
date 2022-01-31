@@ -19,4 +19,8 @@ public class PurchaseOrderService implements IPurchaseOrderService {
                 .totalPrice(articlesPurchaseService.calcTotalPrice(purchaseOrder.getArticlesPurchases()))
                 .build();
     }
+
+    public PurchaseOrder convertToEntity(PurchaseOrderDTO purchaseOrderDTO) {
+        return PurchaseOrder.builder().build();
+    }
 }
