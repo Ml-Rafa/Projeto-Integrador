@@ -29,8 +29,12 @@ public class InboundOrderController {
     }
 
     @PutMapping("/update-inbound-order/{id}")
-    public ResponseEntity<?> updateInboundOrder(@RequestParam Integer id, @RequestBody InboundOrder inboundOrder) {
-        inboundOrderService.updateById(inboundOrder);
+    public ResponseEntity<?> updateInboundOrder(@PathVariable Integer id, @RequestBody InboundOrderDTO inboundOrder) {
+
+        inboundOrder.setOrderNumber(id);
+
+        InboundOrder entity = this.inboundOrderService.convertToEntity(inboundOrder);
+        inboundOrderService.updateById(entity);
         return ResponseEntity.status(201).body(inboundOrder);
     }
 

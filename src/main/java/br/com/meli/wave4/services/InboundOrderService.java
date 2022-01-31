@@ -191,4 +191,8 @@ public class InboundOrderService implements IInboundOrderService {
                 .batchStock(batchList)
                 .build();
     }
+
+    public InboundOrder findyById(Integer inboundOrderID){
+        return this.inboundOrderRepository.findById(inboundOrderID).orElse(null);
+    }
 }

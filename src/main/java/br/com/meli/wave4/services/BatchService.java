@@ -22,6 +22,8 @@ public class BatchService implements IBatchService {
     @Autowired
     private RepresentativeService representativeService;
 
+
+
     public BatchService(BatchRepository batchRepository){
         this.batchRepository = batchRepository;
     }
@@ -52,6 +54,7 @@ public class BatchService implements IBatchService {
                 .dueDate(batch.getDueDate())
                 .manufacturingDate(batch.getManufacturingDate())
                 .manufacturingTime(batch.getManufacturingTime())
+               // .inboundOrder(this.inboundOrderService.findyById(batch.getInboundOrderId()))
                 .build();
     }
 
