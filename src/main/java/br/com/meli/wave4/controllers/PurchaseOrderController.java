@@ -19,7 +19,9 @@ public class PurchaseOrderController {
     @GetMapping
     public ResponseEntity<?> getProductList() {
         List<Product> productListPersistence = productService.getAll();
-        return ResponseEntity.ok(productListPersistence);
+        return productListPersistence.isEmpty()
+                ? ResponseEntity.notFound().build()
+                : ResponseEntity.ok(productListPersistence);
     }
 
     @GetMapping("/list?category=product_category")

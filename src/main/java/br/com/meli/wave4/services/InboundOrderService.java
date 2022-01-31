@@ -1,5 +1,6 @@
 package br.com.meli.wave4.services;
 
+import br.com.meli.wave4.DTO.InboundOrderDTO;
 import br.com.meli.wave4.entities.*;
 import br.com.meli.wave4.exceptions.*;
 import br.com.meli.wave4.repositories.InboundOrderRepository;
@@ -82,6 +83,7 @@ public class InboundOrderService implements IInboundOrderService {
 
     @Override
     public InboundOrder saveInboundOrder(InboundOrder inboundOrder) {
+
         try{
             System.out.println();
             warehouseService.verifyWarehouse(inboundOrder.getSection().getWarehouse().getId());
@@ -166,5 +168,13 @@ public class InboundOrderService implements IInboundOrderService {
 
         }
         return inboundOrder;
+    }
+    public  InboundOrder convertToEntity(InboundOrderDTO inboundOrderDTO) {
+        return InboundOrder.builder()
+                .orderNumber(inboundOrderDTO.getOrderNumber())
+                .orderDate(inboundOrderDTO.getOrderDate())
+                .section(this.sectionService.findBySectionCode(inboundOrderDTO.getSectionCode()))
+                .batchStock(inboundOrderDTO.getBatchStock())
+                .build();
     }
 }

@@ -32,7 +32,7 @@ public class SectionService implements ISectionService {
     public boolean verifySection(Integer sectionCode, Integer warehouseId) {
         Section sectionPersistence = this.findBySectionCode(sectionCode);
 
-        if (sectionPersistence != null || sectionPersistence.getWarehouse().getId().equals(warehouseId)) {
+        if (sectionPersistence.getWarehouse().getId().equals(warehouseId)) {
             return true;
         }
         throw new InvalidSectionException();

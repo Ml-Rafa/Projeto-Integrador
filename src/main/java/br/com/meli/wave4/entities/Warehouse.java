@@ -13,10 +13,10 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class Warehouse {
 
     @Id

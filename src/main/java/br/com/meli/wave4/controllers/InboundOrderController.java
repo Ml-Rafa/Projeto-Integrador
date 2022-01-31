@@ -17,7 +17,7 @@ public class InboundOrderController {
 
     @PostMapping("/register-inbound-order")
     public ResponseEntity<?> registerInboundOrder(@RequestBody InboundOrderDTO inboundOrderDTO, UriComponentsBuilder uriBuilder) {
-        InboundOrder inboundOrder = InboundOrder.convertToEntity(inboundOrderDTO);
+        InboundOrder inboundOrder = this.inboundOrderService.convertToEntity(inboundOrderDTO);
 
         inboundOrderService.saveInboundOrder(inboundOrder);
 
@@ -26,14 +26,12 @@ public class InboundOrderController {
         .buildAndExpand("register")
         .toUri()).body(InboundOrderDTO.convertToDTO(inboundOrder));
 
-        // return null;
     }
 
     @PutMapping("/update-inbound-order/{id}")
     public ResponseEntity<?> updateInboundOrder(@RequestParam Integer id, @RequestBody InboundOrder inboundOrder) {
         inboundOrderService.updateById(inboundOrder);
         return ResponseEntity.status(201).body(inboundOrder);
-        //return null;
     }
 
     @GetMapping
