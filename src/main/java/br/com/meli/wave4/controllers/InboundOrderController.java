@@ -19,7 +19,7 @@ public class InboundOrderController {
     public ResponseEntity<?> registerInboundOrder(@RequestBody InboundOrderDTO inboundOrderDTO, UriComponentsBuilder uriBuilder) {
         InboundOrder inboundOrder = this.inboundOrderService.convertToEntity(inboundOrderDTO);
 
-        inboundOrderService.saveInboundOrder(inboundOrder);
+        inboundOrderService.create(inboundOrder);
 
         return ResponseEntity.created(uriBuilder
         .path("/register-inbound-order")

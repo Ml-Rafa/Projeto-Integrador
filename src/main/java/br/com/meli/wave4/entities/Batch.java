@@ -1,5 +1,6 @@
 package br.com.meli.wave4.entities;
 
+import br.com.meli.wave4.DTO.BatchDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +27,7 @@ public class Batch {
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
     @ManyToOne
-    @JoinColumn(name = "inbound_order_id", nullable = false)
+    @JoinColumn(name = "inbound_order_id")
     private InboundOrder inboundOrder;
 
     @JsonBackReference
@@ -44,4 +45,6 @@ public class Batch {
     private LocalDate manufacturingDate;
     private LocalDateTime manufacturingTime;
     private LocalDate dueDate;
+
+
 }

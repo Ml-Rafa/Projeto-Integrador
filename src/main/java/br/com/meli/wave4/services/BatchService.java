@@ -1,5 +1,6 @@
 package br.com.meli.wave4.services;
 
+import br.com.meli.wave4.DTO.BatchDTO;
 import br.com.meli.wave4.entities.Batch;
 import br.com.meli.wave4.repositories.BatchRepository;
 import br.com.meli.wave4.services.iservices.IBatchService;
@@ -15,6 +16,11 @@ public class BatchService implements IBatchService {
 
     @Autowired
     private BatchRepository batchRepository;
+
+    @Autowired
+    private ProductService productService;
+    @Autowired
+    private RepresentativeService representativeService;
 
     public BatchService(BatchRepository batchRepository){
         this.batchRepository = batchRepository;
@@ -32,6 +38,21 @@ public class BatchService implements IBatchService {
     @Override
     public void save(Batch batch){
         batchRepository.save(batch);
+    }
+
+    public Batch convertToEntity(BatchDTO batch) {
+        return Batch.builder()
+                .batchNumber(batch.getBatchNumber())
+                .currentQuantity(batch.getCurrentQuantity())
+                .initialQuantity(batch.getInitialQuantity())
+                .product(productService.findById(batch.getProductId()))
+                .currentTemperature(batch.getCurrentTemperature())
+                .minimumTemperature(batch.getMinimumTemperature())
+                .representative(representativeService.findById(batch.getRepresentativeId()))
+                .dueDate(batch.getDueDate())
+                .manufacturingDate(batch.getManufacturingDate())
+                .manufacturingTime(batch.getManufacturingTime())
+                .build();
     }
 
 }

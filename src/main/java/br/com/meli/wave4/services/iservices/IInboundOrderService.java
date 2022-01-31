@@ -21,7 +21,7 @@ public interface IInboundOrderService {
 
     InboundOrder updateById(InboundOrder inboundOrder);
 
-    void registerBatch(List<Batch> batch);
+    void registerBatch(List<Batch> batch, InboundOrder inboundOrder);
 
     void registerBatch(Batch batch);
 

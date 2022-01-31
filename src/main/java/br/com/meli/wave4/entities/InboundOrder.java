@@ -30,8 +30,4 @@ public class InboundOrder {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "inboundOrder")
     private List<Batch> batchStock = new ArrayList<>();
 
-
-
-
-
 }

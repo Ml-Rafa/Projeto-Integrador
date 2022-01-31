@@ -17,10 +17,13 @@ public enum TypeRefrigeration {
     public Integer getCode(){
         return code;
     }
+    public String getDescription(){
+        return description;
+    }
 
-    public static TypeRefrigeration valueOf(Integer code){
+    public static TypeRefrigeration value(String type){
         for(TypeRefrigeration value : TypeRefrigeration.values()){
-            if(value.getCode() == code){
+            if(value.getDescription().equals(type)){
                 return value;
             }
         }

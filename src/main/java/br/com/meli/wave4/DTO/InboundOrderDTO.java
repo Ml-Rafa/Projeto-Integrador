@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -21,11 +22,19 @@ public class InboundOrderDTO {
     private Integer orderNumber;
     private LocalDate orderDate;
     private Integer sectionCode;
-    private List<Batch> batchStock = new ArrayList<>();
+    private Integer warehouseCode;
+    private List<BatchDTO> batchStock = new ArrayList<>();
 
     public static InboundOrderDTO convertToDTO(InboundOrder inboundOrder) {
+        List<Batch> batchList = inboundOrder.getBatchStock();
+        System.out.println("INboundOrder: " + inboundOrder.getOrderNumber());
+        List<BatchDTO> batchDTOList = batchList.stream().map(BatchDTO::convertToDTO).collect(Collectors.toList());
         return InboundOrderDTO.builder()
-                .batchStock(inboundOrder.getBatchStock())
+                .orderDate(inboundOrder.getOrderDate())
+                .orderNumber(inboundOrder.getOrderNumber())
+                .sectionCode(inboundOrder.getSection().getSectionCode())
+                .warehouseCode(inboundOrder.getSection().getWarehouse().getId())
+                .batchStock(batchDTOList)
                 .build();
     }
 }

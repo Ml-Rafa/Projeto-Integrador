@@ -1,5 +1,6 @@
 package br.com.meli.wave4.services;
 
+import br.com.meli.wave4.DTO.BatchDTO;
 import br.com.meli.wave4.DTO.InboundOrderDTO;
 import br.com.meli.wave4.entities.*;
 import br.com.meli.wave4.exceptions.*;
@@ -12,10 +13,12 @@ import br.com.meli.wave4.entities.Section;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class InboundOrderService implements IInboundOrderService {
@@ -44,8 +47,11 @@ public class InboundOrderService implements IInboundOrderService {
         Product product = productService.findById(productId);
 
         Section section = sectionService.findBySectionCode(sectionCode);
+        System.out.println("==================================");
+        System.out.println("product: " + product.getSectionTypeRefrigerated());
+        System.out.println("section: " + section.getStorageType());
 
-        if(product.getSectionTypeRefrigerated().equals(section.getStorageType())){
+        if(String.valueOf(product.getSectionTypeRefrigerated()).equals(section.getStorageType())){
             return true;
         }
         throw new SectionNotMatchTypeProductException();
@@ -116,8 +122,10 @@ public class InboundOrderService implements IInboundOrderService {
     }
 
     @Override
-    public void registerBatch(List<Batch> batch) {
-
+    public void registerBatch(List<Batch> batch, InboundOrder inboundOrder) {
+        for(Batch b: batch){
+            b.setInboundOrder(inboundOrder);
+        }
         batchService.saveAll(batch);
     }
 
@@ -148,9 +156,13 @@ public class InboundOrderService implements IInboundOrderService {
 //          VALIDA O ESPAÇO
             Integer totalItens = getTotalProductsInSection(inboundOrder.getBatchStock());
             verifyAvailableArea(totalItens, section);
+//          REGISTRA INBOUND ORDER
+            InboundOrder i = inboundOrderRepository.save(inboundOrder);
+            System.out.println("INBOUND ORDER: " + i.getOrderNumber());
 
 //          REGISTRA O LOTE
-            registerBatch(inboundOrder.getBatchStock());
+
+            registerBatch(inboundOrder.getBatchStock(), i);
 
             //busca novamente porque a lista já está atualizada
             Section sectionAfterInsert = sectionService.findBySectionCode(inboundOrder.getSection().getSectionCode());
@@ -170,11 +182,13 @@ public class InboundOrderService implements IInboundOrderService {
         return inboundOrder;
     }
     public  InboundOrder convertToEntity(InboundOrderDTO inboundOrderDTO) {
+        List<BatchDTO> batchDTOList = inboundOrderDTO.getBatchStock();
+        List<Batch> batchList = batchDTOList.stream().map(batchService::convertToEntity).collect(Collectors.toList());
         return InboundOrder.builder()
                 .orderNumber(inboundOrderDTO.getOrderNumber())
                 .orderDate(inboundOrderDTO.getOrderDate())
                 .section(this.sectionService.findBySectionCode(inboundOrderDTO.getSectionCode()))
-                .batchStock(inboundOrderDTO.getBatchStock())
+                .batchStock(batchList)
                 .build();
     }
 }
