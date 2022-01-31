@@ -16,7 +16,7 @@ public class ArticlesPurchaseService implements IArticlesPurchaseService {
 
     @Override
     public BigDecimal calcTotalPrice(Set<ArticlesPurchase> products){
-        return products.stream().map(articlesPurchase -> productService.findById(articlesPurchase.getProductId())
+        return products.stream().map(articlesPurchase -> articlesPurchase.getProduct()
                    .getPrice()
                    .multiply(new BigDecimal(articlesPurchase.getQuantity()))
         ).reduce(BigDecimal.ZERO, BigDecimal::add);

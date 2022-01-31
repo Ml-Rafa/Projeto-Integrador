@@ -2,22 +2,18 @@ package br.com.meli.wave4.unit_tests;
 import static org.mockito.Mockito.*;
 
 import br.com.meli.wave4.entities.*;
-import br.com.meli.wave4.exceptions.InvalidSectionException;
 import br.com.meli.wave4.repositories.SectionRepository;
 import br.com.meli.wave4.services.SectionService;
 import br.com.meli.wave4.services.iservices.ISectionService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.util.Assert;
 
-import javax.validation.constraints.AssertTrue;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
-public class SectionServiceTests {
+public class SectionServiceTest {
 
     SectionRepository sectionRepositoryMock = mock(SectionRepository.class);
     Section section = null;
@@ -69,6 +65,7 @@ public class SectionServiceTests {
                 .build();
 
         this.sectionService = new SectionService(this.sectionRepositoryMock);
+
     }
 
     @Test

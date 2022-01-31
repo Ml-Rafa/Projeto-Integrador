@@ -1,5 +1,6 @@
 package br.com.meli.wave4.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,7 +27,6 @@ public class Product {
 
 //    @OneToOne(mappedBy = "product")
 //    private Batch batch;
-
     @ManyToOne
     @JoinColumn(name = "seller_id", nullable = false)
     private Seller seller;

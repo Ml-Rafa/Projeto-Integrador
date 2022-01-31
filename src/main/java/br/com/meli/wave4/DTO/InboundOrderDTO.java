@@ -20,7 +20,7 @@ public class InboundOrderDTO {
 
     private Integer orderNumber;
     private LocalDate orderDate;
-    private Section section;
+    private Integer sectionCode;
     private List<Batch> batchStock = new ArrayList<>();
 
     public static InboundOrderDTO convertToDTO(InboundOrder inboundOrder) {

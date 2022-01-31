@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api/v1/fresh-products/inboundorder")
+@RequestMapping("/fresh-products/inboundorder")
 public class InboundOrderController {
 
     @Autowired
@@ -34,5 +34,10 @@ public class InboundOrderController {
         inboundOrderService.updateById(inboundOrder);
         return ResponseEntity.status(201).body(inboundOrder);
         //return null;
+    }
+
+    @GetMapping
+    public String saudacao(){
+        return "Olá";
     }
 }

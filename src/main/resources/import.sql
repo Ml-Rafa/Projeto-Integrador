@@ -30,12 +30,12 @@ INSERT INTO seller (name, document) VALUES ('Carlito Frios', '978.0001/2430-45')
 
 --PRODUCT
 
-INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, stock_id) VALUES ('Frango Congelado', 'RF', null, 2, null);
-INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, stock_id) VALUES ('Pao de Queijo Congelado', 'RF', null, 1, null);
-INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, stock_id) VALUES ('Manteiga', 'FF', null, 3, null);
-INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, stock_id) VALUES ('Iogurte', 'FF', null, 1, null);
-INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, stock_id) VALUES ('maça', 'FS', null, 1, null);
-INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, stock_id) VALUES ('uva', 'FS', null, 1, null);
+INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, stock_id) VALUES ('Frango Congelado', 2, '2021-11-24', 2, null);
+INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, stock_id) VALUES ('Pao de Queijo Congelado', 2, '2021-11-24', 1, null);
+INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, stock_id) VALUES ('Manteiga', 1, '2021-11-24', 3, null);
+INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, stock_id) VALUES ('Iogurte', 1, '2021-11-24', 1, null);
+INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, stock_id) VALUES ('maça', 0, '2021-11-24', 1, null);
+INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id, stock_id) VALUES ('uva', 0, '2021-11-24', 1, null);
 
 --REPRESENTATIVE
 
