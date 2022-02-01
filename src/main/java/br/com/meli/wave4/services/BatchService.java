@@ -2,7 +2,6 @@ package br.com.meli.wave4.services;
 
 import br.com.meli.wave4.DTO.BatchDTO;
 import br.com.meli.wave4.entities.Batch;
-import br.com.meli.wave4.entities.InboundOrder;
 import br.com.meli.wave4.repositories.BatchRepository;
 import br.com.meli.wave4.services.iservices.IBatchService;
 import lombok.NoArgsConstructor;

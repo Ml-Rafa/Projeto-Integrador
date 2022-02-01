@@ -22,11 +22,15 @@ public class InboundOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderNumber;
     private LocalDate orderDate;
+
     @ManyToOne
     @JoinColumn(name = "section_id", referencedColumnName = "sectionCode")
     private Section section;
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "inboundOrder")
     private List<Batch> batchStock = new ArrayList<>();
 
+    @OneToOne
+    private Warehouse warehouse;
 }
