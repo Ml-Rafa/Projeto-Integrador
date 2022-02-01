@@ -1,18 +1,11 @@
 package br.com.meli.wave4.DTO;
 
-import br.com.meli.wave4.entities.*;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import br.com.meli.wave4.entities.Batch;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.CascadeType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Builder
 @Data

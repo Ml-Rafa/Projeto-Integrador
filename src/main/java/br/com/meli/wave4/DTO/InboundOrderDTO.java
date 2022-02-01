@@ -2,7 +2,6 @@ package br.com.meli.wave4.DTO;
 
 import br.com.meli.wave4.entities.Batch;
 import br.com.meli.wave4.entities.InboundOrder;
-import br.com.meli.wave4.entities.Section;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

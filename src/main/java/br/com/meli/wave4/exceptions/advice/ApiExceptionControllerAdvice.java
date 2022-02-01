@@ -1,7 +1,5 @@
 package br.com.meli.wave4.exceptions.advice;
 
-import br.com.meli.wave4.entities.Batch;
-import br.com.meli.wave4.entities.Representative;
 import br.com.meli.wave4.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

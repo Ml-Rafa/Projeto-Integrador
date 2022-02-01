@@ -23,9 +23,6 @@ public class Representative extends User {
     @JoinColumn(name = "warehouse_id",referencedColumnName = "id")
     private Warehouse warehouse;
 
-    @OneToOne(mappedBy = "representative")
-    private Stock stock;
-
     @OneToMany(mappedBy = "representative", cascade = CascadeType.ALL)
     private List<Batch> batch;
 }

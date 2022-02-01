@@ -11,4 +11,6 @@ public interface IProductService {
     List<Product> getAll();
 
     List<Product> findAllByCategory(TypeRefrigeration type);
+
+    Boolean verifyStock(Integer productId, Integer quantity, Integer sectionCode);
 }

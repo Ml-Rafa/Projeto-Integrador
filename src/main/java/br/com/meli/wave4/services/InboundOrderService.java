@@ -6,15 +6,9 @@ import br.com.meli.wave4.entities.*;
 import br.com.meli.wave4.exceptions.*;
 import br.com.meli.wave4.repositories.InboundOrderRepository;
 import br.com.meli.wave4.services.iservices.IInboundOrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import br.com.meli.wave4.entities.Section;
-import org.springframework.beans.factory.annotation.Autowired;
-
-
-import java.lang.reflect.Type;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,8 +29,6 @@ public class InboundOrderService implements IInboundOrderService {
     @Autowired
     WarehouseService warehouseService;
 
-    @Autowired
-    StockService stockService;
 
     @Autowired
     InboundOrderRepository inboundOrderRepository;
@@ -171,11 +163,6 @@ public class InboundOrderService implements IInboundOrderService {
                 productSet.add(batch.getProduct());
             });
 
-            productSet.forEach(product -> {
-                int totalProductStock = sectionAfterInsert.getBatchList().stream().mapToInt(Batch::getCurrentQuantity).sum();
-                Stock stock = new Stock(section.getWarehouse(), representative, product, totalProductStock, LocalDate.now());
-                stockService.save(stock);
-            });
 
 
         }
