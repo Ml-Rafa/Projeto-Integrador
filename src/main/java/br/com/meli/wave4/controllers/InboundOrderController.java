@@ -35,7 +35,7 @@ public class InboundOrderController {
 
         InboundOrder entity = this.inboundOrderService.convertToEntity(inboundOrder);
         inboundOrderService.updateById(entity);
-        return ResponseEntity.status(201).body(inboundOrder);
+        return ResponseEntity.status(201).body(InboundOrderDTO.convertToDTO(entity));
     }
 
     @GetMapping

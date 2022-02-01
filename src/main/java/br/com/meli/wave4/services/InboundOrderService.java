@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -107,9 +108,13 @@ public class InboundOrderService implements IInboundOrderService {
         InboundOrder inboundOrderUpdated = inboundOrderRepository.findById(inboundOrder.getOrderNumber()).orElse(new InboundOrder());
         inboundOrderUpdated.setOrderDate(inboundOrder.getOrderDate());
         inboundOrderUpdated.setSection(inboundOrder.getSection());
+        inboundOrder.getBatchStock().forEach(batch -> batch.setInboundOrder(inboundOrderUpdated));
+        inboundOrder.getBatchStock().forEach(batch -> batch.setSection(inboundOrderUpdated.getSection()));
+        inboundOrder.getBatchStock().forEach(batch -> batchService.update(batch));
         inboundOrderUpdated.setBatchStock(inboundOrder.getBatchStock());
+        inboundOrderUpdated.setOrderNumber(inboundOrder.getOrderNumber());
 
-        return inboundOrderRepository.save(inboundOrderUpdated);
+        return inboundOrderRepository.saveAndFlush(inboundOrderUpdated);
 
     }
 

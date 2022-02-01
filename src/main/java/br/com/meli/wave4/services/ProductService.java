@@ -48,4 +48,21 @@ public class ProductService implements IProductService
     public boolean verifyIfDueDateLessThan3Weeks(Product product){
        return product.getDateValid().isBefore(LocalDate.now().minusDays(20));
     }
+
+    public void save(Product product){
+        productRepository.save(product);
+    }
+
+    public Product update(Product product) {
+        Product productUpdated = productRepository.findById(product.getId()).orElse(null);
+        productUpdated.setPrice(product.getPrice());
+        productUpdated.setDateValid(product.getDateValid());
+        productUpdated.setSeller(product.getSeller());
+        productUpdated.setName(product.getName());
+        productUpdated.setSectionTypeRefrigerated(product.getSectionTypeRefrigerated());
+
+        return productRepository.saveAndFlush(productUpdated);
+
+    }
+
 }

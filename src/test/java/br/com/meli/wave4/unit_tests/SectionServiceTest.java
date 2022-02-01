@@ -2,6 +2,7 @@ package br.com.meli.wave4.unit_tests;
 import static org.mockito.Mockito.*;
 
 import br.com.meli.wave4.entities.*;
+import br.com.meli.wave4.exceptions.InvalidSectionException;
 import br.com.meli.wave4.repositories.SectionRepository;
 import br.com.meli.wave4.services.SectionService;
 import br.com.meli.wave4.services.iservices.ISectionService;
@@ -87,12 +88,17 @@ public class SectionServiceTest {
         );
     }
 
+//    @Test
+//    void shoudReturnTrue(){
+//
+//
+//    }
 
 //    @Override
 //    public boolean verifySection(Integer sectionCode, Integer warehouseId) {
 //        Section sectionPersistence = this.findBySectionCode(sectionCode);
 //
-//        if (sectionPersistence != null || sectionPersistence.getWarehouse().getId().equals(warehouseId)) {
+//        if (sectionPersistence.getWarehouse().getId().equals(warehouseId)) {
 //            return true;
 //        }
 //        throw new InvalidSectionException();

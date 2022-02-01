@@ -2,6 +2,7 @@ package br.com.meli.wave4.services;
 
 import br.com.meli.wave4.DTO.BatchDTO;
 import br.com.meli.wave4.entities.Batch;
+import br.com.meli.wave4.entities.InboundOrder;
 import br.com.meli.wave4.repositories.BatchRepository;
 import br.com.meli.wave4.services.iservices.IBatchService;
 import lombok.NoArgsConstructor;
@@ -56,6 +57,23 @@ public class BatchService implements IBatchService {
                 .manufacturingTime(batch.getManufacturingTime())
                // .inboundOrder(this.inboundOrderService.findyById(batch.getInboundOrderId()))
                 .build();
+    }
+
+    public Batch update(Batch batch) {
+        Batch batchUpdated = batchRepository.findById(batch.getBatchNumber()).orElse(new Batch());
+        batchUpdated.setInboundOrder(batch.getInboundOrder());
+        batchUpdated.setBatchNumber(batch.getBatchNumber());
+        batchUpdated.setSection(batch.getSection());
+        batchUpdated.setRepresentative(batch.getRepresentative());
+        batchUpdated.setCurrentQuantity(batch.getCurrentQuantity());
+        batchUpdated.setCurrentTemperature(batch.getCurrentTemperature());
+        batchUpdated.setDueDate(batch.getDueDate());
+        batchUpdated.setInitialQuantity(batch.getInitialQuantity());
+        batchUpdated.setManufacturingDate(batch.getManufacturingDate());
+        batchUpdated.setManufacturingTime(batch.getManufacturingTime());
+        batchUpdated.setMinimumTemperature(batch.getMinimumTemperature());
+        batchUpdated.setProduct(batch.getProduct());
+        return batchRepository.saveAndFlush(batchUpdated);
     }
 
 }

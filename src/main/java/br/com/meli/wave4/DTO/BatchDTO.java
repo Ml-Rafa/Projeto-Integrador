@@ -24,6 +24,7 @@ public class BatchDTO {
     private Integer inboundOrderId;
 
     public static BatchDTO convertToDTO(Batch batch) {
+
         return BatchDTO.builder()
                 .batchNumber(batch.getBatchNumber())
                 .currentQuantity(batch.getCurrentQuantity())
