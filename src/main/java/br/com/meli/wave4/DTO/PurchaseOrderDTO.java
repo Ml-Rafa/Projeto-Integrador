@@ -21,6 +21,6 @@ public class PurchaseOrderDTO {
     private LocalDate date;
     private Integer clientId;
     private OrderStatus orderStatus;
-    private Set<ArticlesPurchase> products;
+    private Set<ArticlesPurchaseDTO> articlesPurchases;
     private BigDecimal totalPrice;
 }

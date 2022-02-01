@@ -45,6 +45,19 @@ public class ProductService implements IProductService
 
     }
 
+    public Product updateStock(Integer productId, Integer quantity, Integer sectionCode){
+        Product product = this.productRepository.findById(productId).orElse(null);
+
+        Batch batch = product.getBatchList()
+                .stream().filter(b -> b.getSection().getSectionCode().equals(sectionCode))
+                .findFirst().orElse(null);
+
+        batch.setCurrentQuantity(batch.getCurrentQuantity() - quantity);
+
+
+        return product;
+    }
+
     public boolean verifyIfDueDateLessThan3Weeks(Product product){
        return product.getDateValid().isBefore(LocalDate.now().minusDays(20));
     }

@@ -62,4 +62,16 @@ public class PurchaseOrderController {
         return null;
     }
 
+    @PostMapping("fresh-products/orders")
+    public ResponseEntity<?> order(@RequestBody PurchaseOrderDTO purchaseOrderDTO, UriComponentsBuilder uriBuilder){
+
+        PurchaseOrder purchaseOrder = this.purchaseOrderService.convertToEntity(purchaseOrderDTO);
+
+        return ResponseEntity.created(uriBuilder
+                .path("register-purchase-order")
+                .buildAndExpand("register")
+                .toUri()).body(this.purchaseOrderService.order(purchaseOrder));
+
+    }
+
 }
