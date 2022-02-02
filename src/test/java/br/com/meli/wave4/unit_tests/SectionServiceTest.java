@@ -88,19 +88,11 @@ public class SectionServiceTest {
         );
     }
 
-//    @Test
-//    void shoudReturnTrue(){
-//
-//
-//    }
+   @Test
+    void shoudReturnTrue(){
 
-//    @Override
-//    public boolean verifySection(Integer sectionCode, Integer warehouseId) {
-//        Section sectionPersistence = this.findBySectionCode(sectionCode);
-//
-//        if (sectionPersistence.getWarehouse().getId().equals(warehouseId)) {
-//            return true;
-//        }
-//        throw new InvalidSectionException();
-//    }
+
+    }
+
+
 }
