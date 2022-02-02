@@ -5,9 +5,11 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Builder
 @Data
-public class BatchSimpleResponseDTO {
+public class BatchSimpleResponseDTO implements List<T> {
 
     private Integer batchNumber;
     private Integer currentQuantity;

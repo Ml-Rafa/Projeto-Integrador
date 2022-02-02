@@ -38,7 +38,7 @@ public class ProductController {
                         "Letras válidas: " +
                         "\n\nL = Para obter a lista de lotes do produto no armazém informado, ordenado pelo número do lote;" +
                         "\nC = Para obter a lista de lotes do produto no armazém informado, ordenado pela quantidade em atual estoque;" +
-                        "\nF = Para obter a lista de lotes do produto no armazém informado, ordenado pela data de validade;" +
+                        "\nF = Para obter a lista de lotes do produto no armazém informado, ordenado pela data de validade;"
                 );
         }
         return ResponseEntity.ok(productService.filterProductInWarehouse(warehouse, product));

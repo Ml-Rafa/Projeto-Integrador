@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 @Service
@@ -96,6 +97,23 @@ public class ProductService implements IProductService {
                 .warehouseCode(batchList.get(0).getSection().getWarehouse().getId())
                 .productId(product.getId())
                 .batchStock(batchSimpleResponseDTOList).build();
+    }
+
+    public List<BatchSimpleResponseDTO> orderByBatchNumber(List<BatchSimpleResponseDTO> batchSimpleResponseDTOList) {
+
+        batchSimpleResponseDTOList.sort(Comparator.comparing(BatchSimpleResponseDTO::getBatchNumber));
+
+        return batchSimpleResponseDTOList;
+    }
+
+    public List<BatchSimpleResponseDTO> orderByCurrentQuantity(List<BatchSimpleResponseDTO> batchSimpleResponseDTOList) {
+        batchSimpleResponseDTOList.sort(Comparator.comparing(BatchSimpleResponseDTO::getCurrentQuantity));
+        return batchSimpleResponseDTOList;
+    }
+
+    public List<BatchSimpleResponseDTO> orderByDueDate(List<BatchSimpleResponseDTO> batchSimpleResponseDTOList) {
+        batchSimpleResponseDTOList.sort(Comparator.comparing(BatchSimpleResponseDTO::getDueDate));
+        return batchSimpleResponseDTOList;
     }
 
     public void save(Product product) {
