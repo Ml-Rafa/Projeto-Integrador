@@ -2,6 +2,8 @@ package br.com.meli.wave4.services;
 
 import br.com.meli.wave4.DTO.BatchDTO;
 import br.com.meli.wave4.entities.Batch;
+import br.com.meli.wave4.entities.InboundOrder;
+import br.com.meli.wave4.entities.Product;
 import br.com.meli.wave4.repositories.BatchRepository;
 import br.com.meli.wave4.services.iservices.IBatchService;
 import lombok.NoArgsConstructor;
@@ -74,5 +76,14 @@ public class BatchService implements IBatchService {
         batchUpdated.setProduct(batch.getProduct());
         return batchRepository.saveAndFlush(batchUpdated);
     }
+
+    public boolean verifyBatchContainsProduct(Batch batch, Product product){
+        Batch batch1 = product.getBatchList().stream()
+                .filter(b -> b.getBatchNumber().equals(batch.getBatchNumber()))
+                .findFirst().orElse(null);
+        return batch != null;
+    }
+
+//    Criar método para verificar se um lote é de determinado produto
 
 }
