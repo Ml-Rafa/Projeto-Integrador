@@ -23,4 +23,5 @@ public class PurchaseOrderDTO {
     private OrderStatus orderStatus;
     private Set<ArticlesPurchaseDTO> articlesPurchases;
     private BigDecimal totalPrice;
+
 }

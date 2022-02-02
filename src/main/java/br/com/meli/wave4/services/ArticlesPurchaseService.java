@@ -23,14 +23,6 @@ public class ArticlesPurchaseService implements IArticlesPurchaseService {
                    .multiply(new BigDecimal(articlesPurchase.getQuantity()))
         ).reduce(BigDecimal.ZERO, BigDecimal::add);
 
-      /*  BigDecimal total = new BigDecimal(0);
-
-        for(ArticlesPurchase a : products) {
-
-            total.add(a.getProduct().getPrice().multiply(new BigDecimal(a.getQuantity())));
-        }
-        return  total; */
-
     }
 
     public Set<ArticlesPurchaseDTO> convertToDTO(Set<ArticlesPurchase> articlesPurchase){
@@ -43,6 +35,7 @@ public class ArticlesPurchaseService implements IArticlesPurchaseService {
                 ArticlesPurchaseDTO.builder()
                         .product(a.getProduct().getId())
                         .quantity(a.getQuantity())
+                        .batchCode(a.getBatchCode())
                         .build()
             );
         }
@@ -60,6 +53,7 @@ public class ArticlesPurchaseService implements IArticlesPurchaseService {
                     ArticlesPurchase.builder()
                     .product(this.productService.findById(a.getProduct()))
                     .quantity(a.getQuantity())
+                    .batchCode(a.getBatchCode())
                     .build()
             );
 

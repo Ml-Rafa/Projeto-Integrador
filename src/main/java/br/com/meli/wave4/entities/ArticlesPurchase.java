@@ -21,5 +21,6 @@ public class ArticlesPurchase {
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
     private Integer quantity;
+    private Integer batchCode;
 
 }

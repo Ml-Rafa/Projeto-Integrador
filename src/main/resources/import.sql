@@ -45,3 +45,11 @@ INSERT INTO representative (name, document, warehouse_id) VALUES ('Roberta Freit
 INSERT INTO representative (name, document, warehouse_id) VALUES ('Pablo Rogério', '456.456.456', 4);
 INSERT INTO representative (name, document, warehouse_id) VALUES ('Rodrigo Dutra', '567.567.567', 5);
 INSERT INTO representative (name, document, warehouse_id) VALUES ('Priscila Casagrande', '678.678.678', 6);
+
+
+--CLIENT
+
+INSERT INTO client (document,name,address,telephone) VALUES ('12345678','Gabriela da Rocha', 'Palhoça - SC', '222222');
+INSERT INTO client (document,name,address,telephone) VALUES ('31231323','Paula Rodrigues', 'Ermelino Matarazzo - SP', '000999');
+INSERT INTO client (document,name,address,telephone) VALUES ('83283823','Marcelo Nader', 'Liberdade - SP', '888347');
+INSERT INTO client (document,name,address,telephone) VALUES ('34234234','Rafael Oliveira', 'Barueri - SC', '949324');

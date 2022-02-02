@@ -14,5 +14,6 @@ public class ArticlesPurchaseDTO {
 
     private Integer product;
     private Integer quantity;
+    private Integer batchCode;
 
 }

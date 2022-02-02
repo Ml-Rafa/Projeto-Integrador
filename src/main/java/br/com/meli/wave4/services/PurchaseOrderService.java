@@ -6,6 +6,7 @@ import br.com.meli.wave4.entities.Client;
 import br.com.meli.wave4.entities.Product;
 import br.com.meli.wave4.entities.PurchaseOrder;
 import br.com.meli.wave4.repositories.ClientRepository;
+import br.com.meli.wave4.repositories.PurchaseOrderRepository;
 import br.com.meli.wave4.services.iservices.IPurchaseOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,10 +26,18 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     @Autowired
     ClientRepository clientRepository;
 
+    @Autowired
+    PurchaseOrderRepository purchaseOrderRepository;
+
 
     @Override
     public PurchaseOrderDTO convertToDTO(PurchaseOrder purchaseOrder) {
         return PurchaseOrderDTO.builder()
+                .id(purchaseOrder.getId())
+                .date(purchaseOrder.getDate())
+                .clientId(purchaseOrder.getClient().getId())
+                .orderStatus(purchaseOrder.getOrderStatus())
+                .articlesPurchases(this.articlesPurchaseService.convertToDTO(purchaseOrder.getArticlesPurchases()))
                 .totalPrice(articlesPurchaseService.calcTotalPrice(purchaseOrder.getArticlesPurchases()))
                 .build();
     }
@@ -36,7 +45,7 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     public PurchaseOrder convertToEntity(PurchaseOrderDTO purchaseOrderDTO) {
 
         return PurchaseOrder.builder()
-               .client(this.clientRepository.getById(purchaseOrderDTO.getClientId()))
+                .client(this.clientRepository.findById(purchaseOrderDTO.getClientId()).orElse(null))
                 .orderStatus(purchaseOrderDTO.getOrderStatus())
                 .date(purchaseOrderDTO.getDate())
                 .id(purchaseOrderDTO.getId())
@@ -53,26 +62,20 @@ public class PurchaseOrderService implements IPurchaseOrderService {
 
             Product p = this.productService.findById(a.getProduct().getId());
 
-            Client client =  new Client();//this.clientRepository.getById(purchaseOrder.getClient().getId());
+            Client client = (this.clientRepository.findById(purchaseOrder.getClient().getId()).orElse(null));
             Boolean haveStock =
-                    this.productService.verifyStock(p.getId(),a.getQuantity(),1);
-            Boolean lessthan3weeak = this.productService.verifyIfDueDateLessThan3Weeks(p);
+                    this.productService.verifyStock(p.getId(),a.getQuantity(),a.getBatchCode());
+            Boolean lessThan3weak = this.productService.verifyIfDueDateLessThan3Weeks(p);
 
-            if(haveStock && lessthan3weeak && client != null ){
+            if(haveStock && lessThan3weak && client != null ){
                 products.add(a);
-                this.productService.updateStock(p.getId(),a.getQuantity(),1);
+                this.productService.updateStock(p.getId(),a.getQuantity(),a.getBatchCode());
             }
         }
 
-        PurchaseOrderDTO purchaseOrderDTO = PurchaseOrderDTO.builder()
-                .id(purchaseOrder.getId())
-                .orderStatus(purchaseOrder.getOrderStatus())
-                .clientId(purchaseOrder.getId())
-                .date(purchaseOrder.getDate())
-                .articlesPurchases(this.articlesPurchaseService.convertToDTO(products))
-                .totalPrice(this.articlesPurchaseService.calcTotalPrice(products))
-                .build();
+        purchaseOrder.setTotalPrice(this.articlesPurchaseService.calcTotalPrice(products));
+        purchaseOrder.setArticlesPurchases(products);
 
-        return purchaseOrderDTO;
+        return this.convertToDTO(this.purchaseOrderRepository.save(purchaseOrder));
     }
 }
