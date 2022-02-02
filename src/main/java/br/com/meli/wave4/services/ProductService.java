@@ -9,13 +9,14 @@ import br.com.meli.wave4.entities.TypeRefrigeration;
 import br.com.meli.wave4.entities.Warehouse;
 import br.com.meli.wave4.repositories.ProductRepository;
 import br.com.meli.wave4.services.iservices.IProductService;
+import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
 @Service
 public class ProductService implements IProductService {
 
@@ -53,10 +54,34 @@ public class ProductService implements IProductService {
         return product.getDateValid().isBefore(LocalDate.now().minusDays(20));
     }
 
-    public ListProductWithAllBatchDTO filterProductInWarehouse(Warehouse warehouse, Product product) {
+
+   public ListProductWithAllBatchDTO filterProductInWarehouseOrdered(Warehouse warehouse, Product product,
+                                                                     Character charOrdered){
 
         List<Batch> batchList = product.getBatchList().stream()
-                .filter(batch -> batch.getSection().getWarehouse().equals(warehouse)).collect(Collectors.toList());
+                .filter(batch -> batch.getSection().getWarehouse().equals(warehouse))
+                .collect(Collectors.toList());
+
+        List<BatchSimpleResponseDTO> batchSimpleResponseDTOList = batchList.stream()
+                .map(batch -> BatchSimpleResponseDTO.builder()
+                        .batchNumber(batch.getBatchNumber())
+                        .currentQuantity(batch.getCurrentQuantity())
+                        .dueDate(batch.getDueDate())
+                        .build()
+                ).collect(Collectors.toList());
+
+        return ListProductWithAllBatchDTO.builder()
+                .sectionCode(batchList.get(0).getSection().getSectionCode())
+                .warehouseCode(batchList.get(0).getSection().getWarehouse().getId())
+                .productId(product.getId())
+                .batchStock(batchSimpleResponseDTOList).build();
+    }
+
+    public ListProductWithAllBatchDTO filterProductInWarehouse(Warehouse warehouse, Product product){
+
+        List<Batch> batchList = product.getBatchList().stream()
+                .filter(batch -> batch.getSection().getWarehouse().equals(warehouse))
+                .collect(Collectors.toList());
 
         List<BatchSimpleResponseDTO> batchSimpleResponseDTOList = batchList.stream()
                 .map(batch -> BatchSimpleResponseDTO.builder()
