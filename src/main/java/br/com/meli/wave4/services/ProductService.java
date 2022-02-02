@@ -17,68 +17,54 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductService implements IProductService
-{
+public class ProductService implements IProductService {
 
     @Autowired
     ProductRepository productRepository;
 
     @Override
-    public Product findById(Integer productId){
+    public Product findById(Integer productId) {
         return productRepository.findById(productId).orElse(new Product());
     }
 
     @Override
-    public List<Product> getAll(){
+    public List<Product> getAll() {
         return productRepository.findAll();
     }
 
     @Override
-    public List<Product> findAllByCategory(TypeRefrigeration type){
+    public List<Product> findAllByCategory(TypeRefrigeration type) {
         return productRepository.findAllBySectionTypeRefrigerated(type);
     }
 
     @Override
-    public Boolean verifyStock(Integer productId, Integer quantity, Integer sectionCode){
+    public Boolean verifyStock(Integer productId, Integer quantity, Integer sectionCode) {
         Product product = this.productRepository.findById(productId).orElse(null);
 
         Batch batch = product.getBatchList()
                 .stream().filter(b -> b.getSection().getSectionCode().equals(sectionCode))
                 .findFirst().orElse(null);
 
-      return   batch.getCurrentQuantity()>= quantity;
+        return batch.getCurrentQuantity() >= quantity;
 
     }
 
-    public Product updateStock(Integer productId, Integer quantity, Integer sectionCode){
-        Product product = this.productRepository.findById(productId).orElse(null);
-
-        Batch batch = product.getBatchList()
-                .stream().filter(b -> b.getSection().getSectionCode().equals(sectionCode))
-                .findFirst().orElse(null);
-
-        batch.setCurrentQuantity(batch.getCurrentQuantity() - quantity);
-
-
-        return product;
+    public boolean verifyIfDueDateLessThan3Weeks(Product product) {
+        return product.getDateValid().isBefore(LocalDate.now().minusDays(20));
     }
 
-    public boolean verifyIfDueDateLessThan3Weeks(Product product){
-       return product.getDateValid().isBefore(LocalDate.now().minusDays(20));
-    }
-
-    public ListProductWithAllBatchDTO filterProductInWarehouse(Warehouse warehouse, Product product){
+    public ListProductWithAllBatchDTO filterProductInWarehouse(Warehouse warehouse, Product product) {
 
         List<Batch> batchList = product.getBatchList().stream()
                 .filter(batch -> batch.getSection().getWarehouse().equals(warehouse)).collect(Collectors.toList());
 
         List<BatchSimpleResponseDTO> batchSimpleResponseDTOList = batchList.stream()
                 .map(batch -> BatchSimpleResponseDTO.builder()
-            .batchNumber(batch.getBatchNumber())
-            .currentQuantity(batch.getCurrentQuantity())
-            .dueDate(batch.getDueDate())
-            .build()
-        ).collect(Collectors.toList());
+                        .batchNumber(batch.getBatchNumber())
+                        .currentQuantity(batch.getCurrentQuantity())
+                        .dueDate(batch.getDueDate())
+                        .build()
+                ).collect(Collectors.toList());
 
         return ListProductWithAllBatchDTO.builder()
                 .sectionCode(batchList.get(0).getSection().getSectionCode())
@@ -86,7 +72,8 @@ public class ProductService implements IProductService
                 .productId(product.getId())
                 .batchStock(batchSimpleResponseDTOList).build();
     }
-    public void save(Product product){
+
+    public void save(Product product) {
         productRepository.save(product);
     }
 

@@ -1,10 +1,7 @@
 package br.com.meli.wave4.services;
 
 import br.com.meli.wave4.DTO.PurchaseOrderDTO;
-import br.com.meli.wave4.entities.ArticlesPurchase;
-import br.com.meli.wave4.entities.Client;
-import br.com.meli.wave4.entities.Product;
-import br.com.meli.wave4.entities.PurchaseOrder;
+import br.com.meli.wave4.entities.*;
 import br.com.meli.wave4.repositories.ClientRepository;
 import br.com.meli.wave4.repositories.PurchaseOrderRepository;
 import br.com.meli.wave4.services.iservices.IPurchaseOrderService;
@@ -28,6 +25,9 @@ public class PurchaseOrderService implements IPurchaseOrderService {
 
     @Autowired
     PurchaseOrderRepository purchaseOrderRepository;
+
+    @Autowired
+    BatchService batchService;
 
 
     @Override
@@ -69,7 +69,7 @@ public class PurchaseOrderService implements IPurchaseOrderService {
 
             if(haveStock && lessThan3weak && client != null ){
                 products.add(a);
-                this.productService.updateStock(p.getId(),a.getQuantity(),a.getBatchCode());
+                this.batchService.updateStock(p.getId(),a.getQuantity(),a.getBatchCode());
             }
         }
 

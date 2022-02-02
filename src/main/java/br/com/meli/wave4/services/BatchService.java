@@ -5,6 +5,7 @@ import br.com.meli.wave4.entities.Batch;
 import br.com.meli.wave4.entities.InboundOrder;
 import br.com.meli.wave4.entities.Product;
 import br.com.meli.wave4.repositories.BatchRepository;
+import br.com.meli.wave4.repositories.ProductRepository;
 import br.com.meli.wave4.services.iservices.IBatchService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,24 +26,25 @@ public class BatchService implements IBatchService {
     private RepresentativeService representativeService;
 
 
-
-    public BatchService(BatchRepository batchRepository){
+    public BatchService(BatchRepository batchRepository) {
         this.batchRepository = batchRepository;
     }
+
     @Override
-    public Batch findByBatchNumber(Integer batchNumber){
-       return batchRepository.findByBatchNumber(batchNumber).orElse(new Batch());
+    public Batch findByBatchNumber(Integer batchNumber) {
+        return batchRepository.findByBatchNumber(batchNumber).orElse(new Batch());
     }
 
     @Override
-    public List<Batch> saveAll(List<Batch> batchList){
+    public List<Batch> saveAll(List<Batch> batchList) {
         return batchRepository.saveAll(batchList);
     }
 
     @Override
-    public void save(Batch batch){
+    public void save(Batch batch) {
         batchRepository.save(batch);
     }
+
 
     public Batch convertToEntity(BatchDTO batch) {
         return Batch.builder()
@@ -56,7 +58,7 @@ public class BatchService implements IBatchService {
                 .dueDate(batch.getDueDate())
                 .manufacturingDate(batch.getManufacturingDate())
                 .manufacturingTime(batch.getManufacturingTime())
-               // .inboundOrder(this.inboundOrderService.findyById(batch.getInboundOrderId()))
+                // .inboundOrder(this.inboundOrderService.findyById(batch.getInboundOrderId()))
                 .build();
     }
 
@@ -77,13 +79,24 @@ public class BatchService implements IBatchService {
         return batchRepository.saveAndFlush(batchUpdated);
     }
 
-    public boolean verifyBatchContainsProduct(Batch batch, Product product){
+    public boolean verifyBatchContainsProduct(Batch batch, Product product) {
         Batch batch1 = product.getBatchList().stream()
                 .filter(b -> b.getBatchNumber().equals(batch.getBatchNumber()))
                 .findFirst().orElse(null);
         return batch != null;
     }
 
-//    Criar método para verificar se um lote é de determinado produto
+    public Batch updateStock(Integer productId, Integer quantity, Integer sectionCode) {
+        Product product = this.productService.findById(productId);
+
+
+        Batch batch = product.getBatchList()
+                .stream().filter(b -> b.getSection().getSectionCode().equals(sectionCode))
+                .findFirst().orElse(null);
+
+        batch.setCurrentQuantity(batch.getCurrentQuantity() - quantity);
+
+        return batch;
+    }
 
 }
