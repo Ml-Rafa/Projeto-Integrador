@@ -1,5 +1,6 @@
 package br.com.meli.wave4.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,8 +26,10 @@ public class Warehouse {
     @Column(name = "geographic_area")
     private String geographicArea;
 
+    @JsonBackReference
     @OneToOne(mappedBy = "warehouse")
     private Representative representative;
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "warehouse")
     Set<Section> sectionSet = new HashSet<>();

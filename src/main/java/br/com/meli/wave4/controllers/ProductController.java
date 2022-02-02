@@ -44,5 +44,9 @@ public class ProductController {
         return ResponseEntity.ok(productService.filterProductInWarehouse(warehouse, product));
     }
 
+    @GetMapping("/warehouse/{productId}")
+    public ResponseEntity<?> getProductInWarehouse(@PathVariable Integer productId){
+        return ResponseEntity.ok(productService.countProductInWarehouse(productId));
+    }
 
 }

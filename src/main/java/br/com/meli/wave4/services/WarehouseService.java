@@ -7,6 +7,8 @@ import br.com.meli.wave4.services.iservices.IWarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class WarehouseService implements IWarehouseService {
 
@@ -14,11 +16,18 @@ public class WarehouseService implements IWarehouseService {
     WarehouseRepository warehouseRepository;
 
     @Override
-    public Warehouse findById(Integer id){
+    public Warehouse findById(Integer id) {
         return warehouseRepository.findById(id).orElse(null);
     }
 
     @Override
+    public List<Warehouse> findAll() {
+        return warehouseRepository.findAll();
+    }
+
+
+    @Override
+
     public Boolean verifyWarehouse(Integer id) {
         Warehouse warehouse = this.findById(id);
         if (warehouse == null) {

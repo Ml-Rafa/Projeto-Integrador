@@ -61,6 +61,11 @@ public class ApiExceptionControllerAdvice {
                 HttpStatus.BAD_REQUEST.value(), "Unregistered Product Error", "Produto não registrado em nome do vendedor", request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
-
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<StandardError> notFound(NotFoundException e, HttpServletRequest request){
+        StandardError err = new StandardError(System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(), "Not Found Error", e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
 
 }

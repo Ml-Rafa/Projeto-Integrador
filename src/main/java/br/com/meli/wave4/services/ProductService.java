@@ -3,10 +3,8 @@ package br.com.meli.wave4.services;
 import br.com.meli.wave4.DTO.BatchDTO;
 import br.com.meli.wave4.DTO.BatchSimpleResponseDTO;
 import br.com.meli.wave4.DTO.ListProductWithAllBatchDTO;
-import br.com.meli.wave4.entities.Batch;
-import br.com.meli.wave4.entities.Product;
-import br.com.meli.wave4.entities.TypeRefrigeration;
-import br.com.meli.wave4.entities.Warehouse;
+import br.com.meli.wave4.entities.*;
+import br.com.meli.wave4.exceptions.NotFoundException;
 import br.com.meli.wave4.repositories.ProductRepository;
 import br.com.meli.wave4.services.iservices.IProductService;
 import org.hibernate.mapping.Collection;
@@ -14,15 +12,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Service
 public class ProductService implements IProductService {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    WarehouseService warehouseService;
 
     @Override
     public Product findById(Integer productId) {
@@ -56,8 +59,8 @@ public class ProductService implements IProductService {
     }
 
 
-   public ListProductWithAllBatchDTO filterProductInWarehouseOrdered(Warehouse warehouse, Product product,
-                                                                     Character charOrdered){
+    public ListProductWithAllBatchDTO filterProductInWarehouseOrdered(Warehouse warehouse, Product product,
+                                                                      Character charOrdered) {
 
         List<Batch> batchList = product.getBatchList().stream()
                 .filter(batch -> batch.getSection().getWarehouse().equals(warehouse))
@@ -78,7 +81,7 @@ public class ProductService implements IProductService {
                 .batchStock(batchSimpleResponseDTOList).build();
     }
 
-    public ListProductWithAllBatchDTO filterProductInWarehouse(Warehouse warehouse, Product product){
+    public ListProductWithAllBatchDTO filterProductInWarehouse(Warehouse warehouse, Product product) {
 
         List<Batch> batchList = product.getBatchList().stream()
                 .filter(batch -> batch.getSection().getWarehouse().equals(warehouse))
@@ -130,6 +133,33 @@ public class ProductService implements IProductService {
 
         return productRepository.saveAndFlush(productUpdated);
 
+    }
+
+    public List<WarehouseProductInfo> countProductInWarehouse(Integer productId) {
+        List<Warehouse> warehouseList = warehouseService.findAll();
+
+        List<WarehouseProductInfo> warehouseProductInfoList = new ArrayList<>();
+
+        warehouseList.stream().forEach(warehouse -> {
+            Integer quantityProduct = warehouse.getSectionSet().stream().mapToInt(section -> {
+                return section.getBatchList().stream().mapToInt(batch -> {
+                    if (batch.getProduct().getId().equals(productId)) {
+                        return batch.getCurrentQuantity();
+                    }
+                    return 0;
+                }).sum();
+            }).sum();
+
+            if (quantityProduct > 0) {
+                warehouseProductInfoList.add(new WarehouseProductInfo(productId, warehouse, quantityProduct));
+            }
+        });
+
+        if (warehouseProductInfoList.size() > 0) {
+            return warehouseProductInfoList;
+        } else {
+            throw new NotFoundException("O produto não foi encontrado em nenhum armazem!");
+        }
     }
 
 }
