@@ -1,6 +1,5 @@
 package br.com.meli.wave4.services;
 
-import br.com.meli.wave4.DTO.BatchDTO;
 import br.com.meli.wave4.DTO.BatchSimpleResponseDTO;
 import br.com.meli.wave4.DTO.ListProductWithAllBatchDTO;
 import br.com.meli.wave4.entities.*;
@@ -9,14 +8,11 @@ import br.com.meli.wave4.exceptions.InsufficientStockException;
 import br.com.meli.wave4.exceptions.NotFoundException;
 import br.com.meli.wave4.repositories.ProductRepository;
 import br.com.meli.wave4.services.iservices.IProductService;
-import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,7 +60,7 @@ public class ProductService implements IProductService {
 
     @Override
     public boolean verifyIfDueDateLessThan3Weeks(Product product) {
-        if(product.getDateValid().isBefore(LocalDate.now().plusDays(20)))
+        if(product.getDateValid().isAfter(LocalDate.now().plusDays(20)))
             return false;
         throw new DueDateLessThan3WeeksException();
     }
@@ -130,8 +126,8 @@ public class ProductService implements IProductService {
         return batchSimpleResponseDTOList;
     }
     @Override
-    public void save(Product product) {
-        productRepository.save(product);
+    public Product save(Product product) {
+        return productRepository.save(product);
     }
 
     @Override

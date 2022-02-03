@@ -27,7 +27,6 @@ public class WarehouseService implements IWarehouseService {
 
 
     @Override
-
     public Boolean verifyWarehouse(Integer id) {
         Warehouse warehouse = this.findById(id);
         if (warehouse == null) {

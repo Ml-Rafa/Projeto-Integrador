@@ -30,7 +30,7 @@ public interface IProductService {
 
     public List<BatchSimpleResponseDTO> orderByDueDate(List<BatchSimpleResponseDTO> batchSimpleResponseDTOList);
 
-    public void save(Product product);
+    public Product save(Product product);
 
     public Product update(Product product);
 
