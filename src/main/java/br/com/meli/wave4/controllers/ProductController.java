@@ -1,7 +1,10 @@
 package br.com.meli.wave4.controllers;
 
+import br.com.meli.wave4.DTO.ProductNearExpireDateDTO;
 import br.com.meli.wave4.entities.Product;
+import br.com.meli.wave4.entities.ProductNearExpireDate;
 import br.com.meli.wave4.entities.Warehouse;
+import br.com.meli.wave4.exceptions.NotFoundException;
 import br.com.meli.wave4.services.ProductService;
 import br.com.meli.wave4.services.PurchaseOrderService;
 import br.com.meli.wave4.services.WarehouseService;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/fresh-products")
@@ -49,4 +53,17 @@ public class ProductController {
         return ResponseEntity.ok(productService.countProductInWarehouse(productId));
     }
 
+    //teste getProductsNearOfExpiraionDate, depois deve ser modificar p/ atender o requisito de filtros da us5
+    @GetMapping("/expiration-date/{days}")
+    public ResponseEntity<?> getProductsNearOfExpirationDate(@PathVariable Integer days){
+        if (!days.equals(0)){
+            List<ProductNearExpireDateDTO> productList = productService.getProductsNearOfExpiraionDate(days).stream()
+                    .map(ProductNearExpireDateDTO::convertToDTO)
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.ok(productList);
+        } else{
+            throw new NotFoundException("Não é possível realizar busca com esse valor!");
+        }
+    }
 }

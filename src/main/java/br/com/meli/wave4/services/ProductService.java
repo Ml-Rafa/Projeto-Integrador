@@ -2,6 +2,7 @@ package br.com.meli.wave4.services;
 
 import br.com.meli.wave4.DTO.BatchSimpleResponseDTO;
 import br.com.meli.wave4.DTO.ListProductWithAllBatchDTO;
+import br.com.meli.wave4.entities.ProductNearExpireDate;
 import br.com.meli.wave4.entities.*;
 import br.com.meli.wave4.exceptions.DueDateLessThan3WeeksException;
 import br.com.meli.wave4.exceptions.InsufficientStockException;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 public class ProductService implements IProductService {
@@ -42,7 +45,6 @@ public class ProductService implements IProductService {
     @Override
     public List<Product> findAllByCategory(TypeRefrigeration type) {
         return productRepository.findAllBySectionTypeRefrigerated(type);
-
     }
 
     @Override
@@ -146,7 +148,6 @@ public class ProductService implements IProductService {
     @Override
     public List<WarehouseProductInfo> countProductInWarehouse(Integer productId) {
         List<Warehouse> warehouseList = this.warehouseService.findAll();
-
         List<WarehouseProductInfo> warehouseProductInfoList = new ArrayList<>();
 
         warehouseList.stream().forEach(warehouse -> {
@@ -171,4 +172,31 @@ public class ProductService implements IProductService {
         }
     }
 
+    public List<ProductNearExpireDate> getProductsNearOfExpiraionDate(Integer days) {
+        List<Warehouse> warehouseList = this.warehouseService.findAll();
+        List<ProductNearExpireDate> productNearExpireDateList = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+
+        warehouseList.forEach(w -> w.getSectionSet().forEach(s -> {
+            s.getBatchList().forEach(batch -> {
+                if (DAYS.between(today, batch.getDueDate()) <= days) {
+                    LocalDate dueDate = batch.getDueDate();
+                    productNearExpireDateList.add(
+                            new ProductNearExpireDate(
+                                    batch.getBatchNumber(),
+                                    batch.getProduct().getId(),
+                                    batch.getProduct().getSectionTypeRefrigerated().getCode(),
+                                    batch.getCurrentQuantity(),
+                                    dueDate
+                            )
+                    );
+                }
+            });
+        }));
+        if (productNearExpireDateList.size() > 0) {
+            return productNearExpireDateList;
+        } else {
+            throw new NotFoundException("Não foram encntrados produtos neste período!");
+        }
+    }
 }
