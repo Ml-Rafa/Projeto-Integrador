@@ -4,6 +4,8 @@ import br.com.meli.wave4.DTO.BatchDTO;
 import br.com.meli.wave4.DTO.BatchSimpleResponseDTO;
 import br.com.meli.wave4.DTO.ListProductWithAllBatchDTO;
 import br.com.meli.wave4.entities.*;
+import br.com.meli.wave4.exceptions.DueDateLessThan3WeeksException;
+import br.com.meli.wave4.exceptions.InsufficientStockException;
 import br.com.meli.wave4.exceptions.NotFoundException;
 import br.com.meli.wave4.repositories.ProductRepository;
 import br.com.meli.wave4.services.iservices.IProductService;
@@ -11,6 +13,7 @@ import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +32,10 @@ public class ProductService implements IProductService {
 
     @Override
     public Product findById(Integer productId) {
-        return productRepository.findById(productId).orElse(new Product());
+        Product product = productRepository.findById(productId).orElse(null);
+        if(product == null)
+            throw  new NotFoundException("Produto não localizado");
+        return product;
     }
 
     @Override
@@ -40,103 +46,98 @@ public class ProductService implements IProductService {
     @Override
     public List<Product> findAllByCategory(TypeRefrigeration type) {
         return productRepository.findAllBySectionTypeRefrigerated(type);
+
     }
 
     @Override
     public Boolean verifyStock(Integer productId, Integer quantity, Integer sectionCode) {
         Product product = this.productRepository.findById(productId).orElse(null);
-
+        assert product != null;
         Batch batch = product.getBatchList()
                 .stream().filter(b -> b.getSection().getSectionCode().equals(sectionCode))
                 .findFirst().orElse(null);
-
-        return batch.getCurrentQuantity() >= quantity;
-
+        assert batch != null;
+        if(batch.getCurrentQuantity() < quantity)
+           throw new InsufficientStockException();
+       return true;
     }
 
+    @Override
     public boolean verifyIfDueDateLessThan3Weeks(Product product) {
-        return product.getDateValid().isBefore(LocalDate.now().minusDays(20));
+        if(product.getDateValid().isBefore(LocalDate.now().plusDays(20)))
+            return false;
+        throw new DueDateLessThan3WeeksException(); //"o prazo de validade do produto é inferior a 3 semanas";
     }
 
-//    public List<BatchSimpleResponseDTO> sortByCurrentQuantity(List<BatchSimpleResponseDTO> batchList){
-//        batchList.sort((a, b) -> b.getCurrentQuantity().compareTo(a.getCurrentQuantity()));
-//        return batchList;
-//    }
-//   public ListProductWithAllBatchDTO filterProductInWarehouseOrdered(Warehouse warehouse, Product product,
-//                                                                     Character charOrdered){
-//
-//        List<Batch> batchList = product.getBatchList().stream()
-//                .filter(batch -> batch.getSection().getWarehouse().equals(warehouse))
-//                .collect(Collectors.toList());
-//
-//        List<BatchSimpleResponseDTO> batchSimpleResponseDTOList = batchList.stream()
-//                .map(batch -> BatchSimpleResponseDTO.builder()
-//                        .batchNumber(batch.getBatchNumber())
-//                        .currentQuantity(batch.getCurrentQuantity())
-//                        .dueDate(batch.getDueDate())
-//                        .build()
-//                ).collect(Collectors.toList());
-//
-//        List<BatchSimpleResponseDTO> sortedList;
-//        switch (charOrdered){
-//            case 'C':
-//            case 'c': sortedList = sortByCurrentQuantity(batchSimpleResponseDTOList);
-//                    break;
-//            default:
-//                throw new IllegalStateException("Unexpected value: " + charOrdered);
-//        }
-//
-//        return ListProductWithAllBatchDTO.builder()
-//                .sectionCode(batchList.get(0).getSection().getSectionCode())
-//                .warehouseCode(batchList.get(0).getSection().getWarehouse().getId())
-//                .productId(product.getId())
-//                .batchStock(sortedList).build();
-//    }
+    @Override
+   public ListProductWithAllBatchDTO filterProductInWarehouse(Warehouse warehouse, Product product,
+                                                                     Character charOrdered){
 
-    public ListProductWithAllBatchDTO filterProductInWarehouse(Warehouse warehouse, Product product) {
+       List<Batch> batchList = getBatchListInSpecificWarehouse(warehouse, product);
 
-        List<Batch> batchList = product.getBatchList().stream()
+       List<BatchSimpleResponseDTO> batchSimpleResponseDTOList = getBatchSimpleResponseDTOS(batchList);
+
+       List<BatchSimpleResponseDTO> sortedList;
+        switch (charOrdered){
+            case 'L': case 'l':sortedList = orderByBatchNumber(batchSimpleResponseDTOList);
+                break;
+            case 'C': case 'c': sortedList = orderByCurrentQuantity(batchSimpleResponseDTOList);
+                break;
+            case 'F': case 'f': sortedList = orderByDueDate(batchSimpleResponseDTOList);
+                break;
+            default:
+                sortedList = batchSimpleResponseDTOList;
+        }
+
+        return ListProductWithAllBatchDTO.builder()
+                .sectionCode(batchList.get(0).getSection().getSectionCode())
+                .warehouseCode(batchList.get(0).getSection().getWarehouse().getId())
+                .productId(product.getId())
+                .batchStock(sortedList).build();
+    }
+    @Override
+    public List<Batch> getBatchListInSpecificWarehouse(Warehouse warehouse, Product product) {
+        return product.getBatchList().stream()
                 .filter(batch -> batch.getSection().getWarehouse().equals(warehouse))
                 .collect(Collectors.toList());
-
-        List<BatchSimpleResponseDTO> batchSimpleResponseDTOList = batchList.stream()
+    }
+    @Override
+    public List<BatchSimpleResponseDTO> getBatchSimpleResponseDTOS(List<Batch> batchList) {
+        return batchList.stream()
                 .map(batch -> BatchSimpleResponseDTO.builder()
                         .batchNumber(batch.getBatchNumber())
                         .currentQuantity(batch.getCurrentQuantity())
                         .dueDate(batch.getDueDate())
                         .build()
                 ).collect(Collectors.toList());
-
-        return ListProductWithAllBatchDTO.builder()
-                .sectionCode(batchList.get(0).getSection().getSectionCode())
-                .warehouseCode(batchList.get(0).getSection().getWarehouse().getId())
-                .productId(product.getId())
-                .batchStock(batchSimpleResponseDTOList).build();
     }
 
+    @Override
     public List<BatchSimpleResponseDTO> orderByBatchNumber(List<BatchSimpleResponseDTO> batchSimpleResponseDTOList) {
 
         batchSimpleResponseDTOList.sort(Comparator.comparing(BatchSimpleResponseDTO::getBatchNumber));
 
         return batchSimpleResponseDTOList;
     }
-
+    @Override
     public List<BatchSimpleResponseDTO> orderByCurrentQuantity(List<BatchSimpleResponseDTO> batchSimpleResponseDTOList) {
         batchSimpleResponseDTOList.sort(Comparator.comparing(BatchSimpleResponseDTO::getCurrentQuantity));
         return batchSimpleResponseDTOList;
     }
-
+    @Override
     public List<BatchSimpleResponseDTO> orderByDueDate(List<BatchSimpleResponseDTO> batchSimpleResponseDTOList) {
         batchSimpleResponseDTOList.sort(Comparator.comparing(BatchSimpleResponseDTO::getDueDate));
         return batchSimpleResponseDTOList;
     }
-
+    @Override
     public void save(Product product) {
         productRepository.save(product);
     }
 
+    @Override
     public Product update(Product product) {
         Product productUpdated = productRepository.findById(product.getId()).orElse(null);
+        assert productUpdated != null;
         productUpdated.setPrice(product.getPrice());
         productUpdated.setDateValid(product.getDateValid());
         productUpdated.setSeller(product.getSeller());
@@ -144,9 +145,9 @@ public class ProductService implements IProductService {
         productUpdated.setSectionTypeRefrigerated(product.getSectionTypeRefrigerated());
 
         return productRepository.saveAndFlush(productUpdated);
-
     }
 
+    @Override
     public List<WarehouseProductInfo> countProductInWarehouse(Integer productId) {
         List<Warehouse> warehouseList = warehouseService.findAll();
 

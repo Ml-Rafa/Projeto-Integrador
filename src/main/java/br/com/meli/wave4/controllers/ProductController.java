@@ -32,8 +32,7 @@ public class ProductController {
         if(order != null){
             List<Character> validCharacters = Arrays.asList('L', 'C', 'F', 'l', 'c', 'f');
             if(validCharacters.contains(order))
-                return null;
-//                return ResponseEntity.ok(productService.filterProductInWarehouseOrdered(warehouse, product, order));
+                return ResponseEntity.ok(productService.filterProductInWarehouse(warehouse, product, order));
             else
                 throw new RuntimeException("Letra de ordenação inserida é inválida.\n" +
                         "Letras válidas: " +
@@ -42,7 +41,7 @@ public class ProductController {
                         "\nF = Para obter a lista de lotes do produto no armazém informado, ordenado pela data de validade."
                 );
         }
-        return ResponseEntity.ok(productService.filterProductInWarehouse(warehouse, product));
+        return ResponseEntity.ok(productService.filterProductInWarehouse(warehouse, product, ' '));
     }
 
     @GetMapping("/warehouse/{productId}")
