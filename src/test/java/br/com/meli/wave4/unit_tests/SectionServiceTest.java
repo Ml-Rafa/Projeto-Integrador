@@ -1,4 +1,6 @@
 package br.com.meli.wave4.unit_tests;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 import br.com.meli.wave4.entities.*;
@@ -88,11 +90,61 @@ public class SectionServiceTest {
         );
     }
 
-   @Test
-    void shoudReturnTrue(){
+    @Test
+    public void shouldReturnTrue(){
 
+        Warehouse warehouse = Warehouse.builder().id(10).build();
+
+        Section section = Section.builder().warehouse(warehouse).build();
+
+        when(sectionRepositoryMock.findBySectionCode(any())).thenReturn(java.util.Optional.ofNullable(section));
+
+        assertTrue(this.sectionService.verifySection(any(),10));
 
     }
+
+    @Test
+    public void shouldThrowInvalidSectionException (){
+
+        Warehouse warehouse = Warehouse.builder().id(10).build();
+
+        Section section = Section.builder().warehouse(warehouse).build();
+
+        when(sectionRepositoryMock.findBySectionCode(any())).thenReturn(java.util.Optional.ofNullable(section));
+
+        assertThrows(
+                InvalidSectionException.class, ()->{
+                    this.sectionService.verifySection(any(),1);
+                }
+        );
+    }
+
+
+    @Test
+    public void verifyBatchInSectionTest(){
+
+        Section section = Section.builder().sectionCode(10).build();
+
+        Batch batch = Batch.builder().section( Section.builder().sectionCode(10).build()).build();
+
+        assertTrue(this.sectionService.verifyBatchInSection(batch,section));
+
+    }
+
+    @Test
+    public void verifyBatchInSectionThrowException(){
+
+        Section section = Section.builder().sectionCode(10).build();
+
+        Batch batch = Batch.builder().section( Section.builder().sectionCode(9).build()).build();
+
+        assertThrows(
+                InvalidSectionException.class, ()->{
+                    this.sectionService.verifyBatchInSection(batch,section);
+                });
+    }
+
+
 
 
 }

@@ -1,5 +1,6 @@
 package br.com.meli.wave4.services.iservices;
 
+import br.com.meli.wave4.entities.Batch;
 import br.com.meli.wave4.entities.Section;
 
 public interface ISectionService {
@@ -8,4 +9,6 @@ public interface ISectionService {
     Integer getTotalProductsInSection(Section section);
 
     boolean verifySection(Integer sectionCode, Integer warehouseId);
+
+    boolean verifyBatchInSection(Batch batch, Section section);
 }

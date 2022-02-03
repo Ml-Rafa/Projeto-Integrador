@@ -38,7 +38,7 @@ public class SectionService implements ISectionService {
         throw new InvalidSectionException();
     }
 
-    // valida se um lote(batch) é de determinado setor(section)
+    @Override
     public boolean verifyBatchInSection(Batch batch, Section section) {
         Integer batchSectionCode = batch.getSection().getSectionCode();
 
