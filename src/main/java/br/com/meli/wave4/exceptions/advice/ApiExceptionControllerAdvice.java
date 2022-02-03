@@ -34,7 +34,7 @@ public class ApiExceptionControllerAdvice {
     @ExceptionHandler(InvalidWarehouseException.class)
     public ResponseEntity<StandardError> invalidWarehouse(InvalidWarehouseException e, HttpServletRequest request) {
         StandardError err = new StandardError(System.currentTimeMillis(),
-                HttpStatus.BAD_REQUEST.value(), "Invalid Warehouse", "Armazém inválido", request.getRequestURI());
+                HttpStatus.BAD_REQUEST.value(), "Invalid Warehouse", "O armazem informado não existe!", request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
     @ExceptionHandler(SectionNotMatchTypeProductException.class)

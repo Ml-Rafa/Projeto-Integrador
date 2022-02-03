@@ -34,7 +34,7 @@ public class InboundOrderController {
         inboundOrder.setOrderNumber(id);
 
         InboundOrder entity = this.inboundOrderService.convertToEntity(inboundOrder);
-        inboundOrderService.updateById(entity);
+        inboundOrderService.update(entity);
         return ResponseEntity.status(201).body(InboundOrderDTO.convertToDTO(entity));
     }
 

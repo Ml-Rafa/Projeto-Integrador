@@ -2,10 +2,10 @@ package br.com.meli.wave4.services;
 
 import br.com.meli.wave4.DTO.BatchDTO;
 import br.com.meli.wave4.entities.Batch;
-import br.com.meli.wave4.entities.InboundOrder;
 import br.com.meli.wave4.entities.Product;
+import br.com.meli.wave4.exceptions.BatchNotContainsProductException;
+import br.com.meli.wave4.exceptions.NotFoundException;
 import br.com.meli.wave4.repositories.BatchRepository;
-import br.com.meli.wave4.repositories.ProductRepository;
 import br.com.meli.wave4.services.iservices.IBatchService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,7 @@ public class BatchService implements IBatchService {
 
     @Autowired
     private ProductService productService;
+
     @Autowired
     private RepresentativeService representativeService;
 
@@ -32,7 +33,10 @@ public class BatchService implements IBatchService {
 
     @Override
     public Batch findByBatchNumber(Integer batchNumber) {
-        return batchRepository.findByBatchNumber(batchNumber).orElse(new Batch());
+        Batch batch = batchRepository.findByBatchNumber(batchNumber);
+        if(batch == null)
+            throw new NotFoundException("Não foi localizado nenhum lote com o número informado.");
+        return batch;
     }
 
     @Override
@@ -62,7 +66,8 @@ public class BatchService implements IBatchService {
                 .build();
     }
 
-    public Batch update(Batch batch) {
+    @Override
+    public void update(Batch batch) {
         Batch batchUpdated = batchRepository.findById(batch.getBatchNumber()).orElse(new Batch());
         batchUpdated.setInboundOrder(batch.getInboundOrder());
         batchUpdated.setBatchNumber(batch.getBatchNumber());
@@ -76,27 +81,27 @@ public class BatchService implements IBatchService {
         batchUpdated.setManufacturingTime(batch.getManufacturingTime());
         batchUpdated.setMinimumTemperature(batch.getMinimumTemperature());
         batchUpdated.setProduct(batch.getProduct());
-        return batchRepository.saveAndFlush(batchUpdated);
+        batchRepository.saveAndFlush(batchUpdated);
     }
 
+    @Override
     public boolean verifyBatchContainsProduct(Batch batch, Product product) {
         Batch batch1 = product.getBatchList().stream()
                 .filter(b -> b.getBatchNumber().equals(batch.getBatchNumber()))
                 .findFirst().orElse(null);
-        return batch != null;
+        if(batch1 == null)
+            throw new BatchNotContainsProductException();
+        return true;
     }
 
-    public Batch updateStock(Integer productId, Integer quantity, Integer sectionCode) {
+    @Override
+    public void updateStock(Integer productId, Integer quantity, Integer sectionCode) {
         Product product = this.productService.findById(productId);
-
-
         Batch batch = product.getBatchList()
                 .stream().filter(b -> b.getSection().getSectionCode().equals(sectionCode))
                 .findFirst().orElse(null);
-
+        assert batch != null;
         batch.setCurrentQuantity(batch.getCurrentQuantity() - quantity);
-
-        return batch;
     }
 
 }

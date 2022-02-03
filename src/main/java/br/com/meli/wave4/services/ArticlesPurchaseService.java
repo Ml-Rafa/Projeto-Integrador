@@ -22,15 +22,11 @@ public class ArticlesPurchaseService implements IArticlesPurchaseService {
                    .getPrice()
                    .multiply(new BigDecimal(articlesPurchase.getQuantity()))
         ).reduce(BigDecimal.ZERO, BigDecimal::add);
-
     }
 
     public Set<ArticlesPurchaseDTO> convertToDTO(Set<ArticlesPurchase> articlesPurchase){
-
         Set<ArticlesPurchaseDTO> articlesPurchaseDTOSet = new HashSet<>();
-
         for(ArticlesPurchase a : articlesPurchase){
-
             articlesPurchaseDTOSet.add(
                 ArticlesPurchaseDTO.builder()
                         .product(a.getProduct().getId())
@@ -39,16 +35,12 @@ public class ArticlesPurchaseService implements IArticlesPurchaseService {
                         .build()
             );
         }
-
         return articlesPurchaseDTOSet;
     }
 
     public Set<ArticlesPurchase> convertToEntity(Set<ArticlesPurchaseDTO> articlesPurchaseDTO){
-
         Set<ArticlesPurchase> articlesPurchases = new HashSet<>();
-
         for(ArticlesPurchaseDTO a : articlesPurchaseDTO){
-
             articlesPurchases.add(
                     ArticlesPurchase.builder()
                     .product(this.productService.findById(a.getProduct()))
@@ -56,9 +48,7 @@ public class ArticlesPurchaseService implements IArticlesPurchaseService {
                     .batchCode(a.getBatchCode())
                     .build()
             );
-
         }
-
         return articlesPurchases;
     }
 }
