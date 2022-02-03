@@ -98,6 +98,10 @@ public class ProductServiceTest {
         assertThrows(InsufficientStockException.class,
                 ()-> this.productService.verifyStock(123,100,5));
 
+        when(this.productRepository.findById(any())).thenReturn(java.util.Optional.ofNullable(null));
+        assertThrows(AssertionError.class, ()-> this.productService.verifyStock(123,100,5));
+
+
     }
 
     @Test
@@ -253,7 +257,6 @@ public class ProductServiceTest {
         assertNotNull(this.productService.filterProductInWarehouse(this.warehouse,this.product,'F'));
         assertNotNull(this.productService.filterProductInWarehouse(this.warehouse,this.product,'F'));
         assertNotNull(this.productService.filterProductInWarehouse(this.warehouse,this.product,'A'));
-
 
     }
 
