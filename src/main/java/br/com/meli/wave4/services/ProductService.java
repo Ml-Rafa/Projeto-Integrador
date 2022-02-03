@@ -145,7 +145,7 @@ public class ProductService implements IProductService {
 
     @Override
     public List<WarehouseProductInfo> countProductInWarehouse(Integer productId) {
-        List<Warehouse> warehouseList = warehouseService.findAll();
+        List<Warehouse> warehouseList = this.warehouseService.findAll();
 
         List<WarehouseProductInfo> warehouseProductInfoList = new ArrayList<>();
 

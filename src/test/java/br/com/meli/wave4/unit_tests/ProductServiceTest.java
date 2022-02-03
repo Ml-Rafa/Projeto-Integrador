@@ -7,6 +7,7 @@ import br.com.meli.wave4.exceptions.InsufficientStockException;
 import br.com.meli.wave4.exceptions.NotFoundException;
 import br.com.meli.wave4.repositories.ProductRepository;
 import br.com.meli.wave4.services.ProductService;
+import br.com.meli.wave4.services.WarehouseService;
 import br.com.meli.wave4.services.iservices.IProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,10 +21,7 @@ import static org.mockito.Mockito.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class ProductServiceTest {
 
@@ -34,19 +32,22 @@ public class ProductServiceTest {
     @Mock
     ProductRepository productRepository;
 
-    Product product = null;
+    @Mock
+    WarehouseService warehouseService;
+
+    Product product;
 
     List<Batch> batchList = new ArrayList<>();
 
-    Section section = null ;
+    Section section;
 
-    Warehouse warehouse = null;
+    Warehouse warehouse;
 
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
 
-        this.warehouse = Warehouse.builder().build();
+        this.warehouse = Warehouse.builder().id(10).build();
 
         this.section = Section
                 .builder()
@@ -74,6 +75,9 @@ public class ProductServiceTest {
                         .price(new BigDecimal(20))
                         .batchList(this.batchList)
                         .build();
+
+        this.batchList.get(0).setProduct(this.product);
+        this.section.setBatchList(this.batchList);
     }
 
 
@@ -154,6 +158,11 @@ public class ProductServiceTest {
         when(this.productRepository.saveAndFlush(any())).thenReturn(p);
 
         assertEquals(p.getId(),this.productService.update(this.product).getId());
+
+        when(this.productRepository.findById(any())).thenReturn(java.util.Optional.ofNullable(null));
+        assertThrows(AssertionError.class,()->this.productService.update(this.product).getId());
+
+
     }
 
     @Test
@@ -195,5 +204,57 @@ public class ProductServiceTest {
 
     }
 
+    @Test
+    public void getBatchSimpleResponseDTOS(){
+
+        List<Batch> batchList = new LinkedList<>();
+
+        batchList.add(Batch.builder().batchNumber(123).currentQuantity(50).dueDate(LocalDate.now()).build());
+        batchList.add( Batch.builder().batchNumber(124).currentQuantity(20).dueDate(LocalDate.now().plusDays(1)).build());
+
+        assertInstanceOf(BatchSimpleResponseDTO.class, this.productService.getBatchSimpleResponseDTOS(batchList).get(0));
+
+    }
+
+    @Test
+    public void getBatchListInSpecificWarehouse(){
+        assertNotNull(this.productService.getBatchListInSpecificWarehouse(this.warehouse,this.product));
+    }
+
+    @Test
+    public void countProductInWarehouse(){
+
+        List<Warehouse>  warehouseList = new ArrayList<>();
+        warehouseList.add(
+                Warehouse.builder()
+                        .id(9)
+                        .sectionSet(Set.of(this.section))
+                        .build());
+        warehouseList.add(
+                Warehouse.builder()
+                        .id(7)
+                        .sectionSet(Set.of(this.section))
+                        .build());
+
+        when(this.warehouseService.findAll()).thenReturn(warehouseList);
+
+        assertNotNull(this.productService.countProductInWarehouse(123));
+        assertThrows(NotFoundException.class,()->this.productService.countProductInWarehouse(432));
+
+    }
+
+    @Test
+    public void filterProductInWarehouse(){
+
+        assertNotNull(this.productService.filterProductInWarehouse(this.warehouse,this.product,'l'));
+        assertNotNull(this.productService.filterProductInWarehouse(this.warehouse,this.product,'L'));
+        assertNotNull(this.productService.filterProductInWarehouse(this.warehouse,this.product,'c'));
+        assertNotNull(this.productService.filterProductInWarehouse(this.warehouse,this.product,'C'));
+        assertNotNull(this.productService.filterProductInWarehouse(this.warehouse,this.product,'F'));
+        assertNotNull(this.productService.filterProductInWarehouse(this.warehouse,this.product,'F'));
+        assertNotNull(this.productService.filterProductInWarehouse(this.warehouse,this.product,'A'));
+
+
+    }
 
 }
