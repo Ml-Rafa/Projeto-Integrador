@@ -30,7 +30,6 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     BatchService batchService;
 
 
-    @Override
     public PurchaseOrderDTO convertToDTO(PurchaseOrder purchaseOrder) {
         return PurchaseOrderDTO.builder()
                 .id(purchaseOrder.getId())
@@ -53,7 +52,7 @@ public class PurchaseOrderService implements IPurchaseOrderService {
                 .build();
     }
 
-
+    @Override
     public PurchaseOrderDTO order(PurchaseOrder purchaseOrder){
 
         Set<ArticlesPurchase> products = new HashSet<>();

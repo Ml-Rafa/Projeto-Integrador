@@ -3,6 +3,7 @@ package br.com.meli.wave4.services;
 import br.com.meli.wave4.entities.Batch;
 import br.com.meli.wave4.entities.Section;
 import br.com.meli.wave4.exceptions.InvalidSectionException;
+import br.com.meli.wave4.exceptions.NotFoundException;
 import br.com.meli.wave4.repositories.SectionRepository;
 import br.com.meli.wave4.services.iservices.ISectionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,10 @@ public class SectionService implements ISectionService {
 
     @Override
     public Section findBySectionCode(Integer sectionCode){
-        return sectionRepository.findBySectionCode(sectionCode).orElse(null);
+        Section section = sectionRepository.findBySectionCode(sectionCode).orElse(null);
+        if(section == null)
+            throw new NotFoundException("Setor não localizado.");
+        return section;
     }
 
     @Override
@@ -31,22 +35,17 @@ public class SectionService implements ISectionService {
     @Override
     public boolean verifySection(Integer sectionCode, Integer warehouseId) {
         Section sectionPersistence = this.findBySectionCode(sectionCode);
-
-        if (sectionPersistence.getWarehouse().getId().equals(warehouseId)) {
+        if (sectionPersistence.getWarehouse().getId().equals(warehouseId))
             return true;
-        }
         throw new InvalidSectionException();
     }
 
     @Override
     public boolean verifyBatchInSection(Batch batch, Section section) {
         Integer batchSectionCode = batch.getSection().getSectionCode();
-
         Integer sectionCode = section.getSectionCode();
-
-        if(batchSectionCode.equals(sectionCode)) {
+        if(batchSectionCode.equals(sectionCode))
             return true;
-        }
         throw new InvalidSectionException();
     }
 }

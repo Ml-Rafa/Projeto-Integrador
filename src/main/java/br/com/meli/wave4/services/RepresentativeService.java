@@ -24,17 +24,16 @@ public class RepresentativeService implements IRepresentativeService {
         if (representativeId.equals(representative.getId())){
             return true;
         } else{
-            throw new RepresentativeNotCorrespondentException("O representante do lote não corresponde ao representante do warehouse!");
+            throw new RepresentativeNotCorrespondentException();
         }
     }
 
+    @Override
     public Boolean checkRepresentativeOfWarehouse(Warehouse warehouse, Representative representative){
         if (representative.getWarehouse().getId().equals(warehouse.getId())){
             return true;
         } else {
-            throw new RepresentativeNotCorrespondentException("O representante não corresponde ao representante do warehouse!");
+            throw new RepresentativeNotCorrespondentException();
         }
-
     }
-
 }

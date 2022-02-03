@@ -4,5 +4,5 @@ import br.com.meli.wave4.entities.Seller;
 
 public interface ISellerService {
 
-    Boolean verifyProducOfSeller(Seller seller, Integer productId);
+    Boolean verifyProductOfSeller(Seller seller, Integer productId);
 }

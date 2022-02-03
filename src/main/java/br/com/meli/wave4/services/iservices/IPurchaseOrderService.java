@@ -4,5 +4,7 @@ import br.com.meli.wave4.DTO.PurchaseOrderDTO;
 import br.com.meli.wave4.entities.PurchaseOrder;
 
 public interface IPurchaseOrderService {
-    PurchaseOrderDTO convertToDTO(PurchaseOrder purchaseOrder);
+
+
+    public PurchaseOrderDTO order(PurchaseOrder purchaseOrder);
 }

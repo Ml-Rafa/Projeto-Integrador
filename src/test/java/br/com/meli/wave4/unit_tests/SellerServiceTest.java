@@ -32,7 +32,7 @@ public class SellerServiceTest {
         Seller seller = new Seller();
         seller.setProductList(productList);
 
-        assertTrue(this.sellerService.verifyProducOfSeller(seller,123));
+        assertTrue(this.sellerService.verifyProductOfSeller(seller,123));
 
     }
 
@@ -45,7 +45,7 @@ public class SellerServiceTest {
         Seller seller = new Seller();
         seller.setProductList(productList);
 
-        assertFalse(this.sellerService.verifyProducOfSeller(seller,1234));
+        assertFalse(this.sellerService.verifyProductOfSeller(seller,1234));
 
     }
 }
