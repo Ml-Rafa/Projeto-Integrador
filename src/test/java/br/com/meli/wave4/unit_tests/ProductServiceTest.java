@@ -1,5 +1,6 @@
 package br.com.meli.wave4.unit_tests;
 
+import br.com.meli.wave4.DTO.BatchSimpleResponseDTO;
 import br.com.meli.wave4.entities.*;
 import br.com.meli.wave4.exceptions.DueDateLessThan3WeeksException;
 import br.com.meli.wave4.exceptions.InsufficientStockException;
@@ -21,6 +22,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ProductServiceTest {
@@ -153,4 +155,45 @@ public class ProductServiceTest {
 
         assertEquals(p.getId(),this.productService.update(this.product).getId());
     }
+
+    @Test
+    public void orderByCurrentQuantity(){
+        List<BatchSimpleResponseDTO> batchSimpleResponseDTOS = new LinkedList<>();
+        batchSimpleResponseDTOS.add(BatchSimpleResponseDTO.builder().batchNumber(123).currentQuantity(10).build());
+        batchSimpleResponseDTOS.add(BatchSimpleResponseDTO.builder().batchNumber(321).currentQuantity(8).build());
+
+        assertEquals(8,
+                this.productService.orderByCurrentQuantity(batchSimpleResponseDTOS).get(0).getCurrentQuantity());
+        assertEquals(10,
+                this.productService.orderByCurrentQuantity(batchSimpleResponseDTOS).get(1).getCurrentQuantity());
+    }
+
+    @Test
+    public void orderByDueDate(){
+
+        List<BatchSimpleResponseDTO> batchSimpleResponseDTOS = new LinkedList<>();
+        batchSimpleResponseDTOS.add(BatchSimpleResponseDTO.builder().dueDate(LocalDate.now().plusDays(10)).build());
+        batchSimpleResponseDTOS.add(BatchSimpleResponseDTO.builder().dueDate(LocalDate.now()).build());
+
+        assertEquals(LocalDate.now(),
+                this.productService.orderByDueDate(batchSimpleResponseDTOS).get(0).getDueDate());
+        assertEquals(LocalDate.now().plusDays(10),
+                this.productService.orderByDueDate(batchSimpleResponseDTOS).get(1).getDueDate());
+
+    }
+
+    @Test
+    public void orderByBatchNumber(){
+        List<BatchSimpleResponseDTO> batchSimpleResponseDTOS = new LinkedList<>();
+        batchSimpleResponseDTOS.add(BatchSimpleResponseDTO.builder().batchNumber(321).build());
+        batchSimpleResponseDTOS.add(BatchSimpleResponseDTO.builder().batchNumber(123).build());
+
+        assertEquals(123,
+                this.productService.orderByBatchNumber(batchSimpleResponseDTOS).get(0).getBatchNumber());
+        assertEquals(321,
+                this.productService.orderByBatchNumber(batchSimpleResponseDTOS).get(1).getBatchNumber());
+
+    }
+
+
 }
