@@ -67,5 +67,31 @@ public class ApiExceptionControllerAdvice {
                 HttpStatus.BAD_REQUEST.value(), "Not Found Error", e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
+    @ExceptionHandler(DueDateLessThan3WeeksException.class)
+    public ResponseEntity<StandardError> dueDateLessThan3WeeksException(DueDateLessThan3WeeksException e, HttpServletRequest request) {
+        StandardError err = new StandardError(System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(), "Due Date Less Than 3 Weeks Error", "O prazo de validade do produto é inferior a 3 semanas.", request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
+    @ExceptionHandler(ProductDoesNotBelongToTheSellerException.class)
+    public ResponseEntity<StandardError> productDoesNotBelongToTheSellerException(ProductDoesNotBelongToTheSellerException e, HttpServletRequest request) {
+        StandardError err = new StandardError(System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(), "Product Does Not Belong To The Seller Error", "O produto informado não está registrado em nome do vendedor.", request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
 
+    @ExceptionHandler(InsufficientStockException.class)
+    public ResponseEntity<StandardError> insufficientStockException(InsufficientStockException e, HttpServletRequest request) {
+        StandardError err = new StandardError(System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(), "Insufficient Stock Error", "Não há estoque disponível.", request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
+
+
+    @ExceptionHandler(BatchNotContainsProductException.class)
+    public ResponseEntity<StandardError> batchNotContainsProductException(BatchNotContainsProductException e, HttpServletRequest request) {
+        StandardError err = new StandardError(System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(), "Batch Not Contains Product Error", "O Lote não pertence ao produto informado.", request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
 }

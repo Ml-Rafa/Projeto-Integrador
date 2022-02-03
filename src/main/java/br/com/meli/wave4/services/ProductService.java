@@ -66,7 +66,7 @@ public class ProductService implements IProductService {
     public boolean verifyIfDueDateLessThan3Weeks(Product product) {
         if(product.getDateValid().isBefore(LocalDate.now().plusDays(20)))
             return false;
-        throw new DueDateLessThan3WeeksException(); //"o prazo de validade do produto é inferior a 3 semanas";
+        throw new DueDateLessThan3WeeksException();
     }
 
     @Override
