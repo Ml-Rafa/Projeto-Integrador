@@ -58,28 +58,40 @@ public class ProductService implements IProductService {
         return product.getDateValid().isBefore(LocalDate.now().minusDays(20));
     }
 
-
-    public ListProductWithAllBatchDTO filterProductInWarehouseOrdered(Warehouse warehouse, Product product,
-                                                                      Character charOrdered) {
-
-        List<Batch> batchList = product.getBatchList().stream()
-                .filter(batch -> batch.getSection().getWarehouse().equals(warehouse))
-                .collect(Collectors.toList());
-
-        List<BatchSimpleResponseDTO> batchSimpleResponseDTOList = batchList.stream()
-                .map(batch -> BatchSimpleResponseDTO.builder()
-                        .batchNumber(batch.getBatchNumber())
-                        .currentQuantity(batch.getCurrentQuantity())
-                        .dueDate(batch.getDueDate())
-                        .build()
-                ).collect(Collectors.toList());
-
-        return ListProductWithAllBatchDTO.builder()
-                .sectionCode(batchList.get(0).getSection().getSectionCode())
-                .warehouseCode(batchList.get(0).getSection().getWarehouse().getId())
-                .productId(product.getId())
-                .batchStock(batchSimpleResponseDTOList).build();
-    }
+//    public List<BatchSimpleResponseDTO> sortByCurrentQuantity(List<BatchSimpleResponseDTO> batchList){
+//        batchList.sort((a, b) -> b.getCurrentQuantity().compareTo(a.getCurrentQuantity()));
+//        return batchList;
+//    }
+//   public ListProductWithAllBatchDTO filterProductInWarehouseOrdered(Warehouse warehouse, Product product,
+//                                                                     Character charOrdered){
+//
+//        List<Batch> batchList = product.getBatchList().stream()
+//                .filter(batch -> batch.getSection().getWarehouse().equals(warehouse))
+//                .collect(Collectors.toList());
+//
+//        List<BatchSimpleResponseDTO> batchSimpleResponseDTOList = batchList.stream()
+//                .map(batch -> BatchSimpleResponseDTO.builder()
+//                        .batchNumber(batch.getBatchNumber())
+//                        .currentQuantity(batch.getCurrentQuantity())
+//                        .dueDate(batch.getDueDate())
+//                        .build()
+//                ).collect(Collectors.toList());
+//
+//        List<BatchSimpleResponseDTO> sortedList;
+//        switch (charOrdered){
+//            case 'C':
+//            case 'c': sortedList = sortByCurrentQuantity(batchSimpleResponseDTOList);
+//                    break;
+//            default:
+//                throw new IllegalStateException("Unexpected value: " + charOrdered);
+//        }
+//
+//        return ListProductWithAllBatchDTO.builder()
+//                .sectionCode(batchList.get(0).getSection().getSectionCode())
+//                .warehouseCode(batchList.get(0).getSection().getWarehouse().getId())
+//                .productId(product.getId())
+//                .batchStock(sortedList).build();
+//    }
 
     public ListProductWithAllBatchDTO filterProductInWarehouse(Warehouse warehouse, Product product) {
 

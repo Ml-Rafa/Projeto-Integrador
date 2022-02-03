@@ -1,8 +1,6 @@
 package br.com.meli.wave4.services.iservices;
 
-import br.com.meli.wave4.entities.Batch;
-import br.com.meli.wave4.entities.InboundOrder;
-import br.com.meli.wave4.entities.Section;
+import br.com.meli.wave4.entities.*;
 
 import java.util.List;
 
@@ -17,13 +15,21 @@ public interface IInboundOrderService {
 
     Boolean verifyAvailableArea(Integer quantityRequired, Section section);
 
-    InboundOrder saveInboundOrder(InboundOrder inboundOrder);
-
-    InboundOrder updateById(InboundOrder inboundOrder);
+    InboundOrder update(InboundOrder inboundOrder);
 
     void registerBatch(List<Batch> batch, InboundOrder inboundOrder);
 
     void registerBatch(Batch batch);
 
+    void checkSectionOfWarehouse(Warehouse warehouse, Section section);
+
+    Warehouse getWarehouse(InboundOrder inboundOrder);
+
     InboundOrder create(InboundOrder inboundOrder);
+
+    Section getSection(InboundOrder inboundOrder);
+
+    Representative getRepresentative(Batch batch);
+
+    InboundOrder findyById(Integer inboundOrderID);
 }

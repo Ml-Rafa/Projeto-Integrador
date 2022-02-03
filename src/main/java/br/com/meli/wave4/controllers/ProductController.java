@@ -30,15 +30,16 @@ public class ProductController {
         Warehouse warehouse = warehouseService.findById(warehouseId);
         Product product = productService.findById(productId);
         if(order != null){
-            List<Character> validCharacters = Arrays.asList('L', 'C', 'F');
+            List<Character> validCharacters = Arrays.asList('L', 'C', 'F', 'l', 'c', 'f');
             if(validCharacters.contains(order))
-                return ResponseEntity.ok(productService.filterProductInWarehouseOrdered(warehouse, product, order));
+                return null;
+//                return ResponseEntity.ok(productService.filterProductInWarehouseOrdered(warehouse, product, order));
             else
                 throw new RuntimeException("Letra de ordenação inserida é inválida.\n" +
                         "Letras válidas: " +
                         "\n\nL = Para obter a lista de lotes do produto no armazém informado, ordenado pelo número do lote;" +
                         "\nC = Para obter a lista de lotes do produto no armazém informado, ordenado pela quantidade em atual estoque;" +
-                        "\nF = Para obter a lista de lotes do produto no armazém informado, ordenado pela data de validade;"
+                        "\nF = Para obter a lista de lotes do produto no armazém informado, ordenado pela data de validade."
                 );
         }
         return ResponseEntity.ok(productService.filterProductInWarehouse(warehouse, product));

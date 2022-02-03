@@ -72,35 +72,12 @@ public class InboundOrderService implements IInboundOrderService {
         if (total <= section.getMaxCapacity()) {
             return true;
         } else {
-            throw new UnavailableSpaceException("Não há espaço suficiente disponível");
+            throw new UnavailableSpaceException(); //"Não há espaço suficiente disponível"
         }
     }
 
     @Override
-    public InboundOrder saveInboundOrder(InboundOrder inboundOrder) {
-
-        try {
-            System.out.println();
-            warehouseService.verifyWarehouse(inboundOrder.getSection().getWarehouse().getId());
-//            inboundOrder.getBatchStock().forEach(el ->
-//                    checkProductSection(inboundOrder.getSection().getSectionCode(),el.getProduct().getId())
-//            );
-
-            sectionService.verifySection(inboundOrder.getSection().getSectionCode(), inboundOrder.getSection().getWarehouse().getId());
-//            verifyAvailableArea();
-        } catch (UnregisteredProductException |
-                InvalidWarehouseException |
-                RepresentativeNotCorrespondentException |
-                InvalidSectionException |
-                SectionNotMatchTypeProductException |
-                UnavailableSpaceException e) {
-            return null;
-        }
-        return inboundOrder;
-    }
-
-    @Override
-    public InboundOrder updateById(InboundOrder inboundOrder) {
+    public InboundOrder update(InboundOrder inboundOrder) {
         InboundOrder inboundOrderUpdated = inboundOrderRepository.findById(inboundOrder.getOrderNumber()).orElse(new InboundOrder());
         inboundOrderUpdated.setOrderDate(inboundOrder.getOrderDate());
         inboundOrderUpdated.setSection(inboundOrder.getSection());
@@ -135,7 +112,7 @@ public class InboundOrderService implements IInboundOrderService {
 //      É VALIDADO SE O SETOR É VÁLIDO
         Section section = getSection(inboundOrder);
 
-        checkSectionOfWharehouse(warehouse, section);
+        checkSectionOfWarehouse(warehouse, section);
 
 //      VALIDA SE O PRODUTO ESTÁ NO SETOR CORRETO E O REPRESENTANTE
         inboundOrder.getBatchStock().forEach(batch -> {
@@ -162,38 +139,35 @@ public class InboundOrderService implements IInboundOrderService {
         inboundOrder.getBatchStock().forEach(batch -> {
             productSet.add(batch.getProduct());
         });
-
         return inboundOrder;
     }
 
-    private void checkSectionOfWharehouse(Warehouse warehouse, Section section) {
+    @Override
+    public void checkSectionOfWarehouse(Warehouse warehouse, Section section) {
         if (!warehouse.getId().equals(section.getWarehouse().getId())) {
-            throw new InvalidSectionException("Este setor não é válido!");
+            throw new InvalidSectionException();
         }
     }
 
-    private Warehouse getWarehouse(InboundOrder inboundOrder) {
+    @Override
+    public Warehouse getWarehouse(InboundOrder inboundOrder) {
         Warehouse warehouse = warehouseService.findById(inboundOrder.getWarehouse().getId());
-        if (warehouse == null) {
-            throw new InvalidWarehouseException("O armazem informado não existe!");
-        }
+        if (warehouse == null)
+            throw new InvalidWarehouseException();
         return warehouse;
     }
-
-    private Section getSection(InboundOrder inboundOrder) {
+    @Override
+    public Section getSection(InboundOrder inboundOrder) {
         Section section = sectionService.findBySectionCode(inboundOrder.getSection().getSectionCode());
-
-        if (section == null) {
-            throw new InvalidSectionException("Este setor não é válido!");
-        }
+        if (section == null)
+            throw new InvalidSectionException();
         return section;
     }
-
-    private Representative getRepresentative(Batch batch) {
+    @Override
+    public Representative getRepresentative(Batch batch) {
         Representative representative = representativeService.findById(batch.getRepresentative().getId());
-        if (representative == null) {
-            throw new RepresentativeNotCorrespondentException("Este representante não existe!");
-        }
+        if (representative == null)
+            throw new RepresentativeNotCorrespondentException();
         return representative;
     }
 
@@ -209,7 +183,11 @@ public class InboundOrderService implements IInboundOrderService {
                 .build();
     }
 
+    @Override
     public InboundOrder findyById(Integer inboundOrderID) {
-        return this.inboundOrderRepository.findById(inboundOrderID).orElse(null);
+        InboundOrder inboundOrder = this.inboundOrderRepository.findById(inboundOrderID).orElse(null);
+        if (inboundOrder == null)
+            throw new NotFoundException("InboundOrder não encontrado.");
+        return inboundOrder;
     }
 }
