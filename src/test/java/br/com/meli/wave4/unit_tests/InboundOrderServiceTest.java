@@ -88,13 +88,13 @@ public class InboundOrderServiceTest {
     @Test
     public void findById(){
         when((this.inboundOrderRepository.findById(any()))).thenReturn(java.util.Optional.ofNullable(this.inboundOrder));
-        assertEquals(this.inboundOrder.getOrderNumber(), this.inboundOrderService.findyById(any()).getOrderNumber());
+        assertEquals(this.inboundOrder.getOrderNumber(), this.inboundOrderService.findById(any()).getOrderNumber());
     }
 
     @Test
     public void findByIdException(){
         when((this.inboundOrderRepository.findById(any()))).thenReturn(java.util.Optional.ofNullable(null));
-        assertThrows(NotFoundException.class, () ->  this.inboundOrderService.findyById(any()).getOrderNumber());
+        assertThrows(NotFoundException.class, () ->  this.inboundOrderService.findById(any()).getOrderNumber());
     }
 
 }
