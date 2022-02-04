@@ -184,7 +184,7 @@ public class InboundOrderService implements IInboundOrderService {
     }
 
     @Override
-    public InboundOrder findyById(Integer inboundOrderID) {
+    public InboundOrder findById(Integer inboundOrderID) {
         InboundOrder inboundOrder = this.inboundOrderRepository.findById(inboundOrderID).orElse(null);
         if (inboundOrder == null)
             throw new NotFoundException("InboundOrder não encontrado.");

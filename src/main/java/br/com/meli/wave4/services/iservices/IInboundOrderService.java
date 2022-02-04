@@ -31,5 +31,5 @@ public interface IInboundOrderService {
 
     Representative getRepresentative(Batch batch);
 
-    InboundOrder findyById(Integer inboundOrderID);
+    InboundOrder findById(Integer inboundOrderID);
 }
