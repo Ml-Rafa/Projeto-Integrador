@@ -4,14 +4,12 @@ import br.com.meli.wave4.DTO.BatchDTO;
 import br.com.meli.wave4.DTO.InboundOrderDTO;
 import br.com.meli.wave4.entities.*;
 import br.com.meli.wave4.exceptions.InvalidSectionException;
+import br.com.meli.wave4.exceptions.InvalidWarehouseException;
 import br.com.meli.wave4.exceptions.NotFoundException;
 import br.com.meli.wave4.exceptions.RepresentativeNotCorrespondentException;
 import br.com.meli.wave4.repositories.InboundOrderRepository;
 import br.com.meli.wave4.repositories.SectionRepository;
-import br.com.meli.wave4.services.BatchService;
-import br.com.meli.wave4.services.InboundOrderService;
-import br.com.meli.wave4.services.RepresentativeService;
-import br.com.meli.wave4.services.SectionService;
+import br.com.meli.wave4.services.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -48,6 +46,9 @@ public class InboundOrderServiceTest {
 
     @Mock
     SectionService sectionService;
+
+    @Mock
+    WarehouseService warehouseService;
 
     InboundOrder inboundOrder;
 
@@ -185,6 +186,15 @@ public class InboundOrderServiceTest {
 
         when(this.sectionService.findBySectionCode(any())).thenReturn(null);
         assertThrows(InvalidSectionException.class, ()->this.inboundOrderService.getSection(this.inboundOrder));
+    }
+
+    @Test
+    public void getWarehouse(){
+        when(this.warehouseService.findById(any())).thenReturn(this.warehouse);
+        assertEquals(10, this.inboundOrderService.getWarehouse(this.inboundOrder).getId());
+
+        when(this.warehouseService.findById(any())).thenReturn(null);
+        assertThrows(InvalidWarehouseException.class, ()-> this.inboundOrderService.getWarehouse(this.inboundOrder));
     }
 
 }

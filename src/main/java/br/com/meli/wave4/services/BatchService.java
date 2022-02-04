@@ -45,8 +45,8 @@ public class BatchService implements IBatchService {
     }
 
     @Override
-    public void save(Batch batch) {
-        batchRepository.save(batch);
+    public Batch save(Batch batch) {
+        return batchRepository.save(batch);
     }
 
 

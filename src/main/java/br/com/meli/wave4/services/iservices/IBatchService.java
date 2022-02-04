@@ -10,7 +10,7 @@ public interface IBatchService {
 
     List<Batch> saveAll(List<Batch> batchList);
 
-    void save(Batch batch);
+    Batch save(Batch batch);
 
     void update(Batch batch);
 
