@@ -33,6 +33,9 @@ public class InboundOrderService implements IInboundOrderService {
     InboundOrderRepository inboundOrderRepository;
 
     @Autowired
+    SellerService sellerService;
+
+    @Autowired
     RepresentativeService representativeService;
 
     @Override
@@ -51,11 +54,6 @@ public class InboundOrderService implements IInboundOrderService {
         return getTotalProductsInSection(section.getBatchList());
     }
 
-    public Boolean productIsRegisteredInSellerRegister(InboundOrder inboundOrder, Batch batch){
-        if(inboundOrder.getSellerId().equals(batch.getProduct().getSeller().getId()))
-            return true;
-        throw new ProductDoesNotBelongToTheSellerException();
-    }
     @Override
     public Integer getTotalProductsInSection(List<Batch> batchList) {
         return batchList.stream().mapToInt(Batch::getCurrentQuantity).sum();
@@ -120,8 +118,7 @@ public class InboundOrderService implements IInboundOrderService {
         this.checkSectionOfWarehouse(warehouse, section);
 
 //      VERIFICA SE O ID DO PRODUTO ESTÁ REGISTRADO EM NOME DO VENDEDOR
-
-        inboundOrder.getBatchStock().forEach(b -> this.productIsRegisteredInSellerRegister(inboundOrder, b));
+        inboundOrder.getBatchStock().forEach(batch -> sellerService.productBelongToTheSeller(inboundOrder, batch));
 
 //      VALIDA SE O PRODUTO ESTÁ NO SETOR CORRETO E O REPRESENTANTE
         inboundOrder.getBatchStock().forEach(batch -> {

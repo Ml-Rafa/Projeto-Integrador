@@ -1,7 +1,6 @@
 package br.com.meli.wave4.services;
 
-import br.com.meli.wave4.DTO.BatchSimpleResponseDTO;
-import br.com.meli.wave4.DTO.ListProductWithAllBatchDTO;
+import br.com.meli.wave4.DTO.*;
 import br.com.meli.wave4.entities.ProductNearExpireDate;
 import br.com.meli.wave4.entities.*;
 import br.com.meli.wave4.exceptions.DueDateLessThan3WeeksException;
@@ -9,6 +8,7 @@ import br.com.meli.wave4.exceptions.InsufficientStockException;
 import br.com.meli.wave4.exceptions.NotFoundException;
 import br.com.meli.wave4.repositories.ProductRepository;
 import br.com.meli.wave4.services.iservices.IProductService;
+import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +26,15 @@ public class ProductService implements IProductService {
 
     @Autowired
     WarehouseService warehouseService;
+
+    @Autowired
+    BatchService batchService;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    SellerService sellerService;
 
     @Override
     public Product findById(Integer productId) {
@@ -196,5 +205,33 @@ public class ProductService implements IProductService {
         } else {
             throw new NotFoundException("Não foram encntrados produtos neste período!");
         }
+    }
+
+    public Product convertToEntity(ProductDTO product) {
+
+        List<Batch> batchList = product.getBatchList().stream().map(batchService::convertToEntity).collect(Collectors.toList());
+        return Product.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .sectionTypeRefrigerated(product.getSectionTypeRefrigerated())
+                .dateValid(product.getDateValid())
+                .price(product.getPrice())
+                .batchList(batchList)
+                .seller(sellerService.convertToEntity(product.getSeller()))
+                .build();
+    }
+
+    public ProductDTO convertToDTO(Product product) {
+
+        List<BatchDTO> batchDTOList = product.getBatchList().stream().map(BatchDTO::convertToDTO).collect(Collectors.toList());
+        return ProductDTO.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .sectionTypeRefrigerated(product.getSectionTypeRefrigerated())
+                .dateValid(product.getDateValid())
+                .price(product.getPrice())
+                .batchList(batchDTOList)
+                .seller(sellerService.convertToDTO(product.getSeller()))
+                .build();
     }
 }

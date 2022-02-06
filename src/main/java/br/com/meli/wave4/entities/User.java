@@ -29,14 +29,17 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name = "";
-    private String document = "";
+    private String name;
+    private String document;
+    @JsonIgnore
     @Column(name="username")
-    private String user = "";
+    private String user;
+    @JsonIgnore
     @Column(name="password")
-    private String password = "";
+    private String password;
+    @JsonIgnore
     @Column(name="enabled")
-    private boolean active = false;
+    private boolean active;
 
 
     //REPRESENTATIVE
@@ -49,7 +52,7 @@ public class User implements UserDetails {
     //FINAL REPRESENTATIVE
 
     //CLIENT
-    private String Address = "";
+    private String address = "";
     private String telephone = "";
     @JsonIgnore
     @OneToMany(mappedBy = "client")
@@ -59,7 +62,7 @@ public class User implements UserDetails {
     //SELLER
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "seller")
-    private Set<Product> productList = new HashSet<>();
+    private List<Product> productList = new ArrayList<>();
     //FINAL SELLER
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -69,9 +72,6 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "profile_id")
     )
     private Set<Profile> profiles = new HashSet<>();
-//
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    private List<Profile> profiles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -103,4 +103,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }

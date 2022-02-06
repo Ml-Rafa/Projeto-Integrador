@@ -4,6 +4,7 @@ import br.com.meli.wave4.DTO.PurchaseOrderDTO;
 import br.com.meli.wave4.entities.*;
 //import br.com.meli.wave4.repositories.ClientRepository;
 import br.com.meli.wave4.repositories.PurchaseOrderRepository;
+import br.com.meli.wave4.repositories.UserRepository;
 import br.com.meli.wave4.services.iservices.IPurchaseOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
@@ -22,7 +23,7 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     ProductService productService;
 
     @Autowired
-    ClientService clientService;
+    UserRepository userRepository;
 
     @Autowired
     PurchaseOrderRepository purchaseOrderRepository;
@@ -45,7 +46,7 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     public PurchaseOrder convertToEntity(PurchaseOrderDTO purchaseOrderDTO) {
 
         return PurchaseOrder.builder()
-                .client(this.clientService.findById(purchaseOrderDTO.getClientId()))
+                .client(userRepository.findById(purchaseOrderDTO.getClientId()).orElse(null))
                 .orderStatus(purchaseOrderDTO.getOrderStatus())
                 .date(purchaseOrderDTO.getDate())
                 .id(purchaseOrderDTO.getId())
@@ -62,7 +63,7 @@ public class PurchaseOrderService implements IPurchaseOrderService {
 
             Product p = this.productService.findById(a.getProduct().getId());
 
-            User client = (this.clientService.findById(purchaseOrder.getClient().getId()));
+            User client = (userRepository.findById(purchaseOrder.getClient().getId()).orElse(null));
             Boolean haveStock =
                     this.productService.verifyStock(p.getId(),a.getQuantity(),a.getBatchCode());
             Boolean lessThan3weak = this.productService.verifyIfDueDateLessThan3Weeks(p);

@@ -1,6 +1,8 @@
 package br.com.meli.wave4.services;
 
 //import br.com.meli.wave4.entities.Representative;
+import br.com.meli.wave4.DTO.BatchDTO;
+import br.com.meli.wave4.DTO.RepresentativeDTO;
 import br.com.meli.wave4.entities.User;
 import br.com.meli.wave4.entities.Warehouse;
 import br.com.meli.wave4.exceptions.RepresentativeNotCorrespondentException;
@@ -10,6 +12,7 @@ import br.com.meli.wave4.services.iservices.IRepresentativeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,6 +47,7 @@ public class RepresentativeService implements IRepresentativeService {
     public void sayHello(){
         System.out.println("Hello");
     }
+
 
 //    @Autowired
 //    RepresentativeRepository representativeRepository;

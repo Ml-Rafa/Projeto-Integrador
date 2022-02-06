@@ -25,10 +25,6 @@ public class BatchService implements IBatchService {
     private BatchRepository batchRepository;
 
     @Autowired
-    private ProductService productService;
-
-
-    @Autowired
     private ProductRepository productRepository;
 
     @Autowired
@@ -69,7 +65,7 @@ public class BatchService implements IBatchService {
                 .batchNumber(batch.getBatchNumber())
                 .currentQuantity(batch.getCurrentQuantity())
                 .initialQuantity(batch.getInitialQuantity())
-                .product(productRepository.findById(batch.getProductId()).stream().findFirst().orElse(null))
+                .product(productRepository.findById(batch.getProductId()).orElse(null))
                 .currentTemperature(batch.getCurrentTemperature())
                 .minimumTemperature(batch.getMinimumTemperature())
 //                .representative(userRepository.findById(batch.getRepresentativeId()).stream().findFirst().orElse(null))
@@ -110,7 +106,8 @@ public class BatchService implements IBatchService {
 
     @Override
     public void updateStock(Integer productId, Integer quantity, Integer sectionCode) {
-        Product product = this.productService.findById(productId);
+        Product product = productRepository.findById(productId).orElse(null);
+        assert product != null;
         Batch batch = product.getBatchList()
                 .stream().filter(b -> b.getSection().getSectionCode().equals(sectionCode))
                 .findFirst().orElse(null);

@@ -2,9 +2,9 @@ package br.com.meli.wave4.entities;
 
 public enum TypeRefrigeration {
 
-    FRESH(1, "fresh"),
-    REFRIGERATED(2, "refrigerated"),
-    FROZEN(3, "frozen");
+    FRESH(1, "FRESH"),
+    REFRIGERATED(2, "REFRIGERATED"),
+    FROZEN(3, "FROZEN");
 
 
     private Integer code;

@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,7 +55,7 @@ public class SellerServiceTest {
 @Test
 public void verifyProductOfSeller(){
 
-    Set<Product> productList = new HashSet<>();
+    List<Product> productList = new ArrayList<>();
     productList.add( Product.builder().id(123).build());
 
     User seller = new User();
@@ -66,7 +68,7 @@ public void verifyProductOfSeller(){
     @Test
     public void verifyProductOfSellerReturnFalse(){
 
-        Set<Product> productList = new HashSet<>();
+        List<Product> productList = new ArrayList<>();
         productList.add( Product.builder().id(123).build());
 
         User seller = new User();

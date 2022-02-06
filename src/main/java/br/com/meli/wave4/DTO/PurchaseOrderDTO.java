@@ -31,4 +31,5 @@ public class PurchaseOrderDTO {
     private Set<ArticlesPurchaseDTO> articlesPurchases;
     private BigDecimal totalPrice;
 
+
 }

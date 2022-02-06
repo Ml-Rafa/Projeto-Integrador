@@ -1,5 +1,6 @@
 package br.com.meli.wave4.controllers;
 
+import br.com.meli.wave4.DTO.ProductDTO;
 import br.com.meli.wave4.DTO.PurchaseOrderDTO;
 import br.com.meli.wave4.entities.Product;
 import br.com.meli.wave4.entities.PurchaseOrder;
@@ -13,9 +14,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/fresh-products/")
+@RequestMapping("/api/v1/fresh-products")
 public class PurchaseOrderController {
 
     @Autowired
@@ -26,15 +29,33 @@ public class PurchaseOrderController {
 
     @GetMapping
     public ResponseEntity<?> getProductList() {
+
         List<Product> productListPersistence = productService.getAll();
+        List<ProductDTO> productDTOList = productListPersistence.stream().map(productService::convertToDTO).collect(Collectors.toList());
         return productListPersistence.isEmpty()
                 ? ResponseEntity.notFound().build()
-                : ResponseEntity.ok(productListPersistence);
+                : ResponseEntity.ok(productDTOList);
     }
 
-    @GetMapping("/list?category=product_category")
-    public ResponseEntity<?> productListByCategory(@RequestParam TypeRefrigeration product_category) {
-        List<Product> productListPersistence = productService.findAllByCategory(product_category);
+    @GetMapping("/list")
+    public ResponseEntity<?> productListByCategory(@RequestParam String category) {
+        String type = "";
+        switch (category.toUpperCase(Locale.ROOT)){
+            case "FS": type = "FRESH";
+            break;
+            case "RF": type = "REFRIGERATED";
+                break;
+            case "FF": type = "FROZEN";
+                break;
+            default: return ResponseEntity.badRequest().body("Parâmetro informado é inválido.\n" +
+                    "Parâmetros válidos:\n" +
+                    "FS : Fresco;\n" +
+                    "RF : Refrigerado;\n" +
+                    "FF : Congelado");
+        }
+        List<ProductDTO> productListPersistence = productService.findAllByCategory(TypeRefrigeration.valueOf(type))
+                .stream().map(productService::convertToDTO)
+                .collect(Collectors.toList());
         return productListPersistence.isEmpty()
                 ? ResponseEntity.notFound().build()
                 : ResponseEntity.ok(productListPersistence);
