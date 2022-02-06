@@ -51,6 +51,11 @@ public class InboundOrderService implements IInboundOrderService {
         return getTotalProductsInSection(section.getBatchList());
     }
 
+    public Boolean productIsRegisteredInSellerRegister(InboundOrder inboundOrder, Batch batch){
+        if(inboundOrder.getSellerId().equals(batch.getProduct().getSeller().getId()))
+            return true;
+        throw new ProductDoesNotBelongToTheSellerException();
+    }
     @Override
     public Integer getTotalProductsInSection(List<Batch> batchList) {
         return batchList.stream().mapToInt(Batch::getCurrentQuantity).sum();
@@ -80,6 +85,7 @@ public class InboundOrderService implements IInboundOrderService {
         InboundOrder inboundOrderUpdated = inboundOrderRepository.findById(inboundOrder.getOrderNumber()).orElse(null);
         inboundOrderUpdated.setOrderDate(inboundOrder.getOrderDate());
         inboundOrderUpdated.setSection(inboundOrder.getSection());
+        inboundOrderUpdated.setSellerId(inboundOrder.getSellerId());
         inboundOrder.getBatchStock().forEach(batch -> batch.setInboundOrder(inboundOrderUpdated));
         inboundOrder.getBatchStock().forEach(batch -> batch.setSection(inboundOrderUpdated.getSection()));
         inboundOrder.getBatchStock().forEach(batch -> batchService.update(batch));
@@ -105,16 +111,17 @@ public class InboundOrderService implements IInboundOrderService {
     @Override
     public InboundOrder create(InboundOrder inboundOrder) {
 
-//        System.out.println("PRINCIPAL ======= "+ authenticated().getWarehouse().getId());
-//        System.out.println("PRINCIPAL ======= "+ authenticated().getUsername());
-//        System.out.println("PRINCIPAL ======= "+ authenticated().getPassword());
-//      O ARMAZEM SÃO VÁLIDOS
+//      O ARMAZEM É VÁLIDO
         Warehouse warehouse = this.getWarehouse(inboundOrder);
 
 //      É VALIDADO SE O SETOR É VÁLIDO
         Section section = this.getSection(inboundOrder);
 
         this.checkSectionOfWarehouse(warehouse, section);
+
+//      VERIFICA SE O ID DO PRODUTO ESTÁ REGISTRADO EM NOME DO VENDEDOR
+
+        inboundOrder.getBatchStock().forEach(b -> this.productIsRegisteredInSellerRegister(inboundOrder, b));
 
 //      VALIDA SE O PRODUTO ESTÁ NO SETOR CORRETO E O REPRESENTANTE
         inboundOrder.getBatchStock().forEach(batch -> {
@@ -181,6 +188,7 @@ public class InboundOrderService implements IInboundOrderService {
                 .orderDate(inboundOrderDTO.getOrderDate())
                 .section(this.sectionService.findBySectionCode(inboundOrderDTO.getSectionCode()))
                 .batchStock(batchList)
+                .sellerId(inboundOrderDTO.getSellerId())
                 .warehouse(Warehouse.builder().id(inboundOrderDTO.getWarehouseCode()).build())
 //                .warehouse(warehouseService.findById(inboundOrderDTO.getWarehouseCode()))
                 .build();

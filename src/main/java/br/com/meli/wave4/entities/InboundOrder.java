@@ -24,7 +24,7 @@ public class InboundOrder {
     @ManyToOne
     @JoinColumn(name = "section_id", referencedColumnName = "sectionCode")
     private Section section;
-
+    private Integer sellerId;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "inboundOrder")
     private List<Batch> batchStock = new ArrayList<>();

@@ -25,7 +25,6 @@ public class RepresentativeService implements IRepresentativeService {
 
     @Override
     public Boolean compareRepresentative( Integer representativeId, User representative){
-//        System.out.println("========================== = "+ representativeId +"  ,  " + representative.getId());
         if (representativeId.equals(representative.getId())){
             return true;
         } else{
