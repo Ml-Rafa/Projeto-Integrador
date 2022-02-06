@@ -11,6 +11,8 @@ import org.springframework.security.web.header.Header;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/fresh-products/inboundorder")
 public class InboundOrderController {
@@ -19,7 +21,7 @@ public class InboundOrderController {
     private InboundOrderService inboundOrderService;
 
     @PostMapping("/register-inbound-order")
-    public ResponseEntity<?> registerInboundOrder(@RequestBody InboundOrderDTO inboundOrderDTO, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<?> registerInboundOrder(@Valid @RequestBody InboundOrderDTO inboundOrderDTO, UriComponentsBuilder uriBuilder) {
         InboundOrder inboundOrder = this.inboundOrderService.convertToEntity(inboundOrderDTO);
 
         inboundOrderService.create(inboundOrder);

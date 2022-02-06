@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -26,6 +27,7 @@ public class InboundOrderDTO {
     private LocalDate orderDate;
     private Integer sectionCode;
     private Integer warehouseCode;
+    @Valid
     private List<BatchDTO> batchStock = new ArrayList<>();
 
     public static InboundOrderDTO convertToDTO(InboundOrder inboundOrder) {

@@ -19,33 +19,33 @@ public class Batch {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer batchNumber = 0;
+    private Integer batchNumber;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private Product product = new Product();
+    private Product product;
     @ManyToOne
     @JoinColumn(name = "inbound_order_id")
-    private InboundOrder inboundOrder = new InboundOrder();
+    private InboundOrder inboundOrder;
 
     @JsonBackReference
     @ManyToOne
-    private Section section = new Section();
+    private Section section;
 
     @JsonBackReference
     @ManyToOne
-    private User representative = new User();
+    private User representative;
 //    @JsonBackReference
 //    @ManyToOne
 //    private Representative representative;
 
-    private Double currentTemperature = 0.0;
-    private Double minimumTemperature = 0.0;;
-    private Integer initialQuantity = 0;
-    private Integer currentQuantity = 0;
-    private LocalDate manufacturingDate = LocalDate.now();
-    private LocalDateTime manufacturingTime = LocalDateTime.now();
-    private LocalDate dueDate = LocalDate.now();
+    private Double currentTemperature;
+    private Double minimumTemperature;;
+    private Integer initialQuantity;
+    private Integer currentQuantity;
+    private LocalDate manufacturingDate;
+    private LocalDateTime manufacturingTime;
+    private LocalDate dueDate;
 
 
 }
