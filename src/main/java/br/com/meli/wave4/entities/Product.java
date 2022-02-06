@@ -1,17 +1,16 @@
 package br.com.meli.wave4.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @AllArgsConstructor
@@ -26,11 +25,14 @@ public class Product {
     private BigDecimal price;
 
     @OneToMany(mappedBy = "product" )
-    private List<Batch> batchList;
+    private List<Batch> batchList = new ArrayList<>();
 
+//    @ManyToOne
+//    @JoinColumn(name = "seller_id", nullable = false)
+//    private Seller seller;
     @ManyToOne
     @JoinColumn(name = "seller_id", nullable = false)
-    private Seller seller;
+    private User seller;
 
 
 

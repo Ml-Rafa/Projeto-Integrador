@@ -3,6 +3,7 @@ package br.com.meli.wave4.services.iservices;
 import br.com.meli.wave4.entities.*;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IInboundOrderService {
     Boolean checkProductSection(Integer sectionCode, Integer productId);
@@ -29,7 +30,8 @@ public interface IInboundOrderService {
 
     Section getSection(InboundOrder inboundOrder);
 
-    Representative getRepresentative(Batch batch);
+    User getRepresentative(Batch batch);
+//    Representative getRepresentative(Batch batch);
 
     InboundOrder findById(Integer inboundOrderID);
 }

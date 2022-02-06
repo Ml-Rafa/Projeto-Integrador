@@ -40,7 +40,6 @@ public class InboundOrderService implements IInboundOrderService {
 
         Product product = productService.findById(productId);
         Section section = sectionService.findBySectionCode(sectionCode);
-
         if (String.valueOf(product.getSectionTypeRefrigerated()).equals(section.getStorageType())) {
             return true;
         }
@@ -72,13 +71,13 @@ public class InboundOrderService implements IInboundOrderService {
         if (total <= section.getMaxCapacity()) {
             return true;
         } else {
-            throw new UnavailableSpaceException(); //"Não há espaço suficiente disponível"
+            throw new UnavailableSpaceException();
         }
     }
 
     @Override
     public InboundOrder update(InboundOrder inboundOrder) {
-        InboundOrder inboundOrderUpdated = inboundOrderRepository.findById(inboundOrder.getOrderNumber()).orElse(new InboundOrder());
+        InboundOrder inboundOrderUpdated = inboundOrderRepository.findById(inboundOrder.getOrderNumber()).orElse(null);
         inboundOrderUpdated.setOrderDate(inboundOrder.getOrderDate());
         inboundOrderUpdated.setSection(inboundOrder.getSection());
         inboundOrder.getBatchStock().forEach(batch -> batch.setInboundOrder(inboundOrderUpdated));
@@ -106,6 +105,9 @@ public class InboundOrderService implements IInboundOrderService {
     @Override
     public InboundOrder create(InboundOrder inboundOrder) {
 
+//        System.out.println("PRINCIPAL ======= "+ authenticated().getWarehouse().getId());
+//        System.out.println("PRINCIPAL ======= "+ authenticated().getUsername());
+//        System.out.println("PRINCIPAL ======= "+ authenticated().getPassword());
 //      O ARMAZEM SÃO VÁLIDOS
         Warehouse warehouse = this.getWarehouse(inboundOrder);
 
@@ -116,7 +118,7 @@ public class InboundOrderService implements IInboundOrderService {
 
 //      VALIDA SE O PRODUTO ESTÁ NO SETOR CORRETO E O REPRESENTANTE
         inboundOrder.getBatchStock().forEach(batch -> {
-            Representative representative = this.getRepresentative(batch);
+            User representative = AuthenticationService.authenticated();
             representativeService.checkRepresentativeOfWarehouse(warehouse, representative);
             checkProductSection(inboundOrder.getSection().getSectionCode(), batch.getProduct().getId());
             batch.setRepresentative(representative);
@@ -164,8 +166,8 @@ public class InboundOrderService implements IInboundOrderService {
         return section;
     }
     @Override
-    public Representative getRepresentative(Batch batch) {
-        Representative representative = representativeService.findById(batch.getRepresentative().getId());
+    public User getRepresentative(Batch batch) {
+        User representative = representativeService.findById(batch.getRepresentative().getId());
         if (representative == null)
             throw new RepresentativeNotCorrespondentException();
         return representative;
@@ -180,6 +182,7 @@ public class InboundOrderService implements IInboundOrderService {
                 .section(this.sectionService.findBySectionCode(inboundOrderDTO.getSectionCode()))
                 .batchStock(batchList)
                 .warehouse(Warehouse.builder().id(inboundOrderDTO.getWarehouseCode()).build())
+//                .warehouse(warehouseService.findById(inboundOrderDTO.getWarehouseCode()))
                 .build();
     }
 

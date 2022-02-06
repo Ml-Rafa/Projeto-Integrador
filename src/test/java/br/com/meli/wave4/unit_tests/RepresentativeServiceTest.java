@@ -2,9 +2,9 @@ package br.com.meli.wave4.unit_tests;
 
 
 import br.com.meli.wave4.entities.Batch;
-import br.com.meli.wave4.entities.Representative;
+import br.com.meli.wave4.entities.User;
 import br.com.meli.wave4.entities.Warehouse;
-import br.com.meli.wave4.repositories.RepresentativeRepository;
+import br.com.meli.wave4.repositories.UserRepository;
 import br.com.meli.wave4.services.RepresentativeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,9 +25,9 @@ public class RepresentativeServiceTest {
     RepresentativeService representativeService;
 
     @Mock
-    RepresentativeRepository representativeRepository;
+    UserRepository userRepository;
 
-    Representative representative;
+    User representative;
 
     Warehouse warehouse;
 
@@ -40,7 +40,7 @@ public class RepresentativeServiceTest {
                 Warehouse.builder().build();
 
         this.representative =
-                new Representative();
+                new User();
                 this.representative.setId(3);
                 this.representative.setWarehouse(this.warehouse);
                 this.representative.setBatch(this.batchList);
@@ -49,7 +49,7 @@ public class RepresentativeServiceTest {
     @Test
     public void findById(){
 
-        when(this.representativeRepository.findById(any())).thenReturn(java.util.Optional.ofNullable(this.representative));
+        when(this.userRepository.findById(any())).thenReturn(java.util.Optional.ofNullable(this.representative));
         assertEquals(3,this.representativeService.findById(any()).getId());
 
 

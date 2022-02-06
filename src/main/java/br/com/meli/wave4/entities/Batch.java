@@ -1,16 +1,15 @@
 package br.com.meli.wave4.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,30 +19,33 @@ public class Batch {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer batchNumber;
+    private Integer batchNumber = 0;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private Product product;
+    private Product product = new Product();
     @ManyToOne
     @JoinColumn(name = "inbound_order_id")
-    private InboundOrder inboundOrder;
+    private InboundOrder inboundOrder = new InboundOrder();
 
     @JsonBackReference
     @ManyToOne
-    private Section section;
+    private Section section = new Section();
 
     @JsonBackReference
     @ManyToOne
-    private Representative representative;
+    private User representative = new User();
+//    @JsonBackReference
+//    @ManyToOne
+//    private Representative representative;
 
-    private Double currentTemperature;
-    private Double minimumTemperature;
-    private Integer initialQuantity;
-    private Integer currentQuantity;
-    private LocalDate manufacturingDate;
-    private LocalDateTime manufacturingTime;
-    private LocalDate dueDate;
+    private Double currentTemperature = 0.0;
+    private Double minimumTemperature = 0.0;;
+    private Integer initialQuantity = 0;
+    private Integer currentQuantity = 0;
+    private LocalDate manufacturingDate = LocalDate.now();
+    private LocalDateTime manufacturingTime = LocalDateTime.now();
+    private LocalDate dueDate = LocalDate.now();
 
 
 }

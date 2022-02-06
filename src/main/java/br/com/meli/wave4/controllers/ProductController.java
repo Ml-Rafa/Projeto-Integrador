@@ -3,6 +3,7 @@ package br.com.meli.wave4.controllers;
 import br.com.meli.wave4.DTO.ProductNearExpireDateDTO;
 import br.com.meli.wave4.entities.Product;
 import br.com.meli.wave4.entities.ProductNearExpireDate;
+import br.com.meli.wave4.entities.Section;
 import br.com.meli.wave4.entities.Warehouse;
 import br.com.meli.wave4.exceptions.NotFoundException;
 import br.com.meli.wave4.services.ProductService;

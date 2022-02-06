@@ -4,8 +4,10 @@ import br.com.meli.wave4.entities.Batch;
 import br.com.meli.wave4.entities.Product;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IBatchService {
+//    Optional<Batch> findByBatchNumber(Integer batchNumber);
     Batch findByBatchNumber(Integer batchNumber);
 
     List<Batch> saveAll(List<Batch> batchList);

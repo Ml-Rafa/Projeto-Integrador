@@ -1,7 +1,8 @@
 package br.com.meli.wave4.unit_tests;
 
 import br.com.meli.wave4.entities.Product;
-import br.com.meli.wave4.entities.Seller;
+//import br.com.meli.wave4.entities.Seller;
+import br.com.meli.wave4.entities.User;
 import br.com.meli.wave4.exceptions.ProductDoesNotBelongToTheSellerException;
 import br.com.meli.wave4.services.SellerService;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,18 +25,43 @@ public class SellerServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    public void verifyProductOfSeller(){
+//    @Test
+//    public void verifyProductOfSeller(){
+//
+//        Set<Product> productList = new HashSet<>();
+//        productList.add( Product.builder().id(123).build());
+//
+//        Seller seller = new Seller();
+//        seller.setProductList(productList);
+//
+//        assertTrue(this.sellerService.verifyProductOfSeller(seller,123));
+//
+//    }
+//
+//    @Test
+//    public void verifyProductOfSellerReturnFalse(){
+//
+//        Set<Product> productList = new HashSet<>();
+//        productList.add( Product.builder().id(123).build());
+//
+//        Seller seller = new Seller();
+//        seller.setProductList(productList);
+//
+//        assertFalse(this.sellerService.verifyProductOfSeller(seller,1234));
+//
+//    }
+@Test
+public void verifyProductOfSeller(){
 
-        Set<Product> productList = new HashSet<>();
-        productList.add( Product.builder().id(123).build());
+    Set<Product> productList = new HashSet<>();
+    productList.add( Product.builder().id(123).build());
 
-        Seller seller = new Seller();
-        seller.setProductList(productList);
+    User seller = new User();
+    seller.setProductList(productList);
 
-        assertTrue(this.sellerService.verifyProductOfSeller(seller,123));
+    assertTrue(this.sellerService.verifyProductOfSeller(seller,123));
 
-    }
+}
 
     @Test
     public void verifyProductOfSellerReturnFalse(){
@@ -43,7 +69,7 @@ public class SellerServiceTest {
         Set<Product> productList = new HashSet<>();
         productList.add( Product.builder().id(123).build());
 
-        Seller seller = new Seller();
+        User seller = new User();
         seller.setProductList(productList);
 
         assertThrows(ProductDoesNotBelongToTheSellerException.class,

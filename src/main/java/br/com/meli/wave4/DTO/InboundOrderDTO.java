@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +22,7 @@ import java.util.stream.Collectors;
 public class InboundOrderDTO {
 
     private Integer orderNumber;
+//    @Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2}", message = "A data deve ter o seguinte formato: YYYY-MM-DD")
     private LocalDate orderDate;
     private Integer sectionCode;
     private Integer warehouseCode;
@@ -26,7 +30,6 @@ public class InboundOrderDTO {
 
     public static InboundOrderDTO convertToDTO(InboundOrder inboundOrder) {
         List<Batch> batchList = inboundOrder.getBatchStock();
-        System.out.println("INboundOrder: " + inboundOrder.getOrderNumber());
         List<BatchDTO> batchDTOList = batchList.stream().map(BatchDTO::convertToDTO).collect(Collectors.toList());
         return InboundOrderDTO.builder()
                 .orderDate(inboundOrder.getOrderDate())

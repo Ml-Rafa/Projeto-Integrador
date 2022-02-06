@@ -64,7 +64,7 @@ public class InboundOrderServiceTest {
 
     Product product;
 
-    Representative representative;
+    User representative;
 
     @BeforeEach
     void setup(){
@@ -91,7 +91,7 @@ public class InboundOrderServiceTest {
         this.product=
                 Product.builder()
                         .id(123)
-                        .seller(new Seller())
+                        .seller(new User())
                         .name("Pao de Queijo")
                         .dateValid( LocalDate.now().plusDays(21))
                         .sectionTypeRefrigerated(TypeRefrigeration.REFRIGERATED)
@@ -121,7 +121,6 @@ public class InboundOrderServiceTest {
                         .minimumTemperature(15.0)
                         .dueDate(LocalDate.now())
                         .inboundOrderId(1)
-                        .representativeId(10)
                         .dueDate(LocalDate.now().plusDays(22))
                         .manufacturingDate(LocalDate.now().minusDays(10))
                         .manufacturingTime(LocalDateTime.now().minusDays(10))
@@ -136,7 +135,7 @@ public class InboundOrderServiceTest {
                         .batchStock(this.batchDTOList)
                 .build();
 
-        representative = new Representative();
+        representative = new User();
         representative.setId(77);
         representative.setBatch(this.batchList);
         representative.setWarehouse(this.warehouse);
@@ -162,7 +161,8 @@ public class InboundOrderServiceTest {
 
     @Test
     public void convertToEntity(){
-        when(this.sectionRepository.findBySectionCode(any())).thenReturn(java.util.Optional.ofNullable(this.section));
+//        when(this.sectionRepository.findBySectionCode(any())).thenReturn(java.util.Optional.ofNullable(this.section));
+        when(this.sectionRepository.findBySectionCode(any())).thenReturn(this.section);
         assertInstanceOf(InboundOrder.class, this.inboundOrderService.convertToEntity(this.inboundOrderDTO));
     }
 

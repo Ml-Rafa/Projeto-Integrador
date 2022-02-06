@@ -2,10 +2,11 @@ package br.com.meli.wave4.services;
 
 import br.com.meli.wave4.DTO.PurchaseOrderDTO;
 import br.com.meli.wave4.entities.*;
-import br.com.meli.wave4.repositories.ClientRepository;
+//import br.com.meli.wave4.repositories.ClientRepository;
 import br.com.meli.wave4.repositories.PurchaseOrderRepository;
 import br.com.meli.wave4.services.iservices.IPurchaseOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -61,7 +62,7 @@ public class PurchaseOrderService implements IPurchaseOrderService {
 
             Product p = this.productService.findById(a.getProduct().getId());
 
-            Client client = (this.clientService.findById(purchaseOrder.getClient().getId()));
+            User client = (this.clientService.findById(purchaseOrder.getClient().getId()));
             Boolean haveStock =
                     this.productService.verifyStock(p.getId(),a.getQuantity(),a.getBatchCode());
             Boolean lessThan3weak = this.productService.verifyIfDueDateLessThan3Weeks(p);

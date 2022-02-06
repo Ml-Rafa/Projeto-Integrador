@@ -74,7 +74,7 @@ public class SectionServiceTest {
     @Test
     void shouldReturnSectionByCode(){
         when(this.sectionRepositoryMock.findBySectionCode(1))
-                .thenReturn(java.util.Optional.ofNullable(this.section));
+                .thenReturn(this.section);
         Assertions.assertEquals(
                 "São Paulo",
                 this.sectionService.findBySectionCode(1).getWarehouse().getGeographicArea()
@@ -97,7 +97,7 @@ public class SectionServiceTest {
 
         Section section = Section.builder().warehouse(warehouse).build();
 
-        when(sectionRepositoryMock.findBySectionCode(any())).thenReturn(java.util.Optional.ofNullable(section));
+        when(sectionRepositoryMock.findBySectionCode(any())).thenReturn(section);
 
         assertTrue(this.sectionService.verifySection(any(),10));
 
@@ -110,7 +110,7 @@ public class SectionServiceTest {
 
         Section section = Section.builder().warehouse(warehouse).build();
 
-        when(sectionRepositoryMock.findBySectionCode(any())).thenReturn(java.util.Optional.ofNullable(section));
+        when(sectionRepositoryMock.findBySectionCode(any())).thenReturn(section);
 
         assertThrows(
                 InvalidSectionException.class, ()->{

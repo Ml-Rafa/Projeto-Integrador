@@ -1,12 +1,11 @@
 package br.com.meli.wave4.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class WarehouseProductInfo {
     private Integer product;
     private Warehouse warehouse;

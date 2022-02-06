@@ -2,10 +2,7 @@ package br.com.meli.wave4.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -14,9 +11,11 @@ import java.util.Set;
 
 @Entity
 @Builder
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Warehouse {
 
     @Id
@@ -24,26 +23,16 @@ public class Warehouse {
     private Integer id;
 
     @Column(name = "geographic_area")
-    private String geographicArea;
+    private String geographicArea = "";
 
     @JsonBackReference
     @OneToOne(mappedBy = "warehouse")
-    private Representative representative;
+    private User representative;
+//    @JsonBackReference
+//    @OneToOne(mappedBy = "warehouse")
+//    private Representative representative;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "warehouse")
     Set<Section> sectionSet = new HashSet<>();
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Warehouse warehouse = (Warehouse) o;
-        return id.equals(warehouse.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

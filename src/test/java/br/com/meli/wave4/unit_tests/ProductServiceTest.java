@@ -67,7 +67,7 @@ public class ProductServiceTest {
         this.product=
                 Product.builder()
                         .id(123)
-                        .seller(new Seller())
+                        .seller(new User())
                         .name("Pao de Queijo")
                         .dateValid( LocalDate.now().plusDays(21))
                         .sectionTypeRefrigerated(TypeRefrigeration.REFRIGERATED)

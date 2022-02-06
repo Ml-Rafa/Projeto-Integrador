@@ -5,8 +5,10 @@ import br.com.meli.wave4.DTO.ListProductWithAllBatchDTO;
 import br.com.meli.wave4.entities.*;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IProductService {
+//    Optional<Product> findById(Integer productId);
     Product findById(Integer productId);
 
     List<Product> getAll();
