@@ -5,8 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -15,25 +14,30 @@ import java.time.LocalDateTime;
 public class BatchDTO {
 
     private Integer batchNumber;
-    @NotNull(message = "O número do ID do produto deve ser informado.")
+    @NotNull(message = "O campo productId não pode ser nulo.")
+    @PositiveOrZero(message = "O número do campo productId não pode ser negativo.")
     private Integer productId;
 //    @NotNull(message = "O número do ID do representante deve ser informado.")
 //    private Integer representativeId;
-    @NotNull(message = "A temperatura atual deve ser informada.")
+    @NotNull(message = "O campo currentTemperature não pode ser nulo.")
     private Double currentTemperature;
-    @NotNull(message = "A temperatura mínima deve ser informada.")
+    @NotNull(message = "O campo minimumTemperature não pode ser nulo.")
     private Double minimumTemperature;
-    @NotNull(message = "A quantidade inicial do estoque deve ser informada.")
+    @NotNull(message = "O campo initialQuantity não pode ser nulo.")
+    @PositiveOrZero(message = "O campo initialQuantity não pode ser menor do que zero.")
     private Integer initialQuantity;
-    @NotNull(message = "A quantidade atual do estoque deve ser informada.")
+    @NotNull(message = "O campo currentQuantity não pode ser nulo.")
+    @PositiveOrZero(message = "O campo currentQuantity não pode ser menor do que zero.")
     private Integer currentQuantity;
-//    @Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2}", message = "A data deve ter o seguinte formato: YYYY-MM-DD")
+    @PastOrPresent(message = "O campo manufacturingDate não pode receber uma data futura.")
+    @NotNull(message = "O campo manufacturingDate não pode ser nulo.")
     private LocalDate manufacturingDate;
-//    @Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z", message = "A data e hora deve ter o seguinte formato: yyyy-mm-ddThh:mm:ssZ")
+    @PastOrPresent(message = "O campo manufacturingTime não pode receber uma data/hora futura.")
+    @NotNull(message = "O campo manufacturingTime não pode ser nulo.")
     private LocalDateTime manufacturingTime;
-//    @Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2}", message = "A data deve ter o seguinte formato: YYYY-MM-DD")
+    @FutureOrPresent(message = "O campo dueDate não pode receber uma data pretérita.")
+    @NotNull(message = "O campo dueDate não pode ser nulo.")
     private LocalDate dueDate;
-//    @NotNull(message = "O número do ID da inboundOrder deve ser informado.")
     private Integer inboundOrderId;
 
     public static BatchDTO convertToDTO(Batch batch) {

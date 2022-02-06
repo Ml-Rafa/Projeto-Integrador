@@ -34,7 +34,7 @@ public class InboundOrderController {
     }
 
     @PutMapping("/update-inbound-order/{id}")
-    public ResponseEntity<?> updateInboundOrder(@PathVariable Integer id, @RequestBody InboundOrderDTO inboundOrder) {
+    public ResponseEntity<?> updateInboundOrder(@PathVariable Integer id, @Valid @RequestBody InboundOrderDTO inboundOrder) {
 
         inboundOrder.setOrderNumber(id);
 

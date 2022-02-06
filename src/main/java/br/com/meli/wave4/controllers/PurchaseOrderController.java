@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -40,7 +41,7 @@ public class PurchaseOrderController {
     }
 
     @PostMapping("/orders/")
-    public ResponseEntity<?> registerPurchaseOrder(PurchaseOrderDTO purchaseOrderDto, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<?> registerPurchaseOrder(@Valid @RequestBody PurchaseOrderDTO purchaseOrderDto, UriComponentsBuilder uriBuilder) {
         PurchaseOrder purchaseOrder = this.purchaseOrderService.convertToEntity(purchaseOrderDto);
 
         //chamada do método que vai salvar o carrinho de compras
@@ -63,7 +64,7 @@ public class PurchaseOrderController {
     }
 
     @PostMapping("fresh-products/orders")
-    public ResponseEntity<?> order(@RequestBody PurchaseOrderDTO purchaseOrderDTO, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<?> order(@Valid @RequestBody PurchaseOrderDTO purchaseOrderDTO, UriComponentsBuilder uriBuilder){
 
         PurchaseOrder purchaseOrder = this.purchaseOrderService.convertToEntity(purchaseOrderDTO);
 
