@@ -5,6 +5,7 @@ import br.com.meli.wave4.DTO.InboundOrderDTO;
 import br.com.meli.wave4.entities.*;
 import br.com.meli.wave4.exceptions.*;
 import br.com.meli.wave4.repositories.InboundOrderRepository;
+import br.com.meli.wave4.repositories.UserRepository;
 import br.com.meli.wave4.services.iservices.IInboundOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,12 @@ public class InboundOrderService implements IInboundOrderService {
 
     @Autowired
     RepresentativeService representativeService;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    AuthenticationService authenticationService;
 
     @Override
     public Boolean checkProductSection(Integer sectionCode, Integer productId) {
@@ -85,7 +92,7 @@ public class InboundOrderService implements IInboundOrderService {
         inboundOrderUpdated.setSection(inboundOrder.getSection());
         inboundOrderUpdated.setSellerId(inboundOrder.getSellerId());
         inboundOrder.getBatchStock().forEach(batch -> batch.setInboundOrder(inboundOrderUpdated));
-        inboundOrder.getBatchStock().forEach(batch -> batch.setRepresentative(AuthenticationService.authenticated()));
+        inboundOrder.getBatchStock().forEach(batch -> batch.setRepresentative(authenticationService.authenticated()));
         inboundOrder.getBatchStock().forEach(batch -> batch.setSection(inboundOrderUpdated.getSection()));
         inboundOrder.getBatchStock().forEach(batch -> batchService.update(batch));
         inboundOrderUpdated.setBatchStock(inboundOrder.getBatchStock());
@@ -118,41 +125,48 @@ public class InboundOrderService implements IInboundOrderService {
 
         this.checkSectionOfWarehouse(warehouse, section);
 
-//      VERIFICA SE O ID DO PRODUTO ESTÁ REGISTRADO EM NOME DO VENDEDOR
-        inboundOrder.getBatchStock().forEach(batch -> sellerService.productBelongToTheSeller(inboundOrder, batch));
+        //    VERIFICA SE O ID DO PRODUTO ESTÁ REGISTRADO EM NOME DO VENDEDOR
+            inboundOrder.getBatchStock().forEach(batch -> sellerService.productBelongToTheSeller(inboundOrder, batch));
 
 //      VALIDA SE O PRODUTO ESTÁ NO SETOR CORRETO E O REPRESENTANTE
-        inboundOrder.getBatchStock().forEach(batch -> {
-            User representative = AuthenticationService.authenticated();
-            representativeService.checkRepresentativeOfWarehouse(warehouse, representative);
-            checkProductSection(inboundOrder.getSection().getSectionCode(), batch.getProduct().getId());
-            batch.setRepresentative(representative);
-            batch.setSection(section);
-        });
+            inboundOrder.getBatchStock().forEach(batch -> {
+                User representative = authenticationService.authenticated();
+                representativeService.checkRepresentativeOfWarehouse(warehouse, representative);
+                checkProductSection(inboundOrder.getSection().getSectionCode(), batch.getProduct().getId());
+                batch.setRepresentative(representative);
+                batch.setSection(section);
+            });
 
 //      VALIDA O ESPAÇO
-        Integer totalItens = this.getTotalProductsInSection(inboundOrder.getBatchStock());
-        verifyAvailableArea(totalItens, section);
+            Integer totalItens = this.getTotalProductsInSection(inboundOrder.getBatchStock());
+            verifyAvailableArea(totalItens, section);
 
 //      REGISTRA INBOUND ORDER
-        InboundOrder i = this.inboundOrderRepository.save(inboundOrder);
+            InboundOrder i = this.inboundOrderRepository.save(inboundOrder);
 
 //      REGISTRA O LOTE
-        registerBatch(inboundOrder.getBatchStock(), i);
+            registerBatch(inboundOrder.getBatchStock(), i);
 
-        //busca novamente porque a lista já está atualizada
-        Section sectionAfterInsert = sectionService.findBySectionCode(inboundOrder.getSection().getSectionCode());
-        Set<Product> productSet = new HashSet<>();
-        inboundOrder.getBatchStock().forEach(batch -> {
-            productSet.add(batch.getProduct());
-        });
-        return inboundOrder;
+            //busca novamente porque a lista já está atualizada
+            Section sectionAfterInsert = sectionService.findBySectionCode(inboundOrder.getSection().getSectionCode());
+            Set<Product> productSet = new HashSet<>();
+            inboundOrder.getBatchStock().forEach(batch -> {
+                productSet.add(batch.getProduct());
+            });
+            return inboundOrder;
+
+
     }
 
+//
+
+
     @Override
-    public void checkSectionOfWarehouse(Warehouse warehouse, Section section) {
+    public Boolean checkSectionOfWarehouse(Warehouse warehouse, Section section) {
         if (!warehouse.getId().equals(section.getWarehouse().getId())) {
             throw new InvalidSectionException();
+        }else{
+            return true;
         }
     }
 
@@ -188,7 +202,6 @@ public class InboundOrderService implements IInboundOrderService {
                 .batchStock(batchList)
                 .sellerId(inboundOrderDTO.getSellerId())
                 .warehouse(Warehouse.builder().id(inboundOrderDTO.getWarehouseCode()).build())
-//                .warehouse(warehouseService.findById(inboundOrderDTO.getWarehouseCode()))
                 .build();
     }
 

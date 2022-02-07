@@ -33,6 +33,9 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     @Autowired
     BatchService batchService;
 
+    @Autowired
+    AuthenticationService authenticationService;
+
 
     public PurchaseOrderDTO convertToDTO(PurchaseOrder purchaseOrder) {
 
@@ -49,7 +52,7 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     public PurchaseOrder convertToEntity(PurchaseOrderDTO purchaseOrderDTO) {
         return PurchaseOrder.builder()
 //                .client(userRepository.findById(purchaseOrderDTO.getClientId()).orElse(null))
-                .client(AuthenticationService.authenticated())
+                .client(this.authenticationService.authenticated())
                 .orderStatus(purchaseOrderDTO.getOrderStatus())
                 .date(purchaseOrderDTO.getDate())
                 .id(purchaseOrderDTO.getId())
@@ -67,7 +70,7 @@ public class PurchaseOrderService implements IPurchaseOrderService {
             Product p = this.productService.findById(a.getProduct().getId());
 
 //            User client = (userRepository.findById(purchaseOrder.getClient().getId()).orElse(null));
-            User client = AuthenticationService.authenticated();
+            User client =this.authenticationService.authenticated();
             Boolean haveStock =
                     this.productService.verifyStock(p.getId(),a.getQuantity(),a.getBatchCode());
             Boolean lessThan3weak = this.productService.verifyIfDueDateLessThan3Weeks(p);

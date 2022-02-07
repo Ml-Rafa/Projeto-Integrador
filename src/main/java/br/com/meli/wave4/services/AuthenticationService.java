@@ -21,7 +21,7 @@ public class AuthenticationService implements UserDetailsService{
         return repository.findByUser(username);
     }
 
-    public static User authenticated(){
+    public  User authenticated(){
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 

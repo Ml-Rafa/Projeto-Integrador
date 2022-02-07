@@ -22,7 +22,7 @@ public interface IInboundOrderService {
 
     void registerBatch(Batch batch);
 
-    void checkSectionOfWarehouse(Warehouse warehouse, Section section);
+    Boolean checkSectionOfWarehouse(Warehouse warehouse, Section section);
 
     Warehouse getWarehouse(InboundOrder inboundOrder);
 

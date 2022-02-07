@@ -23,8 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 public class InboundOrderServiceTest {
@@ -48,6 +47,15 @@ public class InboundOrderServiceTest {
     SectionService sectionService;
 
     @Mock
+    SellerService sellerService;
+
+    @Mock
+    ProductService productService;
+
+    @Mock
+    AuthenticationService authenticationService;
+
+    @Mock
     WarehouseService warehouseService;
 
     InboundOrder inboundOrder;
@@ -60,7 +68,7 @@ public class InboundOrderServiceTest {
 
     Section section;
 
-    Warehouse warehouse;
+    Warehouse warehouse = null;
 
     Product product;
 
@@ -75,10 +83,11 @@ public class InboundOrderServiceTest {
         this.section = Section
                 .builder()
                 .sectionCode(5)
-                .availableCapacity(35.0)
+                .availableCapacity(135.0)
                 .warehouse(this.warehouse)
-                .maxCapacity(35.0)
+                .maxCapacity(135.0)
                 .temperature(-5.0)
+                .storageType(String.valueOf(TypeRefrigeration.REFRIGERATED))
                 .build();
 
         this.batchList.add(
@@ -135,12 +144,14 @@ public class InboundOrderServiceTest {
                         .batchStock(this.batchDTOList)
                 .build();
 
-        representative = new User();
-        representative.setId(77);
-        representative.setBatch(this.batchList);
-        representative.setWarehouse(this.warehouse);
-        representative.setName("Joao");
-        representative.setDocument("777777");
+        representative = User.builder()
+                .name("José Rodriguez")
+                .document("123.123.123")
+                .warehouse(this.warehouse)
+                .user("joserodriguez")
+                .password("$2a$10$ACeicQVIBKhi6wodeFH3jO4ziB0pfQ3AVulvcsFL.32n3e3rFaiWe")
+                .active(true)
+                .build();
 
         this.batchList.get(0).setRepresentative(representative);
 
@@ -170,7 +181,7 @@ public class InboundOrderServiceTest {
     public void getRepresentative(){
 
         when(this.representativeService.findById(any())).thenReturn(representative);
-        assertEquals("Joao", this.inboundOrderService.getRepresentative(this.batchList.get(0)).getName());
+        assertEquals("José Rodriguez", this.inboundOrderService.getRepresentative(this.batchList.get(0)).getName());
 
         when(this.representativeService.findById(any())).thenReturn(null);
         assertThrows(RepresentativeNotCorrespondentException.class,
@@ -195,6 +206,23 @@ public class InboundOrderServiceTest {
 
         when(this.warehouseService.findById(any())).thenReturn(null);
         assertThrows(InvalidWarehouseException.class, ()-> this.inboundOrderService.getWarehouse(this.inboundOrder));
+    }
+
+    @Test
+    public void create(){
+
+        when(this.warehouseService.findById(any())).thenReturn(this.warehouse);
+        when(this.sectionService.findBySectionCode(any())).thenReturn(this.section);
+        when(this.representativeService.checkRepresentativeOfWarehouse(any(),any())).thenReturn(true);
+        when(this.productService.findById(any())).thenReturn(this.product);
+        when(this.sectionService.findBySectionCode(any())).thenReturn(this.section);
+        when(this.authenticationService.authenticated()).thenReturn(representative);
+        when(this.inboundOrderRepository.save(any())).thenReturn(this.inboundOrder);
+
+
+
+       assertNotNull(this.inboundOrderService.create(this.inboundOrder));
+
     }
 
 }
