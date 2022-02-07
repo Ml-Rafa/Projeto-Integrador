@@ -63,9 +63,7 @@ public class PurchaseOrderController {
 
     @GetMapping("/orders/{id}")
     public ResponseEntity<?> productsOnOrder(@PathVariable Integer id) {
-
         return ResponseEntity.status(200).body(purchaseOrderService.findById(id));
-        //return ResponseEntity.ok().body(purchaseOrderService.findById(id));
     }
 
     @PutMapping("/orders/{id}")

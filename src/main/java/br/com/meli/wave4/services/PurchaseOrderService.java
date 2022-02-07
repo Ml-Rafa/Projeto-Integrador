@@ -92,17 +92,50 @@ public class PurchaseOrderService implements IPurchaseOrderService {
 
 
     public PurchaseOrder findById(Integer id) {
-        return purchaseOrderRepository.findById(id).orElse(null);
+        PurchaseOrder purchaseOrder = purchaseOrderRepository.findById(id).orElse(null);
+        return purchaseOrder;
     }
 
     public PurchaseOrder update(PurchaseOrder purchaseOrder) {
-        PurchaseOrder purchaseOrderUpdated = purchaseOrderRepository.findById(purchaseOrder.getId()).orElse(null);
-        purchaseOrderUpdated.setDate(purchaseOrder.getDate());
-        purchaseOrderUpdated.setOrderStatus(purchaseOrder.getOrderStatus());
-        purchaseOrderUpdated.setArticlesPurchases(purchaseOrder.getArticlesPurchases());
-        purchaseOrderUpdated.setTotalPrice(purchaseOrder.getTotalPrice());
+        //PurchaseOrder purchaseOrderUpdated = purchaseOrderRepository.findById(purchaseOrder.getId()).orElse(null);
 
-        return purchaseOrderRepository.saveAndFlush(purchaseOrderUpdated);
+        List<ArticlesPurchase> products = new ArrayList<>();
+
+        for(ArticlesPurchase a : purchaseOrder.getArticlesPurchases()) {
+            Product p = this.productService.findById(a.getProduct().getId());
+
+            Boolean haveStock = this.productService.verifyStock(p.getId(), a.getQuantity(), a.getBatchCode());
+
+            Boolean lessThan2Week = this.productService.verifyIfDueDateLessThan3Weeks(p);
+
+            if(haveStock && !lessThan2Week) {
+                products.add(a);
+                this.batchService.updateStock(p.getId(), a.getQuantity(), a.getBatchCode());
+            }
+        }
+
+        purchaseOrder.setTotalPrice(this.articlesPurchaseService.calcTotalPrice(products));
+        purchaseOrder.setArticlesPurchases(products);
+
+
+        return this.purchaseOrderRepository.saveAndFlush(purchaseOrder);
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
