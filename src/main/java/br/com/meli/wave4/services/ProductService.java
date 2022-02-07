@@ -36,11 +36,14 @@ public class ProductService implements IProductService {
     @Autowired
     SellerService sellerService;
 
+    @Autowired
+    SectionService sectionService;
+
     @Override
     public Product findById(Integer productId) {
         Product product = productRepository.findById(productId).orElse(null);
-        if(product == null)
-            throw  new NotFoundException("Produto não localizado");
+        if (product == null)
+            throw new NotFoundException("Produto não localizado");
         return product;
     }
 
@@ -62,45 +65,39 @@ public class ProductService implements IProductService {
                 .stream().filter(b -> b.getSection().getSectionCode().equals(sectionCode))
                 .findFirst().orElse(null);
         assert batch != null;
-        if(batch.getCurrentQuantity() < quantity)
-           throw new InsufficientStockException();
-       return true;
+        if (batch.getCurrentQuantity() < quantity)
+            throw new InsufficientStockException();
+        return true;
     }
-//    @Override
-//    public Boolean verifyStock(Integer productId, Integer quantity, Integer sectionCode) {
-//        Product product = this.productRepository.findById(productId).orElse(new Product());
-////        assert product != null;
-//        Batch batch = product.getBatchList()
-//                .stream().filter(b -> b.getSection().getSectionCode().equals(sectionCode))
-//                .findFirst().orElse(new Batch());
-////        assert batch != null;
-//        if(batch.getCurrentQuantity() < quantity)
-//            throw new InsufficientStockException();
-//        return true;
-//    }
 
     @Override
     public boolean verifyIfDueDateLessThan3Weeks(Product product) {
-        if(product.getDateValid().isAfter(LocalDate.now().plusDays(20)))
+        if (product.getDateValid().isAfter(LocalDate.now().plusDays(20)))
             return false;
         throw new DueDateLessThan3WeeksException();
     }
 
     @Override
-   public ListProductWithAllBatchDTO filterProductInWarehouse(Warehouse warehouse, Product product,
-                                                                     Character charOrdered){
+    public ListProductWithAllBatchDTO filterProductInWarehouse(Warehouse warehouse, Product product,
+                                                               Character charOrdered) {
 
-       List<Batch> batchList = getBatchListInSpecificWarehouse(warehouse, product);
+        List<Batch> batchList = getBatchListInSpecificWarehouse(warehouse, product);
 
-       List<BatchSimpleResponseDTO> batchSimpleResponseDTOList = getBatchSimpleResponseDTOS(batchList);
+        List<BatchSimpleResponseDTO> batchSimpleResponseDTOList = getBatchSimpleResponseDTOS(batchList);
 
-       List<BatchSimpleResponseDTO> sortedList;
-        switch (charOrdered){
-            case 'L': case 'l':sortedList = orderByBatchNumber(batchSimpleResponseDTOList);
+        List<BatchSimpleResponseDTO> sortedList;
+        switch (charOrdered) {
+            case 'L':
+            case 'l':
+                sortedList = orderByBatchNumber(batchSimpleResponseDTOList);
                 break;
-            case 'C': case 'c': sortedList = orderByCurrentQuantity(batchSimpleResponseDTOList);
+            case 'C':
+            case 'c':
+                sortedList = orderByCurrentQuantity(batchSimpleResponseDTOList);
                 break;
-            case 'F': case 'f': sortedList = orderByDueDate(batchSimpleResponseDTOList);
+            case 'F':
+            case 'f':
+                sortedList = orderByDueDate(batchSimpleResponseDTOList);
                 break;
             default:
                 sortedList = batchSimpleResponseDTOList;
@@ -112,12 +109,14 @@ public class ProductService implements IProductService {
                 .productId(product.getId())
                 .batchStock(sortedList).build();
     }
+
     @Override
     public List<Batch> getBatchListInSpecificWarehouse(Warehouse warehouse, Product product) {
         return product.getBatchList().stream()
                 .filter(batch -> batch.getSection().getWarehouse().equals(warehouse))
                 .collect(Collectors.toList());
     }
+
     @Override
     public List<BatchSimpleResponseDTO> getBatchSimpleResponseDTOS(List<Batch> batchList) {
         return batchList.stream()
@@ -136,16 +135,19 @@ public class ProductService implements IProductService {
 
         return batchSimpleResponseDTOList;
     }
+
     @Override
     public List<BatchSimpleResponseDTO> orderByCurrentQuantity(List<BatchSimpleResponseDTO> batchSimpleResponseDTOList) {
         batchSimpleResponseDTOList.sort(Comparator.comparing(BatchSimpleResponseDTO::getCurrentQuantity));
         return batchSimpleResponseDTOList;
     }
+
     @Override
     public List<BatchSimpleResponseDTO> orderByDueDate(List<BatchSimpleResponseDTO> batchSimpleResponseDTOList) {
         batchSimpleResponseDTOList.sort(Comparator.comparing(BatchSimpleResponseDTO::getDueDate));
         return batchSimpleResponseDTOList;
     }
+
     @Override
     public Product save(Product product) {
         return productRepository.save(product);
@@ -191,32 +193,68 @@ public class ProductService implements IProductService {
         }
     }
 
-    public List<ProductNearExpireDate> getProductsNearOfExpiraionDate(Integer days) {
+    @Override
+    public List<ProductNearExpireDate> getProductsNearOfExpiraionDate(Integer days, String category, String order) {
+
         List<Warehouse> warehouseList = this.warehouseService.findAll();
+
         List<ProductNearExpireDate> productNearExpireDateList = new ArrayList<>();
         LocalDate today = LocalDate.now();
 
         warehouseList.forEach(w -> w.getSectionSet().forEach(s -> {
-            s.getBatchList().forEach(batch -> {
-                if (DAYS.between(today, batch.getDueDate()) <= days) {
-                    LocalDate dueDate = batch.getDueDate();
-                    productNearExpireDateList.add(
-                            new ProductNearExpireDate(
-                                    batch.getBatchNumber(),
-                                    batch.getProduct().getId(),
-                                    batch.getProduct().getSectionTypeRefrigerated().getCode(),
-                                    batch.getCurrentQuantity(),
-                                    dueDate
-                            )
-                    );
-                }
-            });
+            generateListProductsNearOfExpirationDate(days, productNearExpireDateList, today, s);
         }));
-        if (productNearExpireDateList.size() > 0) {
+        if (!productNearExpireDateList.isEmpty()) {
+            if (order != null && !order.isEmpty()) {
+                List<ProductNearExpireDate> filteredList = productNearExpireDateList.stream()
+                        .filter(productNearExpireDate -> productNearExpireDate.getTypeRefrigerated().equals(TypeRefrigeration.valueOf(order.toUpperCase()).getCode()))
+                        .collect(Collectors.toList());
+                productNearExpireDateList.clear();
+                productNearExpireDateList.addAll(filteredList);
+            }
+            productNearExpireDateList.sort(Comparator.comparing(ProductNearExpireDate::getDueDate));
             return productNearExpireDateList;
         } else {
             throw new NotFoundException("Não foram encntrados produtos neste período!");
         }
+    }
+
+    @Override
+    public List<ProductNearExpireDate> getProductsNearOfExpiraionDate(Integer days, Integer sectionCode) {
+        Section section = sectionService.findBySectionCode(sectionCode);
+        List<ProductNearExpireDate> productNearExpireDateList = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+
+        generateListProductsNearOfExpirationDate(days, productNearExpireDateList, today, section);
+
+        if (!productNearExpireDateList.isEmpty()) {
+            productNearExpireDateList.sort(Comparator.comparing(ProductNearExpireDate::getDueDate));
+            return productNearExpireDateList;
+        } else {
+            throw new NotFoundException("Não foram encntrados produtos neste período!");
+        }
+    }
+
+    private void generateListProductsNearOfExpirationDate(Integer days,
+                                                          List<ProductNearExpireDate> productNearExpireDateList,
+                                                          LocalDate today, Section s) {
+        s.getBatchList().forEach(batch -> {
+
+//            if (DAYS.between(today, batch.getDueDate()) <= days) {
+//                LocalDate dueDate = batch.getDueDate();
+//                productNearExpireDateList.add(
+//                        new ProductNearExpireDate(
+//                                batch.getBatchNumber(),
+//                                batch.getProduct().getId(),
+//                                batch.getProduct().getSectionTypeRefrigerated().getCode(),
+//                                batch.getCurrentQuantity(),
+//                                dueDate,
+//                                s.getWarehouse().getId(),
+//                                s.getSectionCode()
+//                        )
+//                );
+//            }
+        });
     }
 
     public Product convertToEntity(ProductDTO product) {
