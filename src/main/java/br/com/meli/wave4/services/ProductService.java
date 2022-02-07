@@ -194,7 +194,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<ProductNearExpireDate> getProductsNearOfExpiraionDate(Integer days, String category, String order) {
+    public List<ProductNearExpireDate> getProductsNearOfExpiraionDate(Integer days, String order) {
 
         List<Warehouse> warehouseList = this.warehouseService.findAll();
 
@@ -204,10 +204,11 @@ public class ProductService implements IProductService {
         warehouseList.forEach(w -> w.getSectionSet().forEach(s -> {
             generateListProductsNearOfExpirationDate(days, productNearExpireDateList, today, s);
         }));
+        System.out.println("teste ----------------------------------------------------------------" + order);
         if (!productNearExpireDateList.isEmpty()) {
             if (order != null && !order.isEmpty()) {
                 List<ProductNearExpireDate> filteredList = productNearExpireDateList.stream()
-                        .filter(productNearExpireDate -> productNearExpireDate.getTypeRefrigerated().equals(TypeRefrigeration.valueOf(order.toUpperCase()).getCode()))
+                        .filter(productNearExpireDate -> productNearExpireDate.getTypeRefrigerated().equals(TypeRefrigeration.valueOf(order.toUpperCase())))
                         .collect(Collectors.toList());
                 productNearExpireDateList.clear();
                 productNearExpireDateList.addAll(filteredList);

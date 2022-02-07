@@ -67,10 +67,10 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/due-date-all/{days}/{category}")
-    public ResponseEntity<?> getProductsNearOfExpirationDate(@PathVariable Integer days, @PathVariable String category, @RequestParam(required = false) String order){
+    @GetMapping("/due-date/{days}")
+    public ResponseEntity<?> getProductsNearOfExpirationDate(@PathVariable Integer days,  @RequestParam(required = false) String order){
         if (!days.equals(0)){
-            List<ProductNearExpireDateDTO> productList = productService.getProductsNearOfExpiraionDate(days, category, order).stream()
+            List<ProductNearExpireDateDTO> productList = productService.getProductsNearOfExpiraionDate(days, order).stream()
                     .map(ProductNearExpireDateDTO::convertToDTO)
                     .collect(Collectors.toList());
 

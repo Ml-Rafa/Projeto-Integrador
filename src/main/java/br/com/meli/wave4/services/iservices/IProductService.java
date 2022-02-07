@@ -38,7 +38,7 @@ public interface IProductService {
 
     public List<WarehouseProductInfo> countProductInWarehouse(Integer productId);
 
-    public List<ProductNearExpireDate> getProductsNearOfExpiraionDate(Integer days, String category, String order);
+    public List<ProductNearExpireDate> getProductsNearOfExpiraionDate(Integer days, String order);
 
     public List<ProductNearExpireDate> getProductsNearOfExpiraionDate(Integer days, Integer sectionCode);
 
