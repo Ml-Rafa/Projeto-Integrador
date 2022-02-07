@@ -1,16 +1,15 @@
 package br.com.meli.wave4.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,10 +34,13 @@ public class Batch {
 
     @JsonBackReference
     @ManyToOne
-    private Representative representative;
+    private User representative;
+//    @JsonBackReference
+//    @ManyToOne
+//    private Representative representative;
 
     private Double currentTemperature;
-    private Double minimumTemperature;
+    private Double minimumTemperature;;
     private Integer initialQuantity;
     private Integer currentQuantity;
     private LocalDate manufacturingDate;

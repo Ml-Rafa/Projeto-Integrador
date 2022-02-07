@@ -3,6 +3,7 @@ package br.com.meli.wave4.controllers;
 import br.com.meli.wave4.DTO.ProductNearExpireDateDTO;
 import br.com.meli.wave4.entities.Product;
 import br.com.meli.wave4.entities.ProductNearExpireDate;
+import br.com.meli.wave4.entities.Section;
 import br.com.meli.wave4.entities.Warehouse;
 import br.com.meli.wave4.exceptions.NotFoundException;
 import br.com.meli.wave4.services.ProductService;
@@ -53,11 +54,23 @@ public class ProductController {
         return ResponseEntity.ok(productService.countProductInWarehouse(productId));
     }
 
-    //teste getProductsNearOfExpiraionDate, depois deve ser modificar p/ atender o requisito de filtros da us5
-    @GetMapping("/expiration-date/{days}")
-    public ResponseEntity<?> getProductsNearOfExpirationDate(@PathVariable Integer days){
+    @GetMapping("/due-date/{days}/{sectionId}")
+    public ResponseEntity<?> getProductsNearOfExpirationDate(@PathVariable Integer days, @PathVariable Integer sectionId){
         if (!days.equals(0)){
-            List<ProductNearExpireDateDTO> productList = productService.getProductsNearOfExpiraionDate(days).stream()
+            List<ProductNearExpireDateDTO> productList = productService.getProductsNearOfExpiraionDate(days, sectionId).stream()
+                    .map(ProductNearExpireDateDTO::convertToDTO)
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.ok(productList);
+        } else{
+            throw new NotFoundException("Não é possível realizar busca com esse valor!");
+        }
+    }
+
+    @GetMapping("/due-date-all/{days}/{category}")
+    public ResponseEntity<?> getProductsNearOfExpirationDate(@PathVariable Integer days, @PathVariable String category, @RequestParam(required = false) String order){
+        if (!days.equals(0)){
+            List<ProductNearExpireDateDTO> productList = productService.getProductsNearOfExpiraionDate(days, category, order).stream()
                     .map(ProductNearExpireDateDTO::convertToDTO)
                     .collect(Collectors.toList());
 

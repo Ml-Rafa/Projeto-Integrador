@@ -3,15 +3,19 @@ package br.com.meli.wave4.services;
 import br.com.meli.wave4.DTO.BatchDTO;
 import br.com.meli.wave4.entities.Batch;
 import br.com.meli.wave4.entities.Product;
+import br.com.meli.wave4.entities.Section;
 import br.com.meli.wave4.exceptions.BatchNotContainsProductException;
 import br.com.meli.wave4.exceptions.NotFoundException;
 import br.com.meli.wave4.repositories.BatchRepository;
+import br.com.meli.wave4.repositories.ProductRepository;
+import br.com.meli.wave4.repositories.UserRepository;
 import br.com.meli.wave4.services.iservices.IBatchService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @NoArgsConstructor
@@ -21,11 +25,16 @@ public class BatchService implements IBatchService {
     private BatchRepository batchRepository;
 
     @Autowired
-    private ProductService productService;
+    private ProductRepository productRepository;
 
     @Autowired
     private RepresentativeService representativeService;
 
+    @Autowired
+    private UserRepository userRepository;
+
+//    @Autowired
+//    private InboundOrderService inboundOrderService;
 
     public BatchService(BatchRepository batchRepository) {
         this.batchRepository = batchRepository;
@@ -33,6 +42,7 @@ public class BatchService implements IBatchService {
 
     @Override
     public Batch findByBatchNumber(Integer batchNumber) {
+//        return batchRepository.findByBatchNumber(batchNumber);
         Batch batch = batchRepository.findByBatchNumber(batchNumber);
         if(batch == null)
             throw new NotFoundException("Não foi localizado nenhum lote com o número informado.");
@@ -45,8 +55,8 @@ public class BatchService implements IBatchService {
     }
 
     @Override
-    public void save(Batch batch) {
-        batchRepository.save(batch);
+    public Batch save(Batch batch) {
+        return batchRepository.save(batch);
     }
 
 
@@ -55,14 +65,14 @@ public class BatchService implements IBatchService {
                 .batchNumber(batch.getBatchNumber())
                 .currentQuantity(batch.getCurrentQuantity())
                 .initialQuantity(batch.getInitialQuantity())
-                .product(productService.findById(batch.getProductId()))
+                .product(productRepository.findById(batch.getProductId()).orElse(null))
                 .currentTemperature(batch.getCurrentTemperature())
                 .minimumTemperature(batch.getMinimumTemperature())
-                .representative(representativeService.findById(batch.getRepresentativeId()))
+//                .representative(userRepository.findById(batch.getRepresentativeId()).stream().findFirst().orElse(null))
                 .dueDate(batch.getDueDate())
                 .manufacturingDate(batch.getManufacturingDate())
                 .manufacturingTime(batch.getManufacturingTime())
-                // .inboundOrder(this.inboundOrderService.findyById(batch.getInboundOrderId()))
+//                 .inboundOrder(this.inboundOrderService.findyById(batch.getInboundOrderId()))
                 .build();
     }
 
@@ -96,7 +106,8 @@ public class BatchService implements IBatchService {
 
     @Override
     public void updateStock(Integer productId, Integer quantity, Integer sectionCode) {
-        Product product = this.productService.findById(productId);
+        Product product = productRepository.findById(productId).orElse(null);
+        assert product != null;
         Batch batch = product.getBatchList()
                 .stream().filter(b -> b.getSection().getSectionCode().equals(sectionCode))
                 .findFirst().orElse(null);

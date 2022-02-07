@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class ApiExceptionControllerAdvice {
 
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ValidationError> methodArgumentNotValid(MethodArgumentNotValidException e, HttpServletRequest request) {
         ValidationError err = new ValidationError(System.currentTimeMillis(),
@@ -76,7 +77,7 @@ public class ApiExceptionControllerAdvice {
     @ExceptionHandler(ProductDoesNotBelongToTheSellerException.class)
     public ResponseEntity<StandardError> productDoesNotBelongToTheSellerException(ProductDoesNotBelongToTheSellerException e, HttpServletRequest request) {
         StandardError err = new StandardError(System.currentTimeMillis(),
-                HttpStatus.BAD_REQUEST.value(), "Product Does Not Belong To The Seller Error", "O produto informado não está registrado em nome do vendedor.", request.getRequestURI());
+                HttpStatus.BAD_REQUEST.value(), "Product Does Not Belong To The Seller Error", "Um dos produtos informados não está registrado em nome do vendedor.", request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 

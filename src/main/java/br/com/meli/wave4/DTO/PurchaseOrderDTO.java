@@ -7,8 +7,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -18,10 +20,17 @@ import java.util.Set;
 public class PurchaseOrderDTO {
 
     private Integer id;
+    @PastOrPresent(message = "O campo date não pode receber uma data futura.")
+    @NotNull(message = "O campo date não pode ser nulo.")
     private LocalDate date;
-    private Integer clientId;
+//    @NotNull(message = "O campo clientId não pode ser nulo.")
+//    @PositiveOrZero(message = "O número do campo clientId não pode ser negativo.")
+//    private Integer clientId;
+    @NotNull(message = "O campo orderStatus não pode ser nulo.")
     private OrderStatus orderStatus;
-    private Set<ArticlesPurchaseDTO> articlesPurchases;
+    @NotNull(message = "O campo articlesPurchase não pode ser nulo.")
+    private List<ArticlesPurchaseDTO> articlesPurchases;
     private BigDecimal totalPrice;
+
 
 }

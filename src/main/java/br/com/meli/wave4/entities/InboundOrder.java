@@ -1,10 +1,7 @@
 package br.com.meli.wave4.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -26,7 +24,7 @@ public class InboundOrder {
     @ManyToOne
     @JoinColumn(name = "section_id", referencedColumnName = "sectionCode")
     private Section section;
-
+    private Integer sellerId;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "inboundOrder")
     private List<Batch> batchStock = new ArrayList<>();

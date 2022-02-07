@@ -6,5 +6,5 @@ import br.com.meli.wave4.entities.PurchaseOrder;
 public interface IPurchaseOrderService {
 
 
-    public PurchaseOrderDTO order(PurchaseOrder purchaseOrder);
+    PurchaseOrder order(PurchaseOrder purchaseOrder);
 }

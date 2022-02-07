@@ -9,6 +9,8 @@ import br.com.meli.wave4.services.iservices.ISectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class SectionService implements ISectionService {
 
@@ -21,7 +23,8 @@ public class SectionService implements ISectionService {
 
     @Override
     public Section findBySectionCode(Integer sectionCode){
-        Section section = sectionRepository.findBySectionCode(sectionCode).orElse(null);
+//        return sectionRepository.findBySectionCode(sectionCode);
+        Section section = sectionRepository.findBySectionCode(sectionCode);
         if(section == null)
             throw new NotFoundException("Setor não localizado.");
         return section;
