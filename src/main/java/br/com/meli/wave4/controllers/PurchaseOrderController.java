@@ -61,18 +61,18 @@ public class PurchaseOrderController {
                 : ResponseEntity.ok(productListPersistence);
     }
 
-    @PostMapping("/orders/")
-    public ResponseEntity<?> registerPurchaseOrder(@Valid @RequestBody PurchaseOrderDTO purchaseOrderDto, UriComponentsBuilder uriBuilder) {
-        PurchaseOrder purchaseOrder = this.purchaseOrderService.convertToEntity(purchaseOrderDto);
-
-        //chamada do método que vai salvar o carrinho de compras
-        // purchaseOrderService.create(purchaseOrder);
-
-        return ResponseEntity.created(uriBuilder
-            .path("register-purchase-order")
-            .buildAndExpand("register")
-            .toUri()).body(purchaseOrderService.convertToDTO(purchaseOrder));
-    }
+//    @PostMapping("/orders")
+//    public ResponseEntity<?> registerPurchaseOrder(@Valid @RequestBody PurchaseOrderDTO purchaseOrderDto, UriComponentsBuilder uriBuilder) {
+//        PurchaseOrder purchaseOrder = this.purchaseOrderService.convertToEntity(purchaseOrderDto);
+//
+//        //chamada do método que vai salvar o carrinho de compras
+//         purchaseOrderService.order(purchaseOrder);
+//
+//        return ResponseEntity.created(uriBuilder
+//            .path("register-purchase-order")
+//            .buildAndExpand("register")
+//            .toUri()).body(purchaseOrderService.convertToDTO(purchaseOrder));
+//    }
 
     @GetMapping("/orders/{id}")
     public ResponseEntity<?> productsOnOrder(PurchaseOrder purchaseOrder) {
@@ -84,7 +84,7 @@ public class PurchaseOrderController {
         return null;
     }
 
-    @PostMapping("fresh-products/orders")
+    @PostMapping("/orders")
     public ResponseEntity<?> order(@Valid @RequestBody PurchaseOrderDTO purchaseOrderDTO, UriComponentsBuilder uriBuilder){
 
         PurchaseOrder purchaseOrder = this.purchaseOrderService.convertToEntity(purchaseOrderDTO);
@@ -92,8 +92,6 @@ public class PurchaseOrderController {
         return ResponseEntity.created(uriBuilder
                 .path("register-purchase-order")
                 .buildAndExpand("register")
-                .toUri()).body(this.purchaseOrderService.order(purchaseOrder));
-
+                .toUri()).body(purchaseOrderService.convertToDTO(this.purchaseOrderService.order(purchaseOrder)));
     }
-
 }

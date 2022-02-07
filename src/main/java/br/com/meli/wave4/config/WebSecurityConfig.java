@@ -39,7 +39,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
 
     private static final String[] PUBLIC_MATCHERS = {
-            "/h2-console/**"
+            "/h2-console/**",
+            "/swagger-ui/index.html/**",
+            "/swagger-ui.html/**",
+            "/v3/api-docs/**",
+            "/"
     };
 
     //autenticacao
@@ -60,8 +64,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
-//                .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/inboundorder/register-inbound-order")
-//                .hasAnyAuthority("ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/v1/fresh-products/inboundorder/register-inbound-order/**")
                 .hasAnyAuthority("REPRESENTATIVE")
                 .antMatchers(HttpMethod.PUT, "/api/v1/fresh-products/inboundorder/update-inbound-order/**")

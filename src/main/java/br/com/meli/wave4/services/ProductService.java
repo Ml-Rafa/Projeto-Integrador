@@ -66,6 +66,18 @@ public class ProductService implements IProductService {
            throw new InsufficientStockException();
        return true;
     }
+//    @Override
+//    public Boolean verifyStock(Integer productId, Integer quantity, Integer sectionCode) {
+//        Product product = this.productRepository.findById(productId).orElse(new Product());
+////        assert product != null;
+//        Batch batch = product.getBatchList()
+//                .stream().filter(b -> b.getSection().getSectionCode().equals(sectionCode))
+//                .findFirst().orElse(new Batch());
+////        assert batch != null;
+//        if(batch.getCurrentQuantity() < quantity)
+//            throw new InsufficientStockException();
+//        return true;
+//    }
 
     @Override
     public boolean verifyIfDueDateLessThan3Weeks(Product product) {

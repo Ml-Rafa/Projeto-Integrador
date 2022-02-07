@@ -34,8 +34,8 @@ INSERT INTO users (name, document, username, password, enabled) VALUES ('Descont
 INSERT INTO users (name, document, username, password, enabled) VALUES ('Carlito Frios', '978.0001/2430-45','carlitofrios', '$2a$10$FhB/9FUavDkVAkXx/i4f7e7oOUdQ0/.rMi2FmTmjA0b46xR3c7gbW', '1'); -- 3
 
 --PRODUCT
-INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id,price) VALUES ('Frango Congelado', 'FROZEN', '2021-10-24', 2, 10.0);
-INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id,price) VALUES ('Pao de Queijo Congelado', 'FROZEN', '2022-01-11', 1, 10.0);
+INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id,price) VALUES ('Frango Congelado', 'FROZEN', '2022-10-24', 2, 10.0);
+INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id,price) VALUES ('Pao de Queijo Congelado', 'FROZEN', '2022-04-11', 1, 10.0);
 INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id,price) VALUES ('Manteiga', 'REFRIGERATED', '2022-01-10', 3, 10.0);
 INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id,price) VALUES ('Iogurte', 'REFRIGERATED', '2021-11-12', 1, 10.0);
 INSERT INTO product (name, section_type_refrigerated, date_valid, seller_id,price) VALUES ('maça', 'FRESH', '2021-11-24', 1, 10.0);

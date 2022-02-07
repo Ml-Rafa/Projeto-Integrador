@@ -6,7 +6,9 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -34,7 +36,7 @@ public class PurchaseOrder {
     private OrderStatus orderStatus;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
-    private Set<ArticlesPurchase> articlesPurchases = new HashSet<>();
+    private List<ArticlesPurchase> articlesPurchases = new ArrayList<>();
 
     private BigDecimal totalPrice;
 
