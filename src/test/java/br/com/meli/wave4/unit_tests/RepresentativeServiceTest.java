@@ -34,23 +34,23 @@ public class RepresentativeServiceTest {
     List<Batch> batchList = new ArrayList<>();
 
     @BeforeEach
-    void setup(){
+    void setup() {
         MockitoAnnotations.openMocks(this);
         this.warehouse =
                 Warehouse.builder().build();
 
         this.representative =
                 new Representative();
-                this.representative.setId(3);
-                this.representative.setWarehouse(this.warehouse);
-                this.representative.setBatch(this.batchList);
+        this.representative.setId(3);
+        this.representative.setWarehouse(this.warehouse);
+        this.representative.setBatch(this.batchList);
     }
 
     @Test
-    public void findById(){
+    public void findById() {
 
         when(this.representativeRepository.findById(any())).thenReturn(java.util.Optional.ofNullable(this.representative));
-        assertEquals(3,this.representativeService.findById(any()).getId());
+        assertEquals(3, this.representativeService.findById(any()).getId());
 
 
     }
