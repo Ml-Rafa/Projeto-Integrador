@@ -69,8 +69,31 @@ public class ProductController {
 
     @GetMapping("/due-date/{days}")
     public ResponseEntity<?> getProductsNearOfExpirationDate(@PathVariable Integer days,  @RequestParam(required = false) String order){
-        if (!days.equals(0)){
-            List<ProductNearExpireDateDTO> productList = productService.getProductsNearOfExpiraionDate(days, order).stream()
+        List<String> validCharacters = Arrays.asList("FF", "ff", "RF", "rf", "FS", "fs");
+        if(!validCharacters.contains(order)) {
+            throw new RuntimeException("Letra de ordenação inserida é inválida.\n" +
+                    "Letras válidas: " +
+                    "\n\nFF = Para obter a lista de produtos congelados" +
+                    "\nRF = Para obter a lista de produtos refrigerados" +
+                    "\nFS = Para obter a lista de produtos frescos."
+            );
+        }
+        if (!days.equals(0) && order != ""){
+            String orderBy;
+            switch (order.toUpperCase()) {
+                case "FF":
+                    orderBy = "FROZEN";
+                    break;
+                case "RF":
+                    orderBy = "REFRIGERATED";
+                    break;
+                case "FS":
+                    orderBy = "FRESH";
+                    break;
+                default:
+                    orderBy = "";
+            }
+            List<ProductNearExpireDateDTO> productList = productService.getProductsNearOfExpiraionDate(days, orderBy).stream()
                     .map(ProductNearExpireDateDTO::convertToDTO)
                     .collect(Collectors.toList());
 

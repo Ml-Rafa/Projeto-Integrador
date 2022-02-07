@@ -205,11 +205,11 @@ public class ProductService implements IProductService {
         warehouseList.forEach(w -> w.getSectionSet().forEach(s -> {
             generateListProductsNearOfExpirationDate(days, productNearExpireDateList, today, s);
         }));
-        System.out.println("teste ----------------------------------------------------------------" + order);
+
         if (!productNearExpireDateList.isEmpty()) {
             if (order != null && !order.isEmpty()) {
                 List<ProductNearExpireDate> filteredList = productNearExpireDateList.stream()
-                        .filter(productNearExpireDate -> productNearExpireDate.getTypeRefrigerated().equals(TypeRefrigeration.valueOf(order.toUpperCase())))
+                        .filter(productNearExpireDate -> productNearExpireDate.getTypeRefrigerated().equals(TypeRefrigeration.valueOf(order.toUpperCase()).getCode()))
                         .collect(Collectors.toList());
                 productNearExpireDateList.clear();
                 productNearExpireDateList.addAll(filteredList);
@@ -237,9 +237,7 @@ public class ProductService implements IProductService {
         }
     }
 
-    private void generateListProductsNearOfExpirationDate(Integer days,
-                                                          List<ProductNearExpireDate> productNearExpireDateList,
-                                                          LocalDate today, Section s) {
+    private void generateListProductsNearOfExpirationDate(Integer days, List<ProductNearExpireDate> productNearExpireDateList, LocalDate today, Section s) {
         s.getBatchList().forEach(batch -> {
 
             if (DAYS.between(today, batch.getDueDate()) <= days) {
