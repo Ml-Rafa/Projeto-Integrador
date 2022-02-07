@@ -220,7 +220,6 @@ public class InboundOrderServiceTest {
         when(this.inboundOrderRepository.save(any())).thenReturn(this.inboundOrder);
 
 
-
        assertNotNull(this.inboundOrderService.create(this.inboundOrder));
 
     }
