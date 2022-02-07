@@ -86,4 +86,20 @@ public class PurchaseOrderService implements IPurchaseOrderService {
 
         return this.purchaseOrderRepository.save(purchaseOrder);
     }
+
+
+    public PurchaseOrder findById(Integer id) {
+        return purchaseOrderRepository.findById(id).orElse(null);
+    }
+
+    public PurchaseOrder update(PurchaseOrder purchaseOrder) {
+        PurchaseOrder purchaseOrderUpdated = purchaseOrderRepository.findById(purchaseOrder.getId()).orElse(null);
+        purchaseOrderUpdated.setDate(purchaseOrder.getDate());
+        purchaseOrderUpdated.setOrderStatus(purchaseOrder.getOrderStatus());
+        purchaseOrderUpdated.setArticlesPurchases(purchaseOrder.getArticlesPurchases());
+        purchaseOrderUpdated.setTotalPrice(purchaseOrder.getTotalPrice());
+
+        return purchaseOrderRepository.saveAndFlush(purchaseOrderUpdated);
+
+    }
 }

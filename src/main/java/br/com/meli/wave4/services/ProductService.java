@@ -75,6 +75,7 @@ public class ProductService implements IProductService {
         if (product.getDateValid().isAfter(LocalDate.now().plusDays(20)))
             return false;
         throw new DueDateLessThan3WeeksException();
+
     }
 
     @Override

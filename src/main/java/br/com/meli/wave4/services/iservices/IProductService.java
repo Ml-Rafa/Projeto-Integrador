@@ -19,6 +19,7 @@ public interface IProductService {
 
     boolean verifyIfDueDateLessThan3Weeks(Product product);
 
+
     public ListProductWithAllBatchDTO filterProductInWarehouse(Warehouse warehouse, Product product,
                                                                       Character charOrdered);
 

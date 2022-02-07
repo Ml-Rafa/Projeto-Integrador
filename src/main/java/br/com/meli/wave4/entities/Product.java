@@ -4,6 +4,7 @@ import br.com.meli.wave4.DTO.BatchDTO;
 import br.com.meli.wave4.DTO.InboundOrderDTO;
 import br.com.meli.wave4.DTO.ProductDTO;
 import br.com.meli.wave4.DTO.UserDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -36,6 +37,7 @@ public class Product {
 //    @ManyToOne
 //    @JoinColumn(name = "seller_id", nullable = false)
 //    private Seller seller;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "seller_id", nullable = false)
     private User seller;

@@ -62,13 +62,20 @@ public class PurchaseOrderController {
     }
 
     @GetMapping("/orders/{id}")
-    public ResponseEntity<?> productsOnOrder(PurchaseOrder purchaseOrder) {
-        return null;
+    public ResponseEntity<?> productsOnOrder(@PathVariable Integer id) {
+
+        return ResponseEntity.status(200).body(purchaseOrderService.findById(id));
+        //return ResponseEntity.ok().body(purchaseOrderService.findById(id));
     }
 
     @PutMapping("/orders/{id}")
-    public ResponseEntity<?> updatePurchaseOrder(@PathVariable Integer id) {
-        return null;
+    public ResponseEntity<?> updatePurchaseOrder(@PathVariable Integer id, @RequestBody PurchaseOrderDTO purchaseOrderDTO) {
+        purchaseOrderDTO.setId(id);
+
+        PurchaseOrder entity = this.purchaseOrderService.convertToEntity(purchaseOrderDTO);
+        purchaseOrderService.update(entity);
+
+        return ResponseEntity.status(200).body(purchaseOrderService.convertToDTO(entity));
     }
 
     @PostMapping("/orders")

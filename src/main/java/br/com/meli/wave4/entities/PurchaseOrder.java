@@ -1,6 +1,7 @@
 package br.com.meli.wave4.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,6 +31,8 @@ public class PurchaseOrder {
 //    @ManyToOne
 //    @JoinColumn(name = "client_id")
 //    private Client client;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
