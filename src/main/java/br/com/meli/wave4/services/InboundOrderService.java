@@ -85,6 +85,7 @@ public class InboundOrderService implements IInboundOrderService {
         inboundOrderUpdated.setSection(inboundOrder.getSection());
         inboundOrderUpdated.setSellerId(inboundOrder.getSellerId());
         inboundOrder.getBatchStock().forEach(batch -> batch.setInboundOrder(inboundOrderUpdated));
+        inboundOrder.getBatchStock().forEach(batch -> batch.setRepresentative(AuthenticationService.authenticated()));
         inboundOrder.getBatchStock().forEach(batch -> batch.setSection(inboundOrderUpdated.getSection()));
         inboundOrder.getBatchStock().forEach(batch -> batchService.update(batch));
         inboundOrderUpdated.setBatchStock(inboundOrder.getBatchStock());
