@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -40,10 +41,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
     private static final String[] PUBLIC_MATCHERS = {
             "/h2-console/**",
-            "/swagger-ui/index.html/**",
-            "/swagger-ui.html/**",
-            "/v3/api-docs/**",
-            "/"
     };
 
     //autenticacao
@@ -56,13 +53,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     //autorizacao
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
             http.headers().frameOptions().disable();
         }
         http.cors();
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
+                .antMatchers(
+                        "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html/**", "/swagger-resources/**", "/webjars/**","/").permitAll()
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/fresh-products/inboundorder/register-inbound-order/**")
                 .hasAnyAuthority("REPRESENTATIVE")

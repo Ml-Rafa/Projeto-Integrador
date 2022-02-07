@@ -240,20 +240,20 @@ public class ProductService implements IProductService {
                                                           LocalDate today, Section s) {
         s.getBatchList().forEach(batch -> {
 
-//            if (DAYS.between(today, batch.getDueDate()) <= days) {
-//                LocalDate dueDate = batch.getDueDate();
-//                productNearExpireDateList.add(
-//                        new ProductNearExpireDate(
-//                                batch.getBatchNumber(),
-//                                batch.getProduct().getId(),
-//                                batch.getProduct().getSectionTypeRefrigerated().getCode(),
-//                                batch.getCurrentQuantity(),
-//                                dueDate,
-//                                s.getWarehouse().getId(),
-//                                s.getSectionCode()
-//                        )
-//                );
-//            }
+            if (DAYS.between(today, batch.getDueDate()) <= days) {
+                LocalDate dueDate = batch.getDueDate();
+                productNearExpireDateList.add(
+                        new ProductNearExpireDate(
+                                batch.getBatchNumber(),
+                                batch.getProduct().getId(),
+                                batch.getProduct().getSectionTypeRefrigerated().getCode(),
+                                batch.getCurrentQuantity(),
+                                dueDate,
+                                s.getWarehouse().getId(),
+                                s.getSectionCode()
+                        )
+                );
+            }
         });
     }
 

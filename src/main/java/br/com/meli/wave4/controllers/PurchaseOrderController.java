@@ -61,19 +61,6 @@ public class PurchaseOrderController {
                 : ResponseEntity.ok(productListPersistence);
     }
 
-//    @PostMapping("/orders")
-//    public ResponseEntity<?> registerPurchaseOrder(@Valid @RequestBody PurchaseOrderDTO purchaseOrderDto, UriComponentsBuilder uriBuilder) {
-//        PurchaseOrder purchaseOrder = this.purchaseOrderService.convertToEntity(purchaseOrderDto);
-//
-//        //chamada do método que vai salvar o carrinho de compras
-//         purchaseOrderService.order(purchaseOrder);
-//
-//        return ResponseEntity.created(uriBuilder
-//            .path("register-purchase-order")
-//            .buildAndExpand("register")
-//            .toUri()).body(purchaseOrderService.convertToDTO(purchaseOrder));
-//    }
-
     @GetMapping("/orders/{id}")
     public ResponseEntity<?> productsOnOrder(PurchaseOrder purchaseOrder) {
         return null;
