@@ -39,7 +39,7 @@ public class RepresentativeServiceTest {
     void setup() {
         MockitoAnnotations.openMocks(this);
         this.warehouse =
-                Warehouse.builder().build();
+                Warehouse.builder().id(20).build();
 
         this.representative =
 
@@ -63,6 +63,16 @@ public class RepresentativeServiceTest {
         assertTrue(this.representativeService.compareRepresentative(3,this.representative));
         assertThrows(RepresentativeNotCorrespondentException.class,
                 ()->this.representativeService.compareRepresentative(2,this.representative) );
+    }
+
+    @Test
+    public void checkRepresentativeOfWarehouse(){
+        assertTrue(this.representativeService.checkRepresentativeOfWarehouse(this.warehouse,this.representative));
+
+
+        assertThrows(RepresentativeNotCorrespondentException.class, ()->
+                this.representativeService.checkRepresentativeOfWarehouse(Warehouse.builder().id(1).build(),this.representative)
+                );
     }
 
 
