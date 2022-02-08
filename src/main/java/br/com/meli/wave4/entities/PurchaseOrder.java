@@ -40,6 +40,7 @@ public class PurchaseOrder {
     @OneToMany(mappedBy = "purchaseOrder")
     private List<ArticlesPurchase> articlesPurchases = new ArrayList<>();
 
+
     private BigDecimal totalPrice;
 
 }
