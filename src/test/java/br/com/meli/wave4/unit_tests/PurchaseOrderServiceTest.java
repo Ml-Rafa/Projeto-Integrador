@@ -132,4 +132,16 @@ public class PurchaseOrderServiceTest {
         when(this.articlesPurchaseService.convertToEntity(any())).thenReturn(this.articlesPurchaseList);
         assertNotNull(this.purchaseOrderService.convertToEntity(this.purchaseOrderDTO));
     }
+
+    @Test
+    public void order(){
+        when(this.purchaseOrderRepository.findById(any())).thenReturn(java.util.Optional.ofNullable(this.purchaseOrder));
+        when(this.authenticationService.authenticated()).thenReturn(new User());
+        when(this.productService.verifyStock(any(),any(),any())).thenReturn(true);
+        when(this.productService.findById(any())).thenReturn(this.product);
+        when(this.purchaseOrderRepository.save(any())).thenReturn(this.purchaseOrder);
+
+        this.purchaseOrderService.order(this.purchaseOrder);
+
+    }
 }

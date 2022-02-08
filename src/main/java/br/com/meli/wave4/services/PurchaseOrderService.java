@@ -69,21 +69,17 @@ public class PurchaseOrderService implements IPurchaseOrderService {
 
             Product p = this.productService.findById(a.getProduct().getId());
 
-//            User client = (userRepository.findById(purchaseOrder.getClient().getId()).orElse(null));
             User client =this.authenticationService.authenticated();
             Boolean haveStock =
                     this.productService.verifyStock(p.getId(),a.getQuantity(),a.getBatchCode());
             Boolean lessThan3weak = this.productService.verifyIfDueDateLessThan3Weeks(p);
 
-            if(haveStock && !lessThan3weak
-////                    && client != null
-            ){
+            if(haveStock && !lessThan3weak && client != null){
                 products.add(a);
                 this.batchService.updateStock(p.getId(),a.getQuantity(),a.getBatchCode());
             }
         }
-        System.out.println("PRODUCT : : " + products.get(0).getQuantity());
-        System.out.println("TOTAL PRICE : : " + articlesPurchaseService.calcTotalPrice(products));
+
         purchaseOrder.setTotalPrice(this.articlesPurchaseService.calcTotalPrice(products));
         purchaseOrder.setArticlesPurchases(products);
 
