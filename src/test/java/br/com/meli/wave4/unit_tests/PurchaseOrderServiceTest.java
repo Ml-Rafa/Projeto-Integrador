@@ -70,7 +70,7 @@ public class PurchaseOrderServiceTest {
                 ArticlesPurchase.builder()
                         .id(10)
                         .batchCode(20)
-                        .product(this.product)
+                        .productArticle(this.product)
                         .quantity(10)
                         .build());
 

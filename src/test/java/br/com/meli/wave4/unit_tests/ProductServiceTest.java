@@ -8,6 +8,7 @@ import br.com.meli.wave4.exceptions.NotFoundException;
 import br.com.meli.wave4.repositories.ProductRepository;
 import br.com.meli.wave4.services.ProductService;
 import br.com.meli.wave4.services.WarehouseService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -60,6 +61,7 @@ public class ProductServiceTest {
         this.batchList.add(
                 Batch.builder()
                         .section(this.section)
+                        .batchNumber(1)
                         .initialQuantity(50)
                         .currentQuantity(50)
                         .build());
@@ -85,22 +87,20 @@ public class ProductServiceTest {
 
         when(this.productRepository.findById(any())).thenReturn(java.util.Optional.ofNullable(this.product));
 
-        assertTrue(this.productService.verifyStock(123,10,5));
+        assertTrue(this.productService.verifyStock(123,10,1));
 
     }
 
     @Test
     public void verifyStockFalse(){
 
-        when(this.productRepository.findById(any())).thenReturn(java.util.Optional.ofNullable(this.product));
+        when(this.productRepository.findById(any())).thenReturn(Optional.ofNullable(this.product));
 
-        assertThrows(InsufficientStockException.class,
-                ()-> this.productService.verifyStock(123,100,5));
-
-        when(this.productRepository.findById(any())).thenReturn(java.util.Optional.ofNullable(null));
-        assertThrows(AssertionError.class, ()-> this.productService.verifyStock(123,100,5));
-
-
+        InsufficientStockException exceptionExpected = Assertions.assertThrows(
+                InsufficientStockException.class,
+                ()->{ productService.verifyStock(123,100,1); }
+        );
+        Assertions.assertEquals(InsufficientStockException.class, exceptionExpected.getClass());
     }
 
     @Test
