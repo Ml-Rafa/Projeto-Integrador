@@ -1,5 +1,6 @@
 package br.com.meli.wave4.unit_tests;
 
+import br.com.meli.wave4.DTO.SellerDTO;
 import br.com.meli.wave4.entities.Product;
 //import br.com.meli.wave4.entities.Seller;
 import br.com.meli.wave4.entities.User;
@@ -22,9 +23,17 @@ public class SellerServiceTest {
     @InjectMocks
     SellerService sellerService;
 
+    User user;
+
     @BeforeEach
     void setup(){
         MockitoAnnotations.openMocks(this);
+        this.user = User
+                .builder()
+                .name("Pedro")
+                .id(30)
+                .document("3333333")
+                .build();
     }
 
 //    @Test
@@ -77,5 +86,10 @@ public void verifyProductOfSeller(){
         assertThrows(ProductDoesNotBelongToTheSellerException.class,
                 ()->this.sellerService.verifyProductOfSeller(seller,1234));
 
+    }
+
+    @Test
+    public void convertToDTO(){
+        assertInstanceOf(SellerDTO.class, this.sellerService.convertToDTO(this.user));
     }
 }

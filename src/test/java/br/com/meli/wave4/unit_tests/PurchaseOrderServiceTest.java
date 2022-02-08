@@ -2,6 +2,7 @@ package br.com.meli.wave4.unit_tests;
 
 import br.com.meli.wave4.DTO.PurchaseOrderDTO;
 import br.com.meli.wave4.entities.*;
+import br.com.meli.wave4.repositories.ArticlesPurchaseRepository;
 import br.com.meli.wave4.repositories.PurchaseOrderRepository;
 import br.com.meli.wave4.services.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,6 +40,9 @@ public class PurchaseOrderServiceTest {
 
     @Mock
     ArticlesPurchaseService articlesPurchaseService;
+
+    @Mock
+    ArticlesPurchaseRepository articlesPurchaseRepository;
 
     PurchaseOrder purchaseOrder;
 
@@ -105,15 +109,18 @@ public class PurchaseOrderServiceTest {
 
     }
 
-   // @Test
-   // public void update(){
+   @Test
+    public void update(){
 
-  //      when(this.productService.findById(any())).thenReturn(this.product);
-    //    when(this.productService.verifyStock(any(),any(),any())).thenReturn(true);
-    //    when(this.productService.verifyIfDueDateLessThan3Weeks(any())).thenReturn(true);
+        when(this.purchaseOrderRepository.findById(any())).thenReturn(java.util.Optional.ofNullable(this.purchaseOrder));
+        when(this.productService.findById(any())).thenReturn(this.product);
+        when(this.productService.verifyStock(any(),any(),any())).thenReturn(true);
+        when(this.productService.verifyIfDueDateLessThan3Weeks(any())).thenReturn(true);
+        when(this.purchaseOrderRepository.saveAndFlush(any())).thenReturn(this.purchaseOrder);
 
-     //   this.purchaseOrderService.update(this.purchaseOrder);
-  //  }
+
+        assertNotNull(this.purchaseOrderService.update(this.purchaseOrder));
+    }
 
     @Test
     public void convertToDTO(){
