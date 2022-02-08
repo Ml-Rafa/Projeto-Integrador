@@ -100,15 +100,15 @@ O desafio foi divido em 6 requisitos listados abaixo <img src="https://img.icons
     
  ## Colaboradores 
  
- <img src="https://img.icons8.com/office/90/000000/user-male.png"/> https://github.com/fsconceicao
+ <img src="https://img.icons8.com/office/70/000000/user-male.png"/> https://github.com/fsconceicao
  
- <img src="https://img.icons8.com/office/80/000000/user-male.png"/> https://github.com/marcelonader-meli
+ <img src="https://img.icons8.com/office/70/000000/user-male.png"/> https://github.com/marcelonader-meli
  
- <img src="https://img.icons8.com/office/80/000000/user-male.png"/> https://github.com/Ml-Rafa
+ <img src="https://img.icons8.com/office/70/000000/user-male.png"/> https://github.com/Ml-Rafa
  
- <img src="https://img.icons8.com/office/90/000000/user-female.png"/> https://github.com/gabrielarocha21
+ <img src="https://img.icons8.com/office/70/000000/user-female.png"/> https://github.com/gabrielarocha21
  
- <img src="https://img.icons8.com/office/90/000000/user-female.png"/> https://github.com/paularodriguesmeli
+ <img src="https://img.icons8.com/office/70/000000/user-female.png"/> https://github.com/paularodriguesmeli
  
 
 
