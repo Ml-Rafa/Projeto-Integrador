@@ -31,9 +31,14 @@ public class Product {
     private LocalDate dateValid;
     private BigDecimal price;
 
+//    @OneToMany(mappedBy = "product" )
+//    private List<Batch> batchList = new ArrayList<>();
+
     @OneToMany(mappedBy = "product" )
     private List<Batch> batchList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "productArticle")
+    private List<ArticlesPurchase> articlesPurchases = new ArrayList<>();
 //    @ManyToOne
 //    @JoinColumn(name = "seller_id", nullable = false)
 //    private Seller seller;

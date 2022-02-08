@@ -14,6 +14,7 @@ import javax.validation.constraints.PositiveOrZero;
 @NoArgsConstructor
 public class ArticlesPurchaseDTO {
 
+    private Integer id;
     @NotNull(message = "O campo product não pode ser nulo.")
     @PositiveOrZero(message = "O número do campo product não pode ser negativo.")
     private Integer product;

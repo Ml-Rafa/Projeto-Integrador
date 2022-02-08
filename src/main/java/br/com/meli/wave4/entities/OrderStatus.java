@@ -1,6 +1,6 @@
 package br.com.meli.wave4.entities;
 
-public enum OrderStatus {
+public enum  OrderStatus {
     WAITING_PAYMENT(1),
     PAID(2),
     SHIPPED(3),
