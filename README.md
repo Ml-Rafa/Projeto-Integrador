@@ -7,7 +7,7 @@ Qualidade e testes).
 
 ![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=Ml-Rafa&show_icons=true&theme=radical)
 
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Ml-Rafa&layout=compact)](https://github.com/Ml-Rafa/github-readme-stats)
+
 
 ## Requisitos
 
@@ -95,6 +95,8 @@ O desafio foi divido em 6 requisitos listados abaixo <img src="https://img.icons
     especificações avançadas.
     Os objetivos gerais e as entregas correspondentes para cada nível são
     especificados abaixo.
+    
+ [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Ml-Rafa&layout=compact)](https://github.com/Ml-Rafa/github-readme-stats)
     
  ## Colaboradores 
  
