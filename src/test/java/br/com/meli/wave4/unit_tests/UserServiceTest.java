@@ -1,18 +1,14 @@
 package br.com.meli.wave4.unit_tests;
 
-import br.com.meli.wave4.DTO.BatchDTO;
 import br.com.meli.wave4.DTO.UserDTO;
-import br.com.meli.wave4.entities.Batch;
 import br.com.meli.wave4.entities.User;
 import br.com.meli.wave4.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
-import static org.junit.jupiter.api.Assertions.*;
 
-
-import java.util.Arrays;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 public class UserServiceTest {
 
