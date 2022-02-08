@@ -2,6 +2,7 @@ package br.com.meli.wave4.DTO;
 
 import br.com.meli.wave4.entities.ArticlesPurchase;
 import br.com.meli.wave4.entities.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +31,10 @@ public class PurchaseOrderDTO {
     private OrderStatus orderStatus;
     @NotNull(message = "O campo articlesPurchase não pode ser nulo.")
     private List<ArticlesPurchaseDTO> articlesPurchases;
+
+
+    private List<String> mensagem;
+
     private BigDecimal totalPrice;
 
 

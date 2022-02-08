@@ -5,6 +5,7 @@ import br.com.meli.wave4.DTO.PurchaseOrderDTO;
 import br.com.meli.wave4.entities.Product;
 import br.com.meli.wave4.entities.PurchaseOrder;
 import br.com.meli.wave4.entities.TypeRefrigeration;
+import br.com.meli.wave4.exceptions.InsufficientStockException;
 import br.com.meli.wave4.services.ProductService;
 import br.com.meli.wave4.services.PurchaseOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -77,13 +77,20 @@ public class PurchaseOrderController {
     }
 
     @PostMapping("/orders")
-    public ResponseEntity<?> order(@Valid @RequestBody PurchaseOrderDTO purchaseOrderDTO, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<?> order(@Valid @RequestBody PurchaseOrderDTO purchaseOrderDTO, UriComponentsBuilder uriBuilder) throws InsufficientStockException {
 
-        PurchaseOrder purchaseOrder = this.purchaseOrderService.convertToEntity(purchaseOrderDTO);
+    try {
+                PurchaseOrder purchaseOrder = this.purchaseOrderService.convertToEntity(purchaseOrderDTO);
 
-        return ResponseEntity.created(uriBuilder
-                .path("register-purchase-order")
-                .buildAndExpand("register")
-                .toUri()).body(purchaseOrderService.convertToDTO(this.purchaseOrderService.order(purchaseOrder)));
+                return ResponseEntity.created(uriBuilder
+                        .path("register-purchase-order")
+                        .buildAndExpand("register")
+                        .toUri()).body(purchaseOrderService.order(purchaseOrder));
+
+
+        } catch (InsufficientStockException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 }

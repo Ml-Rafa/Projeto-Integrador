@@ -3,6 +3,8 @@ package br.com.meli.wave4.services;
 import br.com.meli.wave4.DTO.PurchaseOrderDTO;
 import br.com.meli.wave4.entities.*;
 //import br.com.meli.wave4.repositories.ClientRepository;
+import br.com.meli.wave4.exceptions.DueDateLessThan3WeeksException;
+import br.com.meli.wave4.exceptions.InsufficientStockException;
 import br.com.meli.wave4.repositories.PurchaseOrderRepository;
 import br.com.meli.wave4.repositories.UserRepository;
 import br.com.meli.wave4.services.iservices.IPurchaseOrderService;
@@ -61,37 +63,62 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     }
 
     @Override
-    public PurchaseOrder order(PurchaseOrder purchaseOrder){
+    public PurchaseOrderDTO order(PurchaseOrder purchaseOrder){
 
         List<ArticlesPurchase> products = new ArrayList<>();
+        List<String> mensagem = new ArrayList<>();
+
+        PurchaseOrder purchaseOrderPersistence = PurchaseOrder.builder()
+                .id(0)
+                .date(null)
+//                .clientId(purchaseOrder.getClient().getId())
+                .orderStatus(null)
+                .articlesPurchases(new ArrayList<>())
+                .totalPrice(new BigDecimal(0))
+                .build();
 
         for(ArticlesPurchase a: purchaseOrder.getArticlesPurchases()){
 
             Product p = this.productService.findById(a.getProductArticle().getId());
 
             User client =this.authenticationService.authenticated();
-            Boolean haveStock =
-                    this.productService.verifyStock(p.getId(),a.getQuantity(),a.getBatchCode());
-            Boolean lessThan3weak = this.productService.verifyIfDueDateLessThan3Weeks(p);
+            try {
+                Boolean haveStock =
+                        this.productService.verifyStock(p.getId(),a.getQuantity(),a.getBatchCode());
+                Boolean lessThan3weak = this.productService.verifyIfDueDateLessThan3Weeks(p);
 
-            if(haveStock && !lessThan3weak
-            ){
-                products.add(a);
-                this.batchService.updateStock(p.getId(),a.getQuantity(),a.getBatchCode());
+                if(haveStock && !lessThan3weak
+                ){
+                    products.add(a);
+                    this.batchService.updateStock(p.getId(),a.getQuantity(),a.getBatchCode());
+
+                }
+
+            } catch (InsufficientStockException e) {
+                mensagem.add("Quantidade do item " + p.getName() + " indisponível no momento");
+
+            } catch (DueDateLessThan3WeeksException e) {
+                mensagem.add("Produto fora da validade");
 
             }
+
         }
 
         purchaseOrder.setTotalPrice(this.articlesPurchaseService.calcTotalPrice(products));
         purchaseOrder.setArticlesPurchases(products);
 
-        PurchaseOrder purchaseOrderPersistence = this.purchaseOrderRepository.save(purchaseOrder);
-
-        for(ArticlesPurchase a: purchaseOrderPersistence.getArticlesPurchases()){
-            a.setPurchaseOrder(purchaseOrderPersistence);
-            articlesPurchaseService.save(a);
+        if(!products.isEmpty()) {
+            purchaseOrderPersistence = this.purchaseOrderRepository.save(purchaseOrder);
+            for(ArticlesPurchase a: purchaseOrderPersistence.getArticlesPurchases()){
+                a.setPurchaseOrder(purchaseOrderPersistence);
+                articlesPurchaseService.save(a);
+            }
         }
-        return purchaseOrderPersistence;
+
+        PurchaseOrderDTO purchaseOrderDTO = this.convertToDTO(purchaseOrderPersistence);
+        purchaseOrderDTO.setMensagem(mensagem);
+
+        return purchaseOrderDTO;
     }
 
 
