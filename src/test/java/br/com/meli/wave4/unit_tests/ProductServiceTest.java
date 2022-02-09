@@ -1,6 +1,7 @@
 package br.com.meli.wave4.unit_tests;
 
 import br.com.meli.wave4.DTO.BatchSimpleResponseDTO;
+import br.com.meli.wave4.DTO.ListProductInSectionDTO;
 import br.com.meli.wave4.entities.*;
 import br.com.meli.wave4.exceptions.DueDateLessThan3WeeksException;
 import br.com.meli.wave4.exceptions.InsufficientStockException;
@@ -258,5 +259,14 @@ public class ProductServiceTest {
         assertNotNull(this.productService.filterProductInWarehouse(this.warehouse,this.product,'A'));
 
     }
+
+    @Test
+    public void listProductInSectionTest() {
+
+        when(this.productRepository.findById(any())).thenReturn(Optional.ofNullable(this.product));
+
+        assertNotNull(this.productService.listProductsInSection(123));
+    }
+
 
 }

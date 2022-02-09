@@ -195,10 +195,8 @@ public class ProductService implements IProductService {
     }
 
     public ListProductInSectionDTO listProductsInSection(Integer productId) {
-        //buscar o nome do produto, quantidade do produto, seção
+
         Product product = productRepository.findById(productId).orElse(null);
-
-
         return ListProductInSectionDTO.builder()
                 .productName(product.getName())
                 .quantity(product.getBatchList().get(0).getCurrentQuantity())
