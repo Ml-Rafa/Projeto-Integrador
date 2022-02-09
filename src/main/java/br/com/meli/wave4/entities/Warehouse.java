@@ -35,4 +35,8 @@ public class Warehouse {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "warehouse")
     Set<Section> sectionSet = new HashSet<>();
+
+    @ManyToMany(mappedBy = "warehouse")
+    private Set<DeliveryTimeByStateInDays> deliveryTimeByStateInDays = new HashSet<>();
+
 }
