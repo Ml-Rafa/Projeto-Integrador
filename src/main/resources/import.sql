@@ -52,11 +52,14 @@ INSERT INTO users (name, document, warehouse_id, username, password, enabled) VA
 
 --CLIENT
 -- password 123
-INSERT INTO users (document,name,address,telephone, username, password, enabled) VALUES ('12345678','Gabriela da Rocha', 'Palhoça - SC', '222222','gabriela', '$2a$10$fjYcodWEp6l5sWF9wAF7cu1tQryOmHck.32sD1fG4H/hpaOP3H6oe', '1'); -- 10
-INSERT INTO users (document,name,address,telephone, username, password, enabled) VALUES ('31231323','Paula Rodrigues', 'Ermelino Matarazzo - SP', '000999','paula', '$2a$10$fjYcodWEp6l5sWF9wAF7cu1tQryOmHck.32sD1fG4H/hpaOP3H6oe', '1'); -- 11
-INSERT INTO users (document,name,address,telephone, username, password, enabled) VALUES ('83283823','Marcelo Nader', 'Liberdade - SP', '888347','marcelo', '$2a$10$fjYcodWEp6l5sWF9wAF7cu1tQryOmHck.32sD1fG4H/hpaOP3H6oe', '1'); -- 12
-INSERT INTO users (document,name,address,telephone, username, password, enabled) VALUES ('34234234','Rafael Oliveira', 'Barueri - SC', '949324','rafael', '$2a$10$fjYcodWEp6l5sWF9wAF7cu1tQryOmHck.32sD1fG4H/hpaOP3H6oe', '1'); -- 13
-
+INSERT INTO users (document,name,address,telephone, state, username, password, enabled) VALUES ('12345678','Gabriela da Rocha', 'Palhoça - SC', '222222', 'Santa Catarina', 'gabriela', '$2a$10$fjYcodWEp6l5sWF9wAF7cu1tQryOmHck.32sD1fG4H/hpaOP3H6oe', '1'); -- 10
+INSERT INTO users (document,name,address,telephone, state, username, password, enabled) VALUES ('31231323','Paula Rodrigues', 'Ermelino Matarazzo - SP', '000999', 'São Paulo', 'paula', '$2a$10$fjYcodWEp6l5sWF9wAF7cu1tQryOmHck.32sD1fG4H/hpaOP3H6oe', '1'); -- 11
+INSERT INTO users (document,name,address,telephone, state, username, password, enabled) VALUES ('83283823','Marcelo Nader', 'Liberdade - SP', '888347','São Paulo', 'marcelo', '$2a$10$fjYcodWEp6l5sWF9wAF7cu1tQryOmHck.32sD1fG4H/hpaOP3H6oe', '1'); -- 12
+INSERT INTO users (document,name,address,telephone, state, username, password, enabled) VALUES ('34234234','Rafael Oliveira', 'Barueri - SP', '949324','São Paulo', 'rafael', '$2a$10$fjYcodWEp6l5sWF9wAF7cu1tQryOmHck.32sD1fG4H/hpaOP3H6oe', '1'); -- 13
+INSERT INTO users (document,name,address,telephone, state, username, password, enabled) VALUES ('12345678','Felipe Conceição', 'Saúde - SP', '222452', 'São Paulo', 'felipe', '$2a$10$fjYcodWEp6l5sWF9wAF7cu1tQryOmHck.32sD1fG4H/hpaOP3H6oe', '1'); -- 14
+INSERT INTO users (document,name,address,telephone, state, username, password, enabled) VALUES ('31231323','Patrícia Santos', 'Sumé - PB', '123323', 'Paraíba', 'patricia', '$2a$10$fjYcodWEp6l5sWF9wAF7cu1tQryOmHck.32sD1fG4H/hpaOP3H6oe', '1'); -- 15
+INSERT INTO users (document,name,address,telephone, state, username, password, enabled) VALUES ('83283823','Rogéria Gonçalves', 'Terra Boa - PR', '342355','Paraná', 'rogeria', '$2a$10$fjYcodWEp6l5sWF9wAF7cu1tQryOmHck.32sD1fG4H/hpaOP3H6oe', '1'); -- 16
+INSERT INTO users (document,name,address,telephone, state, username, password, enabled) VALUES ('34234234','Peter Rodolfo', 'Capitólio - MG', '003932','Minas Gerais', 'peter', '$2a$10$fjYcodWEp6l5sWF9wAF7cu1tQryOmHck.32sD1fG4H/hpaOP3H6oe', '1'); -- 17
 
 INSERT INTO user_profiles (user_id, profile_id) VALUES (1, 3);
 INSERT INTO user_profiles (user_id, profile_id) VALUES (2, 3);
@@ -82,82 +85,82 @@ INSERT INTO user_profiles (user_id, profile_id) VALUES (13, 1);
 
 -- DELIVERY
 -- Delivery para São Paulo
-INSERT INTO delivery_times (state, hours) VALUES ('São Paulo', 3);       -- 1 - Warehouse São Paulo
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('São Paulo', 3, 7.00);       -- 1 - Warehouse São Paulo
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (1, 1)
-INSERT INTO delivery_times (state, hours) VALUES ('São Paulo', 24);      -- 2 - Warehouse Santa Catarina
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('São Paulo', 24, 15.00);      -- 2 - Warehouse Santa Catarina
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (2, 2)
-INSERT INTO delivery_times (state, hours) VALUES ('São Paulo', 20);      -- 3 - Warehouse Bahia
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('São Paulo', 20, 15.00);      -- 3 - Warehouse Bahia
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (3, 3)
-INSERT INTO delivery_times (state, hours) VALUES ('São Paulo', 12);       -- 4 - Warehouse Minas Gerais
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('São Paulo', 12, 10.00);       -- 4 - Warehouse Minas Gerais
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (4, 4)
-INSERT INTO delivery_times (state, hours) VALUES ('São Paulo', 30);      -- 5 - Warehouse Paraíba
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('São Paulo', 30, 20.00);      -- 5 - Warehouse Paraíba
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (5, 5)
-INSERT INTO delivery_times (state, hours) VALUES ('São Paulo', 24);      -- 6 - Warehouse Paraná
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('São Paulo', 24, 15.00);      -- 6 - Warehouse Paraná
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (6, 6)
 -- Delivery para Santa Catarina
-INSERT INTO delivery_times (state, hours) VALUES ('Santa Catarina', 24);       -- 7 - Warehouse São Paulo
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Santa Catarina', 24, 15.00);       -- 7 - Warehouse São Paulo
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (7, 1)
-INSERT INTO delivery_times (state, hours) VALUES ('Santa Catarina', 3);      -- 8 - Warehouse Santa Catarina
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Santa Catarina', 3, 7.00);      -- 8 - Warehouse Santa Catarina
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (8, 2)
-INSERT INTO delivery_times (state, hours) VALUES ('Santa Catarina', 36);      -- 9 - Warehouse Bahia
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Santa Catarina', 36, 25.00);      -- 9 - Warehouse Bahia
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (9, 3)
-INSERT INTO delivery_times (state, hours) VALUES ('Santa Catarina', 12);       -- 10 - Warehouse Minas Gerais
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Santa Catarina', 12, 15.00);       -- 10 - Warehouse Minas Gerais
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (10, 4)
-INSERT INTO delivery_times (state, hours) VALUES ('Santa Catarina', 48);      -- 11 - Warehouse Paraíba
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Santa Catarina', 48, 30.00);      -- 11 - Warehouse Paraíba
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (11, 5)
-INSERT INTO delivery_times (state, hours) VALUES ('Santa Catarina', 9);      -- 12 - Warehouse Paraná
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Santa Catarina', 9, 10.00);      -- 12 - Warehouse Paraná
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (12, 6)
 -- Delivery para Bahia
-INSERT INTO delivery_times (state, hours) VALUES ('Bahia', 20);       -- 13 - Warehouse São Paulo
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Bahia', 20, 15.00);       -- 13 - Warehouse São Paulo
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (13, 1)
-INSERT INTO delivery_times (state, hours) VALUES ('Bahia', 36);      -- 14 - Warehouse Santa Catarina
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Bahia', 36, 25.00);      -- 14 - Warehouse Santa Catarina
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (14, 2)
-INSERT INTO delivery_times (state, hours) VALUES ('Bahia', 3);      -- 15 - Warehouse Bahia
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Bahia', 3, 7.00);      -- 15 - Warehouse Bahia
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (15, 3)
-INSERT INTO delivery_times (state, hours) VALUES ('Bahia', 12);       -- 16 - Warehouse Minas Gerais
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Bahia', 12, 15.00);       -- 16 - Warehouse Minas Gerais
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (16, 4)
-INSERT INTO delivery_times (state, hours) VALUES ('Bahia', 12);      -- 17 - Warehouse Paraíba
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Bahia', 12, 15.00);      -- 17 - Warehouse Paraíba
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (17, 5)
-INSERT INTO delivery_times (state, hours) VALUES ('Bahia', 36);      -- 18 - Warehouse Paraná
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Bahia', 36, 25.00);      -- 18 - Warehouse Paraná
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (18, 6)
 -- Delivery para Minas Gerais
-INSERT INTO delivery_times (state, hours) VALUES ('Minas Gerais', 12);       -- 19 - Warehouse São Paulo
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Minas Gerais', 12, 10.00);       -- 19 - Warehouse São Paulo
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (19, 1)
-INSERT INTO delivery_times (state, hours) VALUES ('Minas Gerais', 24);      -- 20 - Warehouse Santa Catarina
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Minas Gerais', 24, 15.00);      -- 20 - Warehouse Santa Catarina
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (20, 2)
-INSERT INTO delivery_times (state, hours) VALUES ('Minas Gerais', 12);      -- 21 - Warehouse Bahia
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Minas Gerais', 12, 10.00);      -- 21 - Warehouse Bahia
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (21, 3)
-INSERT INTO delivery_times (state, hours) VALUES ('Minas Gerais', 3);       -- 22 - Warehouse Minas Gerais
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Minas Gerais', 3, 7.00);       -- 22 - Warehouse Minas Gerais
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (22, 4)
-INSERT INTO delivery_times (state, hours) VALUES ('Minas Gerais', 20);      -- 23 - Warehouse Paraíba
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Minas Gerais', 20, 25.00);      -- 23 - Warehouse Paraíba
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (23, 5)
-INSERT INTO delivery_times (state, hours) VALUES ('Minas Gerais', 24);      -- 24 - Warehouse Paraná
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Minas Gerais', 24, 25.00);      -- 24 - Warehouse Paraná
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (24, 6)
 -- Delivery para Paraíba
-INSERT INTO delivery_times (state, hours) VALUES ('Paraíba', 30);       -- 25 - Warehouse São Paulo
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraíba', 30, 30.00);       -- 25 - Warehouse São Paulo
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (25, 1)
-INSERT INTO delivery_times (state, hours) VALUES ('Paraíba', 36);      -- 26 - Warehouse Santa Catarina
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraíba', 36, 35.00);      -- 26 - Warehouse Santa Catarina
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (26, 2)
-INSERT INTO delivery_times (state, hours) VALUES ('Paraíba', 12);      -- 27 - Warehouse Bahia
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraíba', 12, 10.00);      -- 27 - Warehouse Bahia
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (27, 3)
-INSERT INTO delivery_times (state, hours) VALUES ('Paraíba', 20);       -- 28 - Warehouse Minas Gerais
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraíba', 20, 15.00);       -- 28 - Warehouse Minas Gerais
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (28, 4)
-INSERT INTO delivery_times (state, hours) VALUES ('Paraíba', 3);      -- 29 - Warehouse Paraíba
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraíba', 3, 7.00);      -- 29 - Warehouse Paraíba
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (29, 5)
-INSERT INTO delivery_times (state, hours) VALUES ('Paraíba', 36);      -- 30 - Warehouse Paraná
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraíba', 36, 35.00);      -- 30 - Warehouse Paraná
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (30, 6)
 -- Delivery para Paraná
-INSERT INTO delivery_times (state, hours) VALUES ('Paraná', 12);       -- 31 - Warehouse São Paulo
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraná', 12, 15.00);       -- 31 - Warehouse São Paulo
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (31, 1)
-INSERT INTO delivery_times (state, hours) VALUES ('Paraná', 9);      -- 32 - Warehouse Santa Catarina
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraná', 9, 10.00);      -- 32 - Warehouse Santa Catarina
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (32, 2)
-INSERT INTO delivery_times (state, hours) VALUES ('Paraná', 36);      -- 33 - Warehouse Bahia
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraná', 36, 30.00);      -- 33 - Warehouse Bahia
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (33, 3)
-INSERT INTO delivery_times (state, hours) VALUES ('Paraná', 24);       -- 34 - Warehouse Minas Gerais
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraná', 24, 15.00);       -- 34 - Warehouse Minas Gerais
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (34, 4)
-INSERT INTO delivery_times (state, hours) VALUES ('Paraná', 36);      -- 35 - Warehouse Paraíba
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraná', 36, 30.00);      -- 35 - Warehouse Paraíba
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (35, 5)
-INSERT INTO delivery_times (state, hours) VALUES ('Paraná', 3);      -- 36 - Warehouse Paraná
+INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraná', 3, 7.00);      -- 36 - Warehouse Paraná
     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (36, 6)
 
 

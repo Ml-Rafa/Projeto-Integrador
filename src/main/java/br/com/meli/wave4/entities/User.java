@@ -52,8 +52,9 @@ public class User implements UserDetails {
     //FINAL REPRESENTATIVE
 
     //CLIENT
-    private String address = "";
-    private String telephone = "";
+    private String address;
+    private String state;
+    private String telephone;
     @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<PurchaseOrder> listPurchaseOrder = new ArrayList<>();

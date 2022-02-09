@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,4 +29,6 @@ public class DeliveryTimeByStateInHours {
     )
     private Set<Warehouse> warehouse = new HashSet<>();
     private Integer hours;
+    @Column(name = "shipping_value")
+    private BigDecimal shippingValue;
 }
