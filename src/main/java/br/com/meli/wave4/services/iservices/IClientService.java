@@ -1,9 +1,8 @@
 package br.com.meli.wave4.services.iservices;
 
 //import br.com.meli.wave4.entities.Client;
-import br.com.meli.wave4.entities.User;
 
-import java.util.Optional;
+import br.com.meli.wave4.entities.User;
 
 public interface IClientService {
 

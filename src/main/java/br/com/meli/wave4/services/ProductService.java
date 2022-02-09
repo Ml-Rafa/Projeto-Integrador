@@ -1,19 +1,23 @@
 package br.com.meli.wave4.services;
 
-import br.com.meli.wave4.DTO.*;
-import br.com.meli.wave4.entities.ProductNearExpireDate;
+import br.com.meli.wave4.DTO.BatchDTO;
+import br.com.meli.wave4.DTO.BatchSimpleResponseDTO;
+import br.com.meli.wave4.DTO.ListProductWithAllBatchDTO;
+import br.com.meli.wave4.DTO.ProductDTO;
 import br.com.meli.wave4.entities.*;
 import br.com.meli.wave4.exceptions.DueDateLessThan3WeeksException;
 import br.com.meli.wave4.exceptions.InsufficientStockException;
 import br.com.meli.wave4.exceptions.NotFoundException;
 import br.com.meli.wave4.repositories.ProductRepository;
 import br.com.meli.wave4.services.iservices.IProductService;
-import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -117,6 +121,7 @@ public class ProductService implements IProductService {
                 .filter(batch -> batch.getSection().getWarehouse().equals(warehouse))
                 .collect(Collectors.toList());
     }
+
 
     @Override
     public List<BatchSimpleResponseDTO> getBatchSimpleResponseDTOS(List<Batch> batchList) {
@@ -283,5 +288,31 @@ public class ProductService implements IProductService {
                 .batchList(batchDTOList)
                 .seller(sellerService.convertToDTO(product.getSeller()))
                 .build();
+    }
+
+
+    @Override
+    public List<Batch> findProductsOnSaleByWarehouse(Integer warehouseId){
+        Warehouse warehouse = warehouseService.findById(warehouseId);
+        List<Batch> batches = new ArrayList<>();
+
+        warehouse.getSectionSet().forEach(section -> {
+            section.getBatchList().forEach(b -> {
+                if (b.getCurrentQuantity() > 0
+                        && b.getDueDate().isBefore(LocalDate.now().plusDays(35))
+                        && b.getDueDate().isAfter(LocalDate.now().plusDays(20))
+                ){
+                    batches.add(b);
+                }
+            });
+        });
+
+        batches.forEach(batch -> {
+            Double discountPercentage = Double.valueOf(batch.getDiscountOfDueDate() / 100);
+            Double valueOfDiscount = batch.getProduct().getPrice().doubleValue() - (batch.getProduct().getPrice().doubleValue() * discountPercentage);
+            batch.getProduct().setPrice(BigDecimal.valueOf(valueOfDiscount));
+        });
+
+        return batches;
     }
 }

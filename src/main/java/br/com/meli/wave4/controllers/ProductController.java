@@ -1,9 +1,9 @@
 package br.com.meli.wave4.controllers;
 
+import br.com.meli.wave4.DTO.ProductDiscountDTO;
 import br.com.meli.wave4.DTO.ProductNearExpireDateDTO;
+import br.com.meli.wave4.entities.Batch;
 import br.com.meli.wave4.entities.Product;
-import br.com.meli.wave4.entities.ProductNearExpireDate;
-import br.com.meli.wave4.entities.Section;
 import br.com.meli.wave4.entities.Warehouse;
 import br.com.meli.wave4.exceptions.NotFoundException;
 import br.com.meli.wave4.services.ProductService;
@@ -100,6 +100,23 @@ public class ProductController {
             return ResponseEntity.ok(productList);
         } else{
             throw new NotFoundException("Não é possível realizar busca com esse valor!");
+        }
+    }
+
+    @GetMapping("/sale/{warehouseId}")
+    public ResponseEntity<?> findProductsOnSaleByWarehouse(@PathVariable Integer warehouseId){
+        if (!warehouseId.equals(0) && warehouseId != null){
+            List<Batch> products = productService.findProductsOnSaleByWarehouse(warehouseId);
+            List<ProductDiscountDTO> productsWithDiscount = products.stream()
+                    .map(batch -> ProductDiscountDTO.convertToDTO(batch)).collect(Collectors.toList());
+
+            if (productsWithDiscount.isEmpty()) {
+                throw new NotFoundException("Não há produtos na promoção neste momento!");
+            } else {
+                return ResponseEntity.ok(productsWithDiscount);
+            }
+        } else{
+            throw new NotFoundException("Informe o armazém que deseja realizazr a busca!");
         }
     }
 }

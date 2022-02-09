@@ -3,7 +3,6 @@ package br.com.meli.wave4.services;
 import br.com.meli.wave4.DTO.BatchDTO;
 import br.com.meli.wave4.entities.Batch;
 import br.com.meli.wave4.entities.Product;
-import br.com.meli.wave4.entities.Section;
 import br.com.meli.wave4.exceptions.BatchNotContainsProductException;
 import br.com.meli.wave4.exceptions.NotFoundException;
 import br.com.meli.wave4.repositories.BatchRepository;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @NoArgsConstructor
@@ -72,6 +70,7 @@ public class BatchService implements IBatchService {
                 .dueDate(batch.getDueDate())
                 .manufacturingDate(batch.getManufacturingDate())
                 .manufacturingTime(batch.getManufacturingTime())
+                .discountOfDueDate(batch.getDiscountOfDueDate())
 //                 .inboundOrder(this.inboundOrderService.findyById(batch.getInboundOrderId()))
                 .build();
     }

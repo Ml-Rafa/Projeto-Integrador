@@ -1,8 +1,5 @@
 package br.com.meli.wave4.DTO;
 
-import br.com.meli.wave4.entities.Batch;
-import br.com.meli.wave4.entities.Section;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 

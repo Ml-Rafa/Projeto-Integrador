@@ -42,12 +42,12 @@ public class Batch {
 //    private Representative representative;
 
     private Double currentTemperature;
-    private Double minimumTemperature;;
+    private Double minimumTemperature;
     private Integer initialQuantity;
     private Integer currentQuantity;
     private LocalDate manufacturingDate;
     private LocalDateTime manufacturingTime;
     private LocalDate dueDate;
-
+    private Integer discountOfDueDate;
 
 }

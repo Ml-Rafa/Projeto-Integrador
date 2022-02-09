@@ -9,8 +9,6 @@ import br.com.meli.wave4.services.iservices.ISectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class SectionService implements ISectionService {
 

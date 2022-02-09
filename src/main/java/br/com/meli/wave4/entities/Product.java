@@ -1,9 +1,5 @@
 package br.com.meli.wave4.entities;
 
-import br.com.meli.wave4.DTO.BatchDTO;
-import br.com.meli.wave4.DTO.InboundOrderDTO;
-import br.com.meli.wave4.DTO.ProductDTO;
-import br.com.meli.wave4.DTO.UserDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -12,7 +8,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Builder
 @Getter

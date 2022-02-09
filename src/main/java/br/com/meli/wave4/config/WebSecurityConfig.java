@@ -10,7 +10,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -70,6 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/due-date/**").hasAnyAuthority("REPRESENTATIVE")
                 .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/due-date-all/**").hasAnyAuthority("REPRESENTATIVE")
                 .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/warehouse/**").hasAnyAuthority("REPRESENTATIVE")
+                .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/sale/**").hasAnyAuthority("CLIENT")
                 .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/**").hasAnyAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST, "/api/v1/fresh-products/**").hasAnyAuthority("CLIENT")
                 .antMatchers(HttpMethod.PUT, "/api/v1/fresh-products/**").hasAnyAuthority("CLIENT")

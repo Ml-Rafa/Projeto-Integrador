@@ -31,4 +31,5 @@ public class InboundOrder {
 
     @OneToOne
     private Warehouse warehouse;
+
 }

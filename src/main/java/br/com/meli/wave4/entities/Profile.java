@@ -1,11 +1,10 @@
 package br.com.meli.wave4.entities;
 
-import javax.persistence.*;
-
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.*;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Profile implements GrantedAuthority{

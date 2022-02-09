@@ -5,7 +5,6 @@ import br.com.meli.wave4.DTO.ListProductWithAllBatchDTO;
 import br.com.meli.wave4.entities.*;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IProductService {
 //    Optional<Product> findById(Integer productId);
@@ -42,5 +41,7 @@ public interface IProductService {
     public List<ProductNearExpireDate> getProductsNearOfExpiraionDate(Integer days, String order);
 
     public List<ProductNearExpireDate> getProductsNearOfExpiraionDate(Integer days, Integer sectionCode);
+
+    public List<Batch> findProductsOnSaleByWarehouse(Integer warehouseId);
 
 }

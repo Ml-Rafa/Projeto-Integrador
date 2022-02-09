@@ -2,21 +2,17 @@ package br.com.meli.wave4.services;
 
 import br.com.meli.wave4.DTO.PurchaseOrderDTO;
 import br.com.meli.wave4.entities.*;
-//import br.com.meli.wave4.repositories.ClientRepository;
 import br.com.meli.wave4.exceptions.DueDateLessThan3WeeksException;
 import br.com.meli.wave4.exceptions.InsufficientStockException;
 import br.com.meli.wave4.repositories.PurchaseOrderRepository;
 import br.com.meli.wave4.repositories.UserRepository;
 import br.com.meli.wave4.services.iservices.IPurchaseOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class PurchaseOrderService implements IPurchaseOrderService {

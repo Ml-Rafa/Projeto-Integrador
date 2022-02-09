@@ -3,11 +3,8 @@ package br.com.meli.wave4.controllers;
 import br.com.meli.wave4.DTO.InboundOrderDTO;
 import br.com.meli.wave4.entities.InboundOrder;
 import br.com.meli.wave4.services.InboundOrderService;
-import org.apache.tomcat.util.http.fileupload.RequestContext;
-import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.web.header.Header;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 

@@ -3,9 +3,11 @@ package br.com.meli.wave4.DTO;
 import br.com.meli.wave4.entities.Batch;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -40,6 +42,10 @@ public class BatchDTO {
     private LocalDate dueDate;
     private Integer inboundOrderId;
 
+    @NotNull(message = "O campo discountOfDueDate não pode ser nulo.")
+    @PositiveOrZero(message = "O número do campo discountOfDueDate não pode ser negativo.")
+    private Integer discountOfDueDate;
+
     public static BatchDTO convertToDTO(Batch batch) {
 
         return BatchDTO.builder()
@@ -54,6 +60,7 @@ public class BatchDTO {
                 .inboundOrderId(batch.getInboundOrder().getOrderNumber())
                 .manufacturingDate(batch.getManufacturingDate())
                 .manufacturingTime(batch.getManufacturingTime())
+                .discountOfDueDate(batch.getDiscountOfDueDate())
                 .build();
     }
 }
