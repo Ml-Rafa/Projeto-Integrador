@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -95,5 +96,10 @@ public class PurchaseOrderController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 
+    }
+
+    @GetMapping("list-by-client/{id}")
+    public ResponseEntity<?> listByClient(@PathVariable Integer id){
+        return ResponseEntity.ok(this.purchaseOrderService.findByClientId(id));
     }
 }

@@ -36,10 +36,12 @@ public class PurchaseOrder {
     private User client;
     private OrderStatus orderStatus;
     @OneToMany(mappedBy = "purchaseOrder")
+    @JsonIgnore
     private List<ArticlesPurchase> articlesPurchases = new ArrayList<>();
 
+
     @OneToOne
-    RecurrentOrder recurrentOrder;
+    private RecurrentOrder recurrentOrder;
 
     private BigDecimal totalPrice;
 

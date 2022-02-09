@@ -126,6 +126,10 @@ public class PurchaseOrderService implements IPurchaseOrderService {
         return purchaseOrder;
     }
 
+    public List<PurchaseOrder> findByClientId(Integer clientId){
+        return this.purchaseOrderRepository.findByClientId(clientId);
+    }
+
     public PurchaseOrder update(PurchaseOrder purchaseOrder) {
 
         PurchaseOrder purchaseOrderUpdated = purchaseOrderRepository.findById(purchaseOrder.getId()).orElse(null);
