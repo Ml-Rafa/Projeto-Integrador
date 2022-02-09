@@ -43,4 +43,6 @@ public class PurchaseOrder {
 
     private BigDecimal totalPrice;
 
+    @OneToOne(mappedBy = "purchaseOrder")
+    private Schedule schedule;
 }
