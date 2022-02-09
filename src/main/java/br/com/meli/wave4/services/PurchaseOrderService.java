@@ -52,6 +52,7 @@ public class PurchaseOrderService implements IPurchaseOrderService {
                 .build();
     }
 
+
     public PurchaseOrder convertToEntity(PurchaseOrderDTO purchaseOrderDTO) {
         return PurchaseOrder.builder()
                 .client(this.authenticationService.authenticated())
@@ -87,11 +88,9 @@ public class PurchaseOrderService implements IPurchaseOrderService {
                         this.productService.verifyStock(p.getId(),a.getQuantity(),a.getBatchCode());
                 Boolean lessThan3weak = this.productService.verifyIfDueDateLessThan3Weeks(p);
 
-                if(haveStock && !lessThan3weak
-                ){
+                if(haveStock && !lessThan3weak){
                     products.add(a);
                     this.batchService.updateStock(p.getId(),a.getQuantity(),a.getBatchCode());
-
                 }
 
             } catch (InsufficientStockException e) {
