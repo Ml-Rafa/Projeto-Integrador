@@ -1,7 +1,9 @@
 package br.com.meli.wave4.request;
 
+import lombok.Builder;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
+@Builder
 public class LoginRequest {
 
     private String username;
