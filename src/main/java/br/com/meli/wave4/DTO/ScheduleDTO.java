@@ -2,6 +2,9 @@ package br.com.meli.wave4.DTO;
 
 import br.com.meli.wave4.entities.PurchaseOrder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +16,9 @@ import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@Builder
 public class ScheduleDTO {
 
     private Integer id;
