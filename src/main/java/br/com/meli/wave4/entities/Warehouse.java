@@ -37,6 +37,6 @@ public class Warehouse {
     Set<Section> sectionSet = new HashSet<>();
 
     @ManyToMany(mappedBy = "warehouse")
-    private Set<DeliveryTimeByStateInDays> deliveryTimeByStateInDays = new HashSet<>();
+    private Set<DeliveryTimeByStateInHours> deliveryTimeByStateInDays = new HashSet<>();
 
 }
