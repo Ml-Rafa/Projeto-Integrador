@@ -1,7 +1,6 @@
 package br.com.meli.wave4.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
@@ -14,6 +13,9 @@ import java.util.Map;
 @Table(name = "delivery_dates")
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class DeliveryDates {
 
     @Id
