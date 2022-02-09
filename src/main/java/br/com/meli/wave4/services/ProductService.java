@@ -194,6 +194,19 @@ public class ProductService implements IProductService {
         }
     }
 
+    public ListProductInSectionDTO listProductsInSection(Integer productId) {
+        //buscar o nome do produto, quantidade do produto, seção
+        Product product = productRepository.findById(productId).orElse(null);
+
+
+        return ListProductInSectionDTO.builder()
+                .productName(product.getName())
+                .quantity(product.getBatchList().get(0).getCurrentQuantity())
+                .batchNumber(product.getBatchList().get(0).getBatchNumber())
+                .sectionCode(product.getBatchList().get(0).getSection().getSectionCode())
+                .build();
+    }
+
     @Override
     public List<ProductNearExpireDate> getProductsNearOfExpiraionDate(Integer days, String order) {
 

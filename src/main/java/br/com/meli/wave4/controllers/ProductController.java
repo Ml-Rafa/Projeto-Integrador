@@ -54,6 +54,13 @@ public class ProductController {
         return ResponseEntity.ok(productService.countProductInWarehouse(productId));
     }
 
+    @GetMapping("/section/{productId}")
+    public ResponseEntity<?> getProductInSection(@PathVariable Integer productId){
+        return ResponseEntity.ok(productService.listProductsInSection(productId));
+
+    }
+
+
     @GetMapping("/due-date/{days}/{sectionId}")
     public ResponseEntity<?> getProductsNearOfExpirationDate(@PathVariable Integer days, @PathVariable Integer sectionId){
         if (!days.equals(0)){
