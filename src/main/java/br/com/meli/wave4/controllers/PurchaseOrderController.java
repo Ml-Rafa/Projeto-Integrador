@@ -31,7 +31,8 @@ public class PurchaseOrderController {
     public ResponseEntity<?> getProductList() {
 
         List<Product> productListPersistence = productService.getAll();
-        List<ProductDTO> productDTOList = productListPersistence.stream().map(productService::convertToDTO).collect(Collectors.toList());
+        List<ProductDTO> productDTOList = productListPersistence.stream()
+                .map(productService::convertToDTO).collect(Collectors.toList());
         return productListPersistence.isEmpty()
                 ? ResponseEntity.notFound().build()
                 : ResponseEntity.ok(productDTOList);
@@ -67,7 +68,8 @@ public class PurchaseOrderController {
     }
 
     @PutMapping("/orders/{id}")
-    public ResponseEntity<?> updatePurchaseOrder(@PathVariable Integer id, @RequestBody PurchaseOrderDTO purchaseOrderDTO) {
+    public ResponseEntity<?> updatePurchaseOrder(@PathVariable Integer id
+            , @RequestBody PurchaseOrderDTO purchaseOrderDTO) {
         purchaseOrderDTO.setId(id);
 
         PurchaseOrder entity = this.purchaseOrderService.convertToEntity(purchaseOrderDTO);
@@ -77,7 +79,8 @@ public class PurchaseOrderController {
     }
 
     @PostMapping("/orders")
-    public ResponseEntity<?> order(@Valid @RequestBody PurchaseOrderDTO purchaseOrderDTO, UriComponentsBuilder uriBuilder) throws InsufficientStockException {
+    public ResponseEntity<?> order(@Valid @RequestBody PurchaseOrderDTO purchaseOrderDTO
+            , UriComponentsBuilder uriBuilder) throws InsufficientStockException {
 
     try {
                 PurchaseOrder purchaseOrder = this.purchaseOrderService.convertToEntity(purchaseOrderDTO);

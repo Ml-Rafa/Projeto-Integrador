@@ -17,7 +17,7 @@ public class RecurrentOrderController {
     @Autowired
     RecurrentOrderService recurrentOrderService;
 
-    @GetMapping
+    @GetMapping("list")
     public ResponseEntity<List<PurchaseOrderDTO>> processRecurrentOrder(){
         return ResponseEntity.ok(this.recurrentOrderService.processRecurrentOrder());
     }

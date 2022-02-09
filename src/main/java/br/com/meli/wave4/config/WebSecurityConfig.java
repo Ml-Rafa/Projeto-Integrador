@@ -70,6 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/due-date/**").hasAnyAuthority("REPRESENTATIVE")
                 .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/due-date-all/**").hasAnyAuthority("REPRESENTATIVE")
                 .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/warehouse/**").hasAnyAuthority("REPRESENTATIVE")
+                .antMatchers(HttpMethod.GET, "/api/v1/recurrent-order/list").hasAnyAuthority("REPRESENTATIVE")
                 .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/**").hasAnyAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST, "/api/v1/fresh-products/**").hasAnyAuthority("CLIENT")
                 .antMatchers(HttpMethod.PUT, "/api/v1/fresh-products/**").hasAnyAuthority("CLIENT")
