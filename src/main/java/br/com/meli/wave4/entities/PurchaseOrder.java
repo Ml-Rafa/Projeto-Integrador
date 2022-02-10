@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -42,5 +43,9 @@ public class PurchaseOrder {
     private List<ArticlesPurchase> articlesPurchases = new ArrayList<>();
 
     private BigDecimal totalPrice;
+
+    // pegar a hora
+
+    //
 
 }
