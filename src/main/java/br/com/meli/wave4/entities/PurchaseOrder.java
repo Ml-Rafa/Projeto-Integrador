@@ -40,9 +40,6 @@ public class PurchaseOrder {
     private List<ArticlesPurchase> articlesPurchases = new ArrayList<>();
 
 
-    @OneToOne
-    private RecurrentOrder recurrentOrder;
-
     private BigDecimal totalPrice;
 
 }

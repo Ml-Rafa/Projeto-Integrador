@@ -59,8 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http.cors();
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
-                .antMatchers(
-                        "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html/**", "/swagger-resources/**", "/webjars/**","/").permitAll()
+                .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html/**", "/swagger-resources/**", "/webjars/**","/").permitAll()
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/fresh-products/inboundorder/register-inbound-order/**")
                 .hasAnyAuthority("REPRESENTATIVE")
@@ -70,10 +69,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/due-date/**").hasAnyAuthority("REPRESENTATIVE")
                 .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/due-date-all/**").hasAnyAuthority("REPRESENTATIVE")
                 .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/warehouse/**").hasAnyAuthority("REPRESENTATIVE")
-                .antMatchers(HttpMethod.GET, "/api/v1/recurrent-order/list").hasAnyAuthority("REPRESENTATIVE")
                 .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/**").hasAnyAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST, "/api/v1/fresh-products/**").hasAnyAuthority("CLIENT")
                 .antMatchers(HttpMethod.PUT, "/api/v1/fresh-products/**").hasAnyAuthority("CLIENT")
+                .antMatchers(HttpMethod.GET, "/api/v1/recurrent-order/list").hasAnyAuthority("REPRESENTATIVE")
+                .antMatchers(HttpMethod.POST, "/api/v1/recurrent-order/create" ).hasAnyAuthority("CLIENT")
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
