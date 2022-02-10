@@ -34,8 +34,10 @@ public class Product {
 //    @OneToMany(mappedBy = "product" )
 //    private List<Batch> batchList = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "product" )
     private List<Batch> batchList = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "productArticle")
     private List<ArticlesPurchase> articlesPurchases = new ArrayList<>();

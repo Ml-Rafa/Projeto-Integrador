@@ -122,9 +122,12 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     }
 
 
-    public PurchaseOrder findById(Integer id) {
+    public PurchaseOrderDTO findById(Integer id) {
         PurchaseOrder purchaseOrder = purchaseOrderRepository.findById(id).orElse(null);
-        return purchaseOrder;
+
+        PurchaseOrderDTO purchaseOrderDTO = this.convertToDTO(purchaseOrder);
+
+        return purchaseOrderDTO;
     }
 
     public PurchaseOrder update(PurchaseOrder purchaseOrder) {

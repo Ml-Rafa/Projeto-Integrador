@@ -37,6 +37,7 @@ public class PurchaseOrder {
     @JoinColumn(name = "client_id")
     private User client;
     private OrderStatus orderStatus;
+
     @OneToMany(mappedBy = "purchaseOrder")
     private List<ArticlesPurchase> articlesPurchases = new ArrayList<>();
 
