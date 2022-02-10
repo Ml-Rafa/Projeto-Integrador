@@ -105,14 +105,24 @@ public class BatchService implements IBatchService {
     }
 
     @Override
-    public void updateStock(Integer productId, Integer quantity, Integer sectionCode) {
+    public void updateStock(Integer productId, Integer quantity, Integer batchCode) {
         Product product = productRepository.findById(productId).orElse(null);
         assert product != null;
         Batch batch = product.getBatchList()
-                .stream().filter(b -> b.getSection().getSectionCode().equals(sectionCode))
+                .stream().filter(b -> b.getBatchNumber().equals(batchCode))
                 .findFirst().orElse(null);
         assert batch != null;
         batch.setCurrentQuantity(batch.getCurrentQuantity() - quantity);
     }
+
+    public void reverseStock(Integer quantity, Integer batchCode){
+        batchRepository.reverseStock(quantity,batchCode);
+
+    }
+    public void updateStockRepository(Integer quantity, Integer batchCode){
+        batchRepository.update(quantity,batchCode);
+
+    }
+
 
 }

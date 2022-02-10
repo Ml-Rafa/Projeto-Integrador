@@ -38,9 +38,9 @@ public class PurchaseOrder {
     @JoinColumn(name = "client_id")
     private User client;
     private OrderStatus orderStatus;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id")
+    @OneToMany(mappedBy = "purchaseOrder")
     private List<ArticlesPurchase> articlesPurchases = new ArrayList<>();
+
 
     private BigDecimal totalPrice;
 

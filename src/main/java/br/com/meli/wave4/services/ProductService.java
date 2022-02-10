@@ -58,11 +58,11 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Boolean verifyStock(Integer productId, Integer quantity, Integer sectionCode) {
+    public Boolean verifyStock(Integer productId, Integer quantity, Integer batchCode) {
         Product product = this.productRepository.findById(productId).orElse(null);
         assert product != null;
         Batch batch = product.getBatchList()
-                .stream().filter(b -> b.getSection().getSectionCode().equals(sectionCode))
+                .stream().filter(b -> b.getBatchNumber().equals(batchCode))
                 .findFirst().orElse(null);
         assert batch != null;
         if (batch.getCurrentQuantity() < quantity)

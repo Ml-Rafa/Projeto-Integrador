@@ -2,17 +2,14 @@ package br.com.meli.wave4.services;
 
 import br.com.meli.wave4.DTO.ArticlesPurchaseDTO;
 import br.com.meli.wave4.entities.ArticlesPurchase;
-import br.com.meli.wave4.entities.Product;
-import br.com.meli.wave4.entities.Section;
+import br.com.meli.wave4.repositories.ArticlesPurchaseRepository;
 import br.com.meli.wave4.services.iservices.IArticlesPurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class ArticlesPurchaseService implements IArticlesPurchaseService {
@@ -20,9 +17,12 @@ public class ArticlesPurchaseService implements IArticlesPurchaseService {
     @Autowired
     ProductService productService;
 
+    @Autowired
+    ArticlesPurchaseRepository articlesPurchaseRepository;
+
         @Override
         public BigDecimal calcTotalPrice(List<ArticlesPurchase> products){
-        return products.stream().map(articlesPurchase -> articlesPurchase.getProduct()
+        return products.stream().map(articlesPurchase -> articlesPurchase.getProductArticle()
                    .getPrice()
                    .multiply(new BigDecimal(articlesPurchase.getQuantity()))
         ).reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -33,7 +33,8 @@ public class ArticlesPurchaseService implements IArticlesPurchaseService {
         for(ArticlesPurchase a : articlesPurchase){
             articlesPurchaseDTOSet.add(
                 ArticlesPurchaseDTO.builder()
-                        .product(a.getProduct().getId())
+                        .id(a.getId())
+                        .product(a.getProductArticle().getId())
                         .quantity(a.getQuantity())
                         .batchCode(a.getBatchCode())
                         .build()
@@ -47,7 +48,8 @@ public class ArticlesPurchaseService implements IArticlesPurchaseService {
         for(ArticlesPurchaseDTO a : articlesPurchaseDTO){
             articlesPurchases.add(
                     ArticlesPurchase.builder()
-                    .product(this.productService.findById(a.getProduct()))
+                    .id(a.getId())
+                    .productArticle(this.productService.findById(a.getProduct()))
                     .quantity(a.getQuantity())
                     .batchCode(a.getBatchCode())
                     .build()
@@ -55,4 +57,28 @@ public class ArticlesPurchaseService implements IArticlesPurchaseService {
         }
         return articlesPurchases;
     }
+
+    public void save(ArticlesPurchase articlesPurchase){
+        articlesPurchaseRepository.save(articlesPurchase);
+    }
+
+    public ArticlesPurchase findById(Integer articlesPurchaseId){
+            return articlesPurchaseRepository.findById(articlesPurchaseId).orElse(null);
+    }
+
+//    public void update(ArticlesPurchase articlesPurchase){
+//            ArticlesPurchase articlesPurchasePersistence = articlesPurchaseRepository.findById(articlesPurchase.getId()).orElse(null);
+//
+//                articlesPurchasePersistence.setProductArticle(articlesPurchase.getProductArticle());
+//                articlesPurchasePersistence.setBatchCode(articlesPurchase.getBatchCode());
+//                articlesPurchasePersistence.setQuantity(articlesPurchase.getQuantity());
+//                articlesPurchasePersistence.setPurchaseOrder(articlesPurchase.getPurchaseOrder());
+//
+//                articlesPurchaseRepository.saveAndFlush(articlesPurchasePersistence);
+//
+//
+//
+//
+//    }
+
 }

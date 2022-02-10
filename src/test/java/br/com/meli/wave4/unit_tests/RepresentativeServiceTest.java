@@ -4,6 +4,7 @@ package br.com.meli.wave4.unit_tests;
 import br.com.meli.wave4.entities.Batch;
 import br.com.meli.wave4.entities.User;
 import br.com.meli.wave4.entities.Warehouse;
+import br.com.meli.wave4.exceptions.RepresentativeNotCorrespondentException;
 import br.com.meli.wave4.repositories.UserRepository;
 import br.com.meli.wave4.services.RepresentativeService;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import static org.junit.jupiter.api.Assertions.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.any;
@@ -37,14 +39,14 @@ public class RepresentativeServiceTest {
     void setup() {
         MockitoAnnotations.openMocks(this);
         this.warehouse =
-                Warehouse.builder().build();
+                Warehouse.builder().id(20).build();
 
         this.representative =
 
                 new User();
-                this.representative.setId(3);
-                this.representative.setWarehouse(this.warehouse);
-                this.representative.setBatch(this.batchList);
+        this.representative.setId(3);
+        this.representative.setWarehouse(this.warehouse);
+        this.representative.setBatch(this.batchList);
 
     }
 
@@ -54,6 +56,23 @@ public class RepresentativeServiceTest {
         when(this.userRepository.findById(any())).thenReturn(java.util.Optional.ofNullable(this.representative));
         assertEquals(3,this.representativeService.findById(any()).getId());
 
+    }
+
+    @Test
+    public void compareRepresentative(){
+        assertTrue(this.representativeService.compareRepresentative(3,this.representative));
+        assertThrows(RepresentativeNotCorrespondentException.class,
+                ()->this.representativeService.compareRepresentative(2,this.representative) );
+    }
+
+    @Test
+    public void checkRepresentativeOfWarehouse(){
+        assertTrue(this.representativeService.checkRepresentativeOfWarehouse(this.warehouse,this.representative));
+
+
+        assertThrows(RepresentativeNotCorrespondentException.class, ()->
+                this.representativeService.checkRepresentativeOfWarehouse(Warehouse.builder().id(1).build(),this.representative)
+        );
     }
 
 }

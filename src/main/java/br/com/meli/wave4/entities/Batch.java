@@ -23,9 +23,11 @@ public class Batch {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @JsonIgnore
     private Product product;
     @ManyToOne
     @JoinColumn(name = "inbound_order_id")
+    @JsonIgnore
     private InboundOrder inboundOrder;
 
     @JsonBackReference
