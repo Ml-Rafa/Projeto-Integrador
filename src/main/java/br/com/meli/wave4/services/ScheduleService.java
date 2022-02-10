@@ -2,6 +2,7 @@ package br.com.meli.wave4.services;
 
 import br.com.meli.wave4.DTO.ScheduleDTO;
 import br.com.meli.wave4.entities.*;
+import br.com.meli.wave4.exceptions.NotFoundException;
 import br.com.meli.wave4.exceptions.UnavailableDateException;
 import br.com.meli.wave4.repositories.DeliveryDatesRepository;
 import br.com.meli.wave4.repositories.DeliveryTimeByStateInHoursRepository;
@@ -150,6 +151,10 @@ public class ScheduleService {
     }
 
     public void cancelScheduling(Integer scheduleId){
-
+        Schedule schedulePersistence = scheduleRepository.findById(scheduleId).orElse(null);
+        if(schedulePersistence != null)
+            scheduleRepository.delete(schedulePersistence);
+        else
+            throw new NotFoundException("Schedule não encontrada no sistema.");
     }
 }

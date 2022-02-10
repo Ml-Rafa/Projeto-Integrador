@@ -81,7 +81,8 @@ public class SchedulingController {
     @DeleteMapping("/schedules/delete/{scheduleId}")
     public ResponseEntity<?> cancelScheduling(@PathVariable Integer scheduleId) {
         try{
-            return null;
+            scheduleService.cancelScheduling(scheduleId);
+            return ResponseEntity.ok("Schedule cancelada.");
         }catch (NullPointerException e){
             return ResponseEntity.badRequest().body("ScheduleId informado é inválido.");
         }
