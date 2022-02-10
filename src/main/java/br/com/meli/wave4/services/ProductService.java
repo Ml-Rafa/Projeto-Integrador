@@ -302,15 +302,13 @@ public class ProductService implements IProductService {
                         && b.getDueDate().isBefore(LocalDate.now().plusDays(35))
                         && b.getDueDate().isAfter(LocalDate.now().plusDays(20))
                 ){
+                    double doubleValueForDiscount = b.getDiscountOfDueDate().doubleValue();
+                    Double discountPercentage = doubleValueForDiscount / 100;
+                    Double valueOfDiscount = b.getProduct().getPrice().doubleValue() - (b.getProduct().getPrice().doubleValue() * discountPercentage);
+                    b.getProduct().setPrice(BigDecimal.valueOf(valueOfDiscount));
                     batches.add(b);
                 }
             });
-        });
-
-        batches.forEach(batch -> {
-            Double discountPercentage = Double.valueOf(batch.getDiscountOfDueDate() / 100);
-            Double valueOfDiscount = batch.getProduct().getPrice().doubleValue() - (batch.getProduct().getPrice().doubleValue() * discountPercentage);
-            batch.getProduct().setPrice(BigDecimal.valueOf(valueOfDiscount));
         });
 
         return batches;
