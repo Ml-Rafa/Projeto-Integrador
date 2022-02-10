@@ -21,13 +21,17 @@ public class DeliveryTimeByStateInHours {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String state;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "deliverytime_warehouse",
-            joinColumns = @JoinColumn(name = "deliverytime_id"),
-            inverseJoinColumns = @JoinColumn(name = "warehouse_id")
-    )
-    private Set<Warehouse> warehouse = new HashSet<>();
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "deliverytime_warehouse",
+//            joinColumns = @JoinColumn(name = "deliverytime_id"),
+//            inverseJoinColumns = @JoinColumn(name = "warehouse_id")
+//    )
+//    private Set<Warehouse> warehouse = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "warehouse_id")
+    private Warehouse warehouse;
+
     private Integer hours;
     @Column(name = "shipping_value")
     private BigDecimal shippingValue;

@@ -23,7 +23,7 @@ public class Warehouse {
     private Integer id;
 
     @Column(name = "geographic_area")
-    private String geographicArea = "";
+    private String geographicArea;
 
     @JsonBackReference
     @OneToOne(mappedBy = "warehouse")
@@ -36,7 +36,9 @@ public class Warehouse {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "warehouse")
     Set<Section> sectionSet = new HashSet<>();
 
-    @ManyToMany(mappedBy = "warehouse")
+//    @ManyToMany(mappedBy = "warehouse")
+//    private Set<DeliveryTimeByStateInHours> deliveryTimeByStateInDays = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "warehouse")
     private Set<DeliveryTimeByStateInHours> deliveryTimeByStateInDays = new HashSet<>();
 
 }

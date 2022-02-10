@@ -2,6 +2,8 @@ package br.com.meli.wave4.controllers;
 import br.com.meli.wave4.DTO.PurchaseOrderDTO;
 import br.com.meli.wave4.DTO.ScheduleDTO;
 import br.com.meli.wave4.exceptions.InsufficientStockException;
+import br.com.meli.wave4.services.ScheduleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -12,9 +14,12 @@ import javax.validation.Valid;
 @RequestMapping("/api/v1/fresh-products/scheduling")
 public class SchedulingController {
 
+    @Autowired
+    ScheduleService scheduleService;
+
     @GetMapping("/availableDates/{purchaseOrderId}")
     public ResponseEntity<?> getAvailableDates(@PathVariable Integer purchaseOrderId) {
-        return null;
+        return ResponseEntity.ok(scheduleService.getAvailableDates(purchaseOrderId));
     }
 
     @GetMapping("/calculateShipping/{purchaseOrderId}")

@@ -75,341 +75,128 @@ INSERT INTO user_profiles (user_id, profile_id) VALUES (11, 1);
 INSERT INTO user_profiles (user_id, profile_id) VALUES (12, 1);
 INSERT INTO user_profiles (user_id, profile_id) VALUES (13, 1);
 
-
--- INSERT INTO warehouse (geographic_area) VALUES ('São Paulo');
--- INSERT INTO warehouse (geographic_area) VALUES ('Santa Catarina');
--- INSERT INTO warehouse (geographic_area) VALUES ('Bahia');
--- INSERT INTO warehouse (geographic_area) VALUES ('Minas Gerais');
--- INSERT INTO warehouse (geographic_area) VALUES ('Paraíba');
--- INSERT INTO warehouse (geographic_area) VALUES ('Paraná');
-
--- DELIVERY
--- Delivery para São Paulo
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('São Paulo', 3, 7.00);       -- 1 - Warehouse São Paulo
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (1, 1)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('São Paulo', 24, 15.00);      -- 2 - Warehouse Santa Catarina
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (2, 2)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('São Paulo', 20, 15.00);      -- 3 - Warehouse Bahia
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (3, 3)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('São Paulo', 12, 10.00);       -- 4 - Warehouse Minas Gerais
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (4, 4)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('São Paulo', 30, 20.00);      -- 5 - Warehouse Paraíba
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (5, 5)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('São Paulo', 24, 15.00);      -- 6 - Warehouse Paraná
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (6, 6)
--- Delivery para Santa Catarina
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Santa Catarina', 24, 15.00);       -- 7 - Warehouse São Paulo
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (7, 1)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Santa Catarina', 3, 7.00);      -- 8 - Warehouse Santa Catarina
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (8, 2)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Santa Catarina', 36, 25.00);      -- 9 - Warehouse Bahia
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (9, 3)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Santa Catarina', 12, 15.00);       -- 10 - Warehouse Minas Gerais
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (10, 4)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Santa Catarina', 48, 30.00);      -- 11 - Warehouse Paraíba
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (11, 5)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Santa Catarina', 9, 10.00);      -- 12 - Warehouse Paraná
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (12, 6)
--- Delivery para Bahia
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Bahia', 20, 15.00);       -- 13 - Warehouse São Paulo
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (13, 1)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Bahia', 36, 25.00);      -- 14 - Warehouse Santa Catarina
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (14, 2)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Bahia', 3, 7.00);      -- 15 - Warehouse Bahia
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (15, 3)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Bahia', 12, 15.00);       -- 16 - Warehouse Minas Gerais
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (16, 4)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Bahia', 12, 15.00);      -- 17 - Warehouse Paraíba
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (17, 5)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Bahia', 36, 25.00);      -- 18 - Warehouse Paraná
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (18, 6)
--- Delivery para Minas Gerais
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Minas Gerais', 12, 10.00);       -- 19 - Warehouse São Paulo
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (19, 1)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Minas Gerais', 24, 15.00);      -- 20 - Warehouse Santa Catarina
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (20, 2)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Minas Gerais', 12, 10.00);      -- 21 - Warehouse Bahia
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (21, 3)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Minas Gerais', 3, 7.00);       -- 22 - Warehouse Minas Gerais
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (22, 4)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Minas Gerais', 20, 25.00);      -- 23 - Warehouse Paraíba
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (23, 5)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Minas Gerais', 24, 25.00);      -- 24 - Warehouse Paraná
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (24, 6)
--- Delivery para Paraíba
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraíba', 30, 30.00);       -- 25 - Warehouse São Paulo
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (25, 1)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraíba', 36, 35.00);      -- 26 - Warehouse Santa Catarina
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (26, 2)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraíba', 12, 10.00);      -- 27 - Warehouse Bahia
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (27, 3)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraíba', 20, 15.00);       -- 28 - Warehouse Minas Gerais
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (28, 4)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraíba', 3, 7.00);      -- 29 - Warehouse Paraíba
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (29, 5)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraíba', 36, 35.00);      -- 30 - Warehouse Paraná
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (30, 6)
--- Delivery para Paraná
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraná', 12, 15.00);       -- 31 - Warehouse São Paulo
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (31, 1)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraná', 9, 10.00);      -- 32 - Warehouse Santa Catarina
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (32, 2)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraná', 36, 30.00);      -- 33 - Warehouse Bahia
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (33, 3)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraná', 24, 15.00);       -- 34 - Warehouse Minas Gerais
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (34, 4)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraná', 36, 30.00);      -- 35 - Warehouse Paraíba
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (35, 5)
-INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraná', 3, 7.00);      -- 36 - Warehouse Paraná
-    INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (36, 6)
-
-
--- SELECT * FROM DELIVERY_TIMES INNER JOIN DELIVERYTIME_WAREHOUSE ON DELIVERY_TIMES.ID = DELIVERYTIME_WAREHOUSE.DELIVERYTIME_ID INNER JOIN WAREHOUSE ON DELIVERYTIME_WAREHOUSE.WAREHOUSE_ID = WAREHOUSE.ID
-
--- -- DELIVERY_DATES
--- -- São Paulo
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-11 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-11 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-11 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-11 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-11 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-11 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-11 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-11 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-11 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-11 18:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-12 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-12 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-12 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-12 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-12 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-12 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-12 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-12 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-12 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-12 18:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-13 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-13 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-13 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-13 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-13 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-13 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-13 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-13 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-13 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-13 18:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-14 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-14 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-14 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-14 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-14 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-14 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-14 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-14 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-14 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('São Paulo', '2022-02-14 18:00:00', true);
--- -- Santa Catarina
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-11-11 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-11-11 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-11-11 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-11-11 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-11-11 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-11-11 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-11-11 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-11-11 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-11-11 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-11-11 18:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-12 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-12 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-12 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-12 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-12 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-12 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-12 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-12 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-12 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-12 18:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-13 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-13 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-13 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-13 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-13 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-13 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-13 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-13 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-13 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-13 18:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-14 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-14 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-14 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-14 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-14 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-14 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-14 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-14 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-14 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Santa Catarina', '2022-02-14 18:00:00', true);
--- -- Bahia
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-11-11 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-11-11 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-11-11 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-11-11 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-11-11 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-11-11 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-11-11 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-11-11 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-11-11 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-11-11 18:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-12 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-12 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-12 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-12 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-12 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-12 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-12 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-12 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-12 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-12 18:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-13 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-13 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-13 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-13 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-13 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-13 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-13 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-13 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-13 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-13 18:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-14 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-14 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-14 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-14 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-14 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-14 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-14 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-14 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-14 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Bahia', '2022-02-14 18:00:00', true);
--- -- Minas Gerais
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-11-11 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-11-11 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-11-11 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-11-11 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-11-11 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-11-11 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-11-11 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-11-11 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-11-11 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-11-11 18:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-12 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-12 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-12 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-12 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-12 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-12 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-12 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-12 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-12 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-12 18:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-13 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-13 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-13 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-13 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-13 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-13 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-13 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-13 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-13 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-13 18:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-14 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-14 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-14 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-14 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-14 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-14 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-14 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-14 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-14 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Minas Gerais', '2022-02-14 18:00:00', true);
--- -- Paraíba
--- INSERT INTO delivery_dates (delivery_location, dateTime, date_is_available) VALUES ('Paraíba', '2022-11-11 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, dateTime, date_is_available) VALUES ('Paraíba', '2022-11-11 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-11-11 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-11-11 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-11-11 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-11-11 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-11-11 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-11-11 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-11-11 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-11-11 18:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-12 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-12 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-12 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-12 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-12 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-12 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-12 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-12 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-12 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-12 18:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-13 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-13 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-13 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-13 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-13 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-13 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-13 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-13 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-13 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-13 18:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-14 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-14 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-14 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-14 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-14 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-14 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-14 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-14 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-14 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraíba', '2022-02-14 18:00:00', true);
--- -- Para_tá
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-11-11 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, dateTime, date_is_available) VALUES ('Paraná', '2022-11-11 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-11-11 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-11-11 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-11-11 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-11-11 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-11-11 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-11-11 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-11-11 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-11-11 18:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-12 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-12 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-12 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-12 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-12 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-12 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-12 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-12 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-12 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-12 18:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-13 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-13 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-13 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-13 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-13 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-13 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-13 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-13 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-13 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-13 18:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-14 09:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-14 10:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-14 11:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-14 12:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-14 13:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-14 14:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-14 15:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-14 16:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-14 17:00:00', true);
--- INSERT INTO delivery_dates (delivery_location, date_time, date_is_available) VALUES ('Paraná', '2022-02-14 18:00:00', true);
+-- -- DELIVERY
+-- -- Delivery para São Paulo
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('São Paulo', 3, 7.00, 1);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('São Paulo', 24, 15.00, 2);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('São Paulo', 20, 15.0, 3);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('São Paulo', 12, 10.00, 4);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('São Paulo', 30, 20.00, 5);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('São Paulo', 24, 15.00, 6);
+-- -- Delivery para Santa Catarina
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Santa Catarina', 24, 15.00, 1);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Santa Catarina', 3, 7.00, 2);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Santa Catarina', 36, 25.00, 3);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Santa Catarina', 12, 15.00, 4);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Santa Catarina', 48, 30.00, 5);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Santa Catarina', 9, 10.00, 6);
+-- -- Delivery para Bahia
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Bahia', 20, 15.00, 1);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Bahia', 36, 25.00, 2);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Bahia', 3, 7.00, 3);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Bahia', 12, 15.00, 4);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Bahia', 12, 15.00, 5);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Bahia', 36, 25.00, 6);
+-- -- Delivery para Minas Gerais
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Minas Gerais', 12, 10.00, 1);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Minas Gerais', 24, 15.00, 2);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Minas Gerais', 12, 10.00, 3);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Minas Gerais', 3, 7.00, 4);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Minas Gerais', 20, 25.00, 5);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Minas Gerais', 24, 25.00, 6);
+-- -- Delivery para Paraíba
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Paraíba', 30, 30.00, 1);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Paraíba', 36, 35.00, 2);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Paraíba', 12, 10.00, 3);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Paraíba', 20, 15.00, 4);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Paraíba', 3, 7.00, 5);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Paraíba', 36, 35.00, 6);
+-- -- Delivery para Paraná
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Paraná', 12, 15.00, 1);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Paraná', 9, 10.00, 2);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Paraná', 36, 30.00, 3);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Paraná', 24, 15.00, 4);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Paraná', 36, 30.00, 5);
+INSERT INTO delivery_times(state, hours, shipping_value, warehouse_id) VALUES ('Paraná', 3, 7.00, 6);
+-- -- DELIVERY
+-- -- Delivery para São Paulo
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('São Paulo', 3, 7.00);       -- 1 - Warehouse São Paulo
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (1, 1);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('São Paulo', 24, 15.00);      -- 2 - Warehouse Santa Catarina
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (2, 2);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('São Paulo', 20, 15.00);      -- 3 - Warehouse Bahia
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (3, 3);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('São Paulo', 12, 10.00);       -- 4 - Warehouse Minas Gerais
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (4, 4);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('São Paulo', 30, 20.00);      -- 5 - Warehouse Paraíba
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (5, 5);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('São Paulo', 24, 15.00);      -- 6 - Warehouse Paraná
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (6, 6);
+-- -- Delivery para Santa Catarina
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Santa Catarina', 24, 15.00);       -- 7 - Warehouse São Paulo
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (7, 1);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Santa Catarina', 3, 7.00);      -- 8 - Warehouse Santa Catarina
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (8, 2);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Santa Catarina', 36, 25.00);      -- 9 - Warehouse Bahia
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (9, 3);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Santa Catarina', 12, 15.00);       -- 10 - Warehouse Minas Gerais
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (10, 4);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Santa Catarina', 48, 30.00);      -- 11 - Warehouse Paraíba
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (11, 5);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Santa Catarina', 9, 10.00);      -- 12 - Warehouse Paraná
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (12, 6);
+-- -- Delivery para Bahia
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Bahia', 20, 15.00);       -- 13 - Warehouse São Paulo
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (13, 1);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Bahia', 36, 25.00);      -- 14 - Warehouse Santa Catarina
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (14, 2);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Bahia', 3, 7.00);      -- 15 - Warehouse Bahia
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (15, 3);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Bahia', 12, 15.00);       -- 16 - Warehouse Minas Gerais
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (16, 4);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Bahia', 12, 15.00);      -- 17 - Warehouse Paraíba
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (17, 5);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Bahia', 36, 25.00);      -- 18 - Warehouse Paraná
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (18, 6);
+-- -- Delivery para Minas Gerais
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Minas Gerais', 12, 10.00);       -- 19 - Warehouse São Paulo
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (19, 1);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Minas Gerais', 24, 15.00);      -- 20 - Warehouse Santa Catarina
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (20, 2);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Minas Gerais', 12, 10.00);      -- 21 - Warehouse Bahia
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (21, 3);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Minas Gerais', 3, 7.00);       -- 22 - Warehouse Minas Gerais
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (22, 4);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Minas Gerais', 20, 25.00);      -- 23 - Warehouse Paraíba
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (23, 5);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Minas Gerais', 24, 25.00);      -- 24 - Warehouse Paraná
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (24, 6);
+-- -- Delivery para Paraíba
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraíba', 30, 30.00);       -- 25 - Warehouse São Paulo
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (25, 1);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraíba', 36, 35.00);      -- 26 - Warehouse Santa Catarina
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (26, 2);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraíba', 12, 10.00);      -- 27 - Warehouse Bahia
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (27, 3);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraíba', 20, 15.00);       -- 28 - Warehouse Minas Gerais
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (28, 4);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraíba', 3, 7.00);      -- 29 - Warehouse Paraíba
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (29, 5);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraíba', 36, 35.00);      -- 30 - Warehouse Paraná
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (30, 6);
+-- -- Delivery para Paraná
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraná', 12, 15.00);       -- 31 - Warehouse São Paulo
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (31, 1);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraná', 9, 10.00);      -- 32 - Warehouse Santa Catarina
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (32, 2);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraná', 36, 30.00);      -- 33 - Warehouse Bahia
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (33, 3);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraná', 24, 15.00);       -- 34 - Warehouse Minas Gerais
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (34, 4);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraná', 36, 30.00);      -- 35 - Warehouse Paraíba
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (35, 5);
+-- INSERT INTO delivery_times (state, hours, shipping_value) VALUES ('Paraná', 3, 7.00);      -- 36 - Warehouse Paraná
+--     INSERT INTO deliverytime_warehouse (deliverytime_id, warehouse_id) VALUES (36, 6);
+--
+--
+-- -- SELECT * FROM DELIVERY_TIMES INNER JOIN DELIVERYTIME_WAREHOUSE ON DELIVERY_TIMES.ID = DELIVERYTIME_WAREHOUSE.DELIVERYTIME_ID INNER JOIN WAREHOUSE ON DELIVERYTIME_WAREHOUSE.WAREHOUSE_ID = WAREHOUSE.ID

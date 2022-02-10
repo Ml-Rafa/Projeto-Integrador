@@ -73,6 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/**").hasAnyAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST, "/api/v1/fresh-products/**").hasAnyAuthority("CLIENT")
                 .antMatchers(HttpMethod.PUT, "/api/v1/fresh-products/**").hasAnyAuthority("CLIENT")
+                .antMatchers(HttpMethod.PUT, "/api/v1/fresh-products/scheduling/**").hasAnyAuthority("CLIENT")
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
