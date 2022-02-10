@@ -310,7 +310,7 @@ public class ProductService implements IProductService {
                 }
             });
         });
-
+        batches.sort(Comparator.comparing(batch -> batch.getProduct().getPrice()));
         return batches;
     }
 }
