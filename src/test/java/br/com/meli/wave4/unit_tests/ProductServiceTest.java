@@ -64,6 +64,8 @@ public class ProductServiceTest {
                         .batchNumber(1)
                         .initialQuantity(50)
                         .currentQuantity(50)
+                        .dueDate(LocalDate.now().plusDays(27))
+                        .discountOfDueDate(50)
                         .build());
 
         this.product=
@@ -256,6 +258,32 @@ public class ProductServiceTest {
         assertNotNull(this.productService.filterProductInWarehouse(this.warehouse,this.product,'F'));
         assertNotNull(this.productService.filterProductInWarehouse(this.warehouse,this.product,'F'));
         assertNotNull(this.productService.filterProductInWarehouse(this.warehouse,this.product,'A'));
+
+    }
+
+    @Test
+    public void aplyDiscaountOnProductsNearDueDate(){
+        Set<Section> sectionSet = new HashSet<>();
+        sectionSet.add(this.section);
+        Product originalProduct = Product.builder()
+                        .id(this.product.getId())
+                        .seller(this.product.getSeller())
+                        .name(this.product.getName())
+                        .dateValid( this.product.getDateValid())
+                        .sectionTypeRefrigerated(this.product.getSectionTypeRefrigerated())
+                        .price(this.product.getPrice())
+                        .batchList(this.batchList)
+                        .build();
+
+        Warehouse warehouse1 = Warehouse.builder()
+                .id(11)
+                .sectionSet(sectionSet)
+                .build();
+        when(this.warehouseService.findById(any())).thenReturn(warehouse1);
+        List<Batch> productsOnSaleByWarehouse = productService.findProductsOnSaleByWarehouse(warehouse1.getId());
+
+        assertEquals(productsOnSaleByWarehouse.size(),1);
+        assertNotEquals(originalProduct.getPrice(), productsOnSaleByWarehouse.get(0).getProduct().getPrice());
 
     }
 
