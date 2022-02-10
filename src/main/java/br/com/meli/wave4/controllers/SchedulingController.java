@@ -1,4 +1,6 @@
 package br.com.meli.wave4.controllers;
+import br.com.meli.wave4.DTO.DeliveryDatesDTO;
+import br.com.meli.wave4.DTO.DeliveryTimeByStateInHoursDTO;
 import br.com.meli.wave4.DTO.PurchaseOrderDTO;
 import br.com.meli.wave4.DTO.ScheduleDTO;
 import br.com.meli.wave4.exceptions.InsufficientStockException;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/fresh-products/scheduling")
@@ -19,7 +22,11 @@ public class SchedulingController {
 
     @GetMapping("/availableDates/{purchaseOrderId}")
     public ResponseEntity<?> getAvailableDates(@PathVariable Integer purchaseOrderId) {
-        return ResponseEntity.ok(scheduleService.getAvailableDates(purchaseOrderId));
+        List<DeliveryDatesDTO> deliveryDatesDTO = DeliveryDatesDTO.convertToDTO(scheduleService.getAvailableDates(purchaseOrderId));
+
+        return deliveryDatesDTO.isEmpty()
+                ? ResponseEntity.notFound().build()
+                : ResponseEntity.ok(DeliveryDatesDTO.convertToDTO(scheduleService.getAvailableDates(purchaseOrderId)));
     }
 
     @GetMapping("/calculateShipping/{purchaseOrderId}")
