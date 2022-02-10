@@ -95,4 +95,11 @@ public class ApiExceptionControllerAdvice {
                 HttpStatus.BAD_REQUEST.value(), "Batch Not Contains Product Error", "O Lote não pertence ao produto informado.", request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
+
+    @ExceptionHandler(UnavailableDateException.class)
+    public ResponseEntity<StandardError> unavailableDateException(UnavailableDateException e, HttpServletRequest request) {
+        StandardError err = new StandardError(System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(), "Unavailable Date Error", "A data escolhida está indisponível.", request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
 }
