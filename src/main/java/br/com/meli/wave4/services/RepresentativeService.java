@@ -15,26 +15,26 @@ public class RepresentativeService implements IRepresentativeService {
     @Autowired
     UserRepository userRepository;
 
-    public User findById(Integer representativeId){
+    public User findById(Integer representativeId) {
 
         return userRepository.findById(representativeId).orElse(null);
     }
 
     @Override
-    public Boolean compareRepresentative( Integer representativeId, User representative){
-        if (representativeId.equals(representative.getId())){
+    public Boolean compareRepresentative(Integer representativeId, User representative) {
+        if (representativeId.equals(representative.getId())) {
             return true;
-        } else{
+        } else {
             throw new RepresentativeNotCorrespondentException();
         }
     }
 
     @Override
-    public Boolean checkRepresentativeOfWarehouse(Warehouse warehouse, User representative){
+    public Boolean checkRepresentativeOfWarehouse(Warehouse warehouse, User representative) {
 
-        if (representative.getWarehouse().getId().equals(warehouse.getId())){
+        if (representative.getWarehouse().getId().equals(warehouse.getId())) {
             return true;
         }
-            throw new RepresentativeNotCorrespondentException();
+        throw new RepresentativeNotCorrespondentException();
     }
 }

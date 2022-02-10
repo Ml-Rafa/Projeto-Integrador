@@ -34,9 +34,9 @@ public class ProductController {
                                             @RequestParam(required = false) Character order) {
         Warehouse warehouse = warehouseService.findById(warehouseId);
         Product product = productService.findById(productId);
-        if(order != null){
+        if (order != null) {
             List<Character> validCharacters = Arrays.asList('L', 'C', 'F', 'l', 'c', 'f');
-            if(validCharacters.contains(order))
+            if (validCharacters.contains(order))
                 return ResponseEntity.ok(productService.filterProductInWarehouse(warehouse, product, order));
             else
                 throw new RuntimeException("Letra de ordenação inserida é inválida.\n" +
@@ -50,27 +50,27 @@ public class ProductController {
     }
 
     @GetMapping("/warehouse/{productId}")
-    public ResponseEntity<?> getProductInWarehouse(@PathVariable Integer productId){
+    public ResponseEntity<?> getProductInWarehouse(@PathVariable Integer productId) {
         return ResponseEntity.ok(productService.countProductInWarehouse(productId));
     }
 
     @GetMapping("/due-date/{days}/{sectionId}")
-    public ResponseEntity<?> getProductsNearOfExpirationDate(@PathVariable Integer days, @PathVariable Integer sectionId){
-        if (!days.equals(0)){
+    public ResponseEntity<?> getProductsNearOfExpirationDate(@PathVariable Integer days, @PathVariable Integer sectionId) {
+        if (!days.equals(0)) {
             List<ProductNearExpireDateDTO> productList = productService.getProductsNearOfExpiraionDate(days, sectionId).stream()
                     .map(ProductNearExpireDateDTO::convertToDTO)
                     .collect(Collectors.toList());
 
             return ResponseEntity.ok(productList);
-        } else{
+        } else {
             throw new NotFoundException("Não é possível realizar busca com esse valor!");
         }
     }
 
     @GetMapping("/due-date/{days}")
-    public ResponseEntity<?> getProductsNearOfExpirationDate(@PathVariable Integer days,  @RequestParam(required = false) String order){
+    public ResponseEntity<?> getProductsNearOfExpirationDate(@PathVariable Integer days, @RequestParam(required = false) String order) {
         List<String> validCharacters = Arrays.asList("FF", "ff", "RF", "rf", "FS", "fs");
-        if(!validCharacters.contains(order)) {
+        if (!validCharacters.contains(order)) {
             throw new RuntimeException("Letra de ordenação inserida é inválida.\n" +
                     "Letras válidas: " +
                     "\n\nFF = Para obter a lista de produtos congelados" +
@@ -78,7 +78,7 @@ public class ProductController {
                     "\nFS = Para obter a lista de produtos frescos."
             );
         }
-        if (!days.equals(0) && order != ""){
+        if (!days.equals(0) && order != "") {
             String orderBy;
             switch (order.toUpperCase()) {
                 case "FF":
@@ -98,14 +98,14 @@ public class ProductController {
                     .collect(Collectors.toList());
 
             return ResponseEntity.ok(productList);
-        } else{
+        } else {
             throw new NotFoundException("Não é possível realizar busca com esse valor!");
         }
     }
 
     @GetMapping("/sale/{warehouseId}")
-    public ResponseEntity<?> findProductsOnSaleByWarehouse(@PathVariable Integer warehouseId){
-        if (!warehouseId.equals(0) && warehouseId != null){
+    public ResponseEntity<?> findProductsOnSaleByWarehouse(@PathVariable Integer warehouseId) {
+        if (!warehouseId.equals(0) && warehouseId != null) {
             List<Batch> products = productService.findProductsOnSaleByWarehouse(warehouseId);
             List<ProductDiscountDTO> productsWithDiscount = products.stream()
                     .map(batch -> ProductDiscountDTO.convertToDTO(batch)).collect(Collectors.toList());
@@ -115,7 +115,7 @@ public class ProductController {
             } else {
                 return ResponseEntity.ok(productsWithDiscount);
             }
-        } else{
+        } else {
             throw new NotFoundException("Informe o armazém que deseja realizazr a busca!");
         }
     }

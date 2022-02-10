@@ -24,11 +24,6 @@ public class PurchaseOrder {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT")
     private LocalDate date;
-//    private Integer clientId;
-
-//    @ManyToOne
-//    @JoinColumn(name = "client_id")
-//    private Client client;
 
     @JsonIgnore
     @ManyToOne
@@ -38,7 +33,5 @@ public class PurchaseOrder {
     @OneToMany(mappedBy = "purchaseOrder")
     private List<ArticlesPurchase> articlesPurchases = new ArrayList<>();
 
-
     private BigDecimal totalPrice;
-
 }

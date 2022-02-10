@@ -28,8 +28,8 @@ public class AuthenticationController {
     public ResponseEntity<TokenDTO> getAuthentication(@RequestBody LoginRequest loginRequest) {
         UsernamePasswordAuthenticationToken dataLogin = loginRequest.convert();
         Authentication authentication = manager.authenticate(dataLogin);
-           String token = tokenService.getToken(authentication);
-           return ResponseEntity.ok(new TokenDTO(token, "Bearer"));
+        String token = tokenService.getToken(authentication);
+        return ResponseEntity.ok(new TokenDTO(token, "Bearer"));
     }
 }
 

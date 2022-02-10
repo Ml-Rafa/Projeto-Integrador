@@ -20,20 +20,20 @@ public class InboundOrderController {
     @PostMapping("/register-inbound-order")
     public ResponseEntity<?> registerInboundOrder(@Valid @RequestBody InboundOrderDTO inboundOrderDTO, UriComponentsBuilder uriBuilder) {
         InboundOrder inboundOrder = this.inboundOrderService.convertToEntity(inboundOrderDTO);
-        if(inboundOrder == null)
+        if (inboundOrder == null)
             return ResponseEntity.badRequest().body("Não foi possível registrar a inbound order.");
         inboundOrderService.create(inboundOrder);
         return ResponseEntity.created(uriBuilder
-        .path("/register-inbound-order")
-        .buildAndExpand("register")
-        .toUri()).body(InboundOrderDTO.convertToDTO(inboundOrder));
+                .path("/register-inbound-order")
+                .buildAndExpand("register")
+                .toUri()).body(InboundOrderDTO.convertToDTO(inboundOrder));
     }
 
     @PutMapping("/update-inbound-order/{id}")
     public ResponseEntity<?> updateInboundOrder(@PathVariable Integer id, @Valid @RequestBody InboundOrderDTO inboundOrder) {
         inboundOrder.setOrderNumber(id);
         InboundOrder entity = this.inboundOrderService.convertToEntity(inboundOrder);
-        if(entity == null)
+        if (entity == null)
             return ResponseEntity.badRequest().body("Não foi possível atualizar a inbound order.");
         inboundOrderService.update(entity);
         return ResponseEntity.status(201).body(InboundOrderDTO.convertToDTO(entity));

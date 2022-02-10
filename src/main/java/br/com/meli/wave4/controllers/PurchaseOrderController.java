@@ -41,18 +41,22 @@ public class PurchaseOrderController {
     @GetMapping("/list")
     public ResponseEntity<?> productListByCategory(@RequestParam String category) {
         String type = "";
-        switch (category.toUpperCase(Locale.ROOT)){
-            case "FS": type = "FRESH";
-            break;
-            case "RF": type = "REFRIGERATED";
+        switch (category.toUpperCase(Locale.ROOT)) {
+            case "FS":
+                type = "FRESH";
                 break;
-            case "FF": type = "FROZEN";
+            case "RF":
+                type = "REFRIGERATED";
                 break;
-            default: return ResponseEntity.badRequest().body("Parâmetro informado é inválido.\n" +
-                    "Parâmetros válidos:\n" +
-                    "FS : Fresco;\n" +
-                    "RF : Refrigerado;\n" +
-                    "FF : Congelado");
+            case "FF":
+                type = "FROZEN";
+                break;
+            default:
+                return ResponseEntity.badRequest().body("Parâmetro informado é inválido.\n" +
+                        "Parâmetros válidos:\n" +
+                        "FS : Fresco;\n" +
+                        "RF : Refrigerado;\n" +
+                        "FF : Congelado");
         }
         List<ProductDTO> productListPersistence = productService.findAllByCategory(TypeRefrigeration.valueOf(type))
                 .stream().map(productService::convertToDTO)
@@ -80,13 +84,13 @@ public class PurchaseOrderController {
     @PostMapping("/orders")
     public ResponseEntity<?> order(@Valid @RequestBody PurchaseOrderDTO purchaseOrderDTO, UriComponentsBuilder uriBuilder) throws InsufficientStockException {
 
-    try {
-                PurchaseOrder purchaseOrder = this.purchaseOrderService.convertToEntity(purchaseOrderDTO);
+        try {
+            PurchaseOrder purchaseOrder = this.purchaseOrderService.convertToEntity(purchaseOrderDTO);
 
-                return ResponseEntity.created(uriBuilder
-                        .path("register-purchase-order")
-                        .buildAndExpand("register")
-                        .toUri()).body(purchaseOrderService.order(purchaseOrder));
+            return ResponseEntity.created(uriBuilder
+                    .path("register-purchase-order")
+                    .buildAndExpand("register")
+                    .toUri()).body(purchaseOrderService.order(purchaseOrder));
 
 
         } catch (InsufficientStockException e) {

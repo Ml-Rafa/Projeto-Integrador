@@ -1,7 +1,5 @@
 package br.com.meli.wave4.services;
 
-//import br.com.meli.wave4.entities.Client;
-
 import br.com.meli.wave4.DTO.ClientDTO;
 import br.com.meli.wave4.DTO.PurchaseOrderDTO;
 import br.com.meli.wave4.entities.User;
@@ -47,16 +45,8 @@ public class ClientService implements IClientService {
     }
 
     @Override
-    public User findById(Integer clientId){
+    public User findById(Integer clientId) {
         return this.userRepository.findById(clientId).orElse(null);
     }
-
-//    @Autowired
-//    ClientRepository clientRepository;
-//
-//    @Override
-//    public Client findById(Integer clientId){
-//        return this.clientRepository.findById(clientId).orElse(null);
-//    }
 
 }

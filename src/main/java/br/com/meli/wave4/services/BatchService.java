@@ -31,18 +31,14 @@ public class BatchService implements IBatchService {
     @Autowired
     private UserRepository userRepository;
 
-//    @Autowired
-//    private InboundOrderService inboundOrderService;
-
     public BatchService(BatchRepository batchRepository) {
         this.batchRepository = batchRepository;
     }
 
     @Override
     public Batch findByBatchNumber(Integer batchNumber) {
-//        return batchRepository.findByBatchNumber(batchNumber);
         Batch batch = batchRepository.findByBatchNumber(batchNumber);
-        if(batch == null)
+        if (batch == null)
             throw new NotFoundException("Não foi localizado nenhum lote com o número informado.");
         return batch;
     }
@@ -66,12 +62,10 @@ public class BatchService implements IBatchService {
                 .product(productRepository.findById(batch.getProductId()).orElse(null))
                 .currentTemperature(batch.getCurrentTemperature())
                 .minimumTemperature(batch.getMinimumTemperature())
-//                .representative(userRepository.findById(batch.getRepresentativeId()).stream().findFirst().orElse(null))
                 .dueDate(batch.getDueDate())
                 .manufacturingDate(batch.getManufacturingDate())
                 .manufacturingTime(batch.getManufacturingTime())
                 .discountOfDueDate(batch.getDiscountOfDueDate())
-//                 .inboundOrder(this.inboundOrderService.findyById(batch.getInboundOrderId()))
                 .build();
     }
 
@@ -98,7 +92,7 @@ public class BatchService implements IBatchService {
         Batch batch1 = product.getBatchList().stream()
                 .filter(b -> b.getBatchNumber().equals(batch.getBatchNumber()))
                 .findFirst().orElse(null);
-        if(batch1 == null)
+        if (batch1 == null)
             throw new BatchNotContainsProductException();
         return true;
     }
@@ -114,12 +108,13 @@ public class BatchService implements IBatchService {
         batch.setCurrentQuantity(batch.getCurrentQuantity() - quantity);
     }
 
-    public void reverseStock(Integer quantity, Integer batchCode){
-        batchRepository.reverseStock(quantity,batchCode);
+    public void reverseStock(Integer quantity, Integer batchCode) {
+        batchRepository.reverseStock(quantity, batchCode);
 
     }
-    public void updateStockRepository(Integer quantity, Integer batchCode){
-        batchRepository.update(quantity,batchCode);
+
+    public void updateStockRepository(Integer quantity, Integer batchCode) {
+        batchRepository.update(quantity, batchCode);
 
     }
 

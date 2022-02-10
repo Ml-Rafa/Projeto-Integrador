@@ -27,9 +27,7 @@ public class Warehouse {
     @JsonBackReference
     @OneToOne(mappedBy = "warehouse")
     private User representative;
-//    @JsonBackReference
-//    @OneToOne(mappedBy = "warehouse")
-//    private Representative representative;
+
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "warehouse")

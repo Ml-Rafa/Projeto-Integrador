@@ -15,21 +15,20 @@ public class SectionService implements ISectionService {
     @Autowired
     SectionRepository sectionRepository;
 
-    public SectionService(SectionRepository sectionRepository){
+    public SectionService(SectionRepository sectionRepository) {
         this.sectionRepository = sectionRepository;
     }
 
     @Override
-    public Section findBySectionCode(Integer sectionCode){
-//        return sectionRepository.findBySectionCode(sectionCode);
+    public Section findBySectionCode(Integer sectionCode) {
         Section section = sectionRepository.findBySectionCode(sectionCode);
-        if(section == null)
+        if (section == null)
             throw new NotFoundException("Setor não localizado.");
         return section;
     }
 
     @Override
-    public Integer getTotalProductsInSection(Section section){
+    public Integer getTotalProductsInSection(Section section) {
         return section.getBatchList().stream().mapToInt(Batch::getCurrentQuantity).sum();
     }
 
@@ -45,7 +44,7 @@ public class SectionService implements ISectionService {
     public boolean verifyBatchInSection(Batch batch, Section section) {
         Integer batchSectionCode = batch.getSection().getSectionCode();
         Integer sectionCode = section.getSectionCode();
-        if(batchSectionCode.equals(sectionCode))
+        if (batchSectionCode.equals(sectionCode))
             return true;
         throw new InvalidSectionException();
     }

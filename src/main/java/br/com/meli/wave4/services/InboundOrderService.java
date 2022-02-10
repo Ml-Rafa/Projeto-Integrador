@@ -126,46 +126,42 @@ public class InboundOrderService implements IInboundOrderService {
         this.checkSectionOfWarehouse(warehouse, section);
 
         //    VERIFICA SE O ID DO PRODUTO ESTÁ REGISTRADO EM NOME DO VENDEDOR
-            inboundOrder.getBatchStock().forEach(batch -> sellerService.productBelongToTheSeller(inboundOrder, batch));
+        inboundOrder.getBatchStock().forEach(batch -> sellerService.productBelongToTheSeller(inboundOrder, batch));
 
 //      VALIDA SE O PRODUTO ESTÁ NO SETOR CORRETO E O REPRESENTANTE
-            inboundOrder.getBatchStock().forEach(batch -> {
-                User representative = authenticationService.authenticated();
-                representativeService.checkRepresentativeOfWarehouse(warehouse, representative);
-                checkProductSection(inboundOrder.getSection().getSectionCode(), batch.getProduct().getId());
-                batch.setRepresentative(representative);
-                batch.setSection(section);
-            });
+        inboundOrder.getBatchStock().forEach(batch -> {
+            User representative = authenticationService.authenticated();
+            representativeService.checkRepresentativeOfWarehouse(warehouse, representative);
+            checkProductSection(inboundOrder.getSection().getSectionCode(), batch.getProduct().getId());
+            batch.setRepresentative(representative);
+            batch.setSection(section);
+        });
 
 //      VALIDA O ESPAÇO
-            Integer totalItens = this.getTotalProductsInSection(inboundOrder.getBatchStock());
-            verifyAvailableArea(totalItens, section);
+        Integer totalItens = this.getTotalProductsInSection(inboundOrder.getBatchStock());
+        verifyAvailableArea(totalItens, section);
 
 //      REGISTRA INBOUND ORDER
-            InboundOrder i = this.inboundOrderRepository.save(inboundOrder);
+        InboundOrder i = this.inboundOrderRepository.save(inboundOrder);
 
 //      REGISTRA O LOTE
-            registerBatch(inboundOrder.getBatchStock(), i);
+        registerBatch(inboundOrder.getBatchStock(), i);
 
-            //busca novamente porque a lista já está atualizada
-            Section sectionAfterInsert = sectionService.findBySectionCode(inboundOrder.getSection().getSectionCode());
-            Set<Product> productSet = new HashSet<>();
-            inboundOrder.getBatchStock().forEach(batch -> {
-                productSet.add(batch.getProduct());
-            });
-            return inboundOrder;
-
-
+        //busca novamente porque a lista já está atualizada
+        Section sectionAfterInsert = sectionService.findBySectionCode(inboundOrder.getSection().getSectionCode());
+        Set<Product> productSet = new HashSet<>();
+        inboundOrder.getBatchStock().forEach(batch -> {
+            productSet.add(batch.getProduct());
+        });
+        return inboundOrder;
     }
-
-//
 
 
     @Override
     public Boolean checkSectionOfWarehouse(Warehouse warehouse, Section section) {
         if (!warehouse.getId().equals(section.getWarehouse().getId())) {
             throw new InvalidSectionException();
-        }else{
+        } else {
             return true;
         }
     }
@@ -177,6 +173,7 @@ public class InboundOrderService implements IInboundOrderService {
             throw new InvalidWarehouseException();
         return warehouse;
     }
+
     @Override
     public Section getSection(InboundOrder inboundOrder) {
         Section section = sectionService.findBySectionCode(inboundOrder.getSection().getSectionCode());
@@ -184,6 +181,7 @@ public class InboundOrderService implements IInboundOrderService {
             throw new InvalidSectionException();
         return section;
     }
+
     @Override
     public User getRepresentative(Batch batch) {
         User representative = representativeService.findById(batch.getRepresentative().getId());

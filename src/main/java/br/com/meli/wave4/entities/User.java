@@ -14,7 +14,6 @@ import java.util.*;
 @Builder
 @Getter
 @Setter
-//@MappedSuperclass
 @Entity
 @Table(name="users")
 public class User implements UserDetails {
@@ -49,7 +48,6 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "representative", cascade = CascadeType.ALL)
     private List<Batch> batch = new ArrayList<>();
-    //FINAL REPRESENTATIVE
 
     //CLIENT
     private String address = "";
@@ -57,13 +55,11 @@ public class User implements UserDetails {
     @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<PurchaseOrder> listPurchaseOrder = new ArrayList<>();
-    //FINAL CLIENT
 
     //SELLER
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "seller")
     private List<Product> productList = new ArrayList<>();
-    //FINAL SELLER
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -79,6 +75,7 @@ public class User implements UserDetails {
         this.profiles.forEach(profile-> authorities.add(new SimpleGrantedAuthority(profile.getName())));
         return authorities;
     }
+
     @Override
     public String getPassword() {
         return this.password;

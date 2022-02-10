@@ -20,65 +20,50 @@ public class ArticlesPurchaseService implements IArticlesPurchaseService {
     @Autowired
     ArticlesPurchaseRepository articlesPurchaseRepository;
 
-        @Override
-        public BigDecimal calcTotalPrice(List<ArticlesPurchase> products){
+    @Override
+    public BigDecimal calcTotalPrice(List<ArticlesPurchase> products) {
         return products.stream().map(articlesPurchase -> articlesPurchase.getProductArticle()
-                   .getPrice()
-                   .multiply(new BigDecimal(articlesPurchase.getQuantity()))
+                .getPrice()
+                .multiply(new BigDecimal(articlesPurchase.getQuantity()))
         ).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public List<ArticlesPurchaseDTO> convertToDTO(List<ArticlesPurchase> articlesPurchase){
+    public List<ArticlesPurchaseDTO> convertToDTO(List<ArticlesPurchase> articlesPurchase) {
         List<ArticlesPurchaseDTO> articlesPurchaseDTOSet = new ArrayList<>();
-        for(ArticlesPurchase a : articlesPurchase){
+        for (ArticlesPurchase a : articlesPurchase) {
             articlesPurchaseDTOSet.add(
-                ArticlesPurchaseDTO.builder()
-                        .id(a.getId())
-                        .product(a.getProductArticle().getId())
-                        .quantity(a.getQuantity())
-                        .batchCode(a.getBatchCode())
-                        .build()
+                    ArticlesPurchaseDTO.builder()
+                            .id(a.getId())
+                            .product(a.getProductArticle().getId())
+                            .quantity(a.getQuantity())
+                            .batchCode(a.getBatchCode())
+                            .build()
             );
         }
         return articlesPurchaseDTOSet;
     }
 
-    public List<ArticlesPurchase> convertToEntity(List<ArticlesPurchaseDTO> articlesPurchaseDTO){
+    public List<ArticlesPurchase> convertToEntity(List<ArticlesPurchaseDTO> articlesPurchaseDTO) {
         List<ArticlesPurchase> articlesPurchases = new ArrayList<>();
-        for(ArticlesPurchaseDTO a : articlesPurchaseDTO){
+        for (ArticlesPurchaseDTO a : articlesPurchaseDTO) {
             articlesPurchases.add(
                     ArticlesPurchase.builder()
-                    .id(a.getId())
-                    .productArticle(this.productService.findById(a.getProduct()))
-                    .quantity(a.getQuantity())
-                    .batchCode(a.getBatchCode())
-                    .build()
+                            .id(a.getId())
+                            .productArticle(this.productService.findById(a.getProduct()))
+                            .quantity(a.getQuantity())
+                            .batchCode(a.getBatchCode())
+                            .build()
             );
         }
         return articlesPurchases;
     }
 
-    public void save(ArticlesPurchase articlesPurchase){
+    public void save(ArticlesPurchase articlesPurchase) {
         articlesPurchaseRepository.save(articlesPurchase);
     }
 
-    public ArticlesPurchase findById(Integer articlesPurchaseId){
-            return articlesPurchaseRepository.findById(articlesPurchaseId).orElse(null);
+    public ArticlesPurchase findById(Integer articlesPurchaseId) {
+        return articlesPurchaseRepository.findById(articlesPurchaseId).orElse(null);
     }
-
-//    public void update(ArticlesPurchase articlesPurchase){
-//            ArticlesPurchase articlesPurchasePersistence = articlesPurchaseRepository.findById(articlesPurchase.getId()).orElse(null);
-//
-//                articlesPurchasePersistence.setProductArticle(articlesPurchase.getProductArticle());
-//                articlesPurchasePersistence.setBatchCode(articlesPurchase.getBatchCode());
-//                articlesPurchasePersistence.setQuantity(articlesPurchase.getQuantity());
-//                articlesPurchasePersistence.setPurchaseOrder(articlesPurchase.getPurchaseOrder());
-//
-//                articlesPurchaseRepository.saveAndFlush(articlesPurchasePersistence);
-//
-//
-//
-//
-//    }
 
 }
