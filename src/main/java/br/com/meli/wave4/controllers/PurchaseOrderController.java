@@ -93,4 +93,9 @@ public class PurchaseOrderController {
         }
 
     }
+    @GetMapping("clear/car")
+    public ResponseEntity<?> verifyTimePurchasesOrder(){
+
+        return ResponseEntity.ok(this.purchaseOrderService.verifyTimePurchasesOrder());
+    }
 }

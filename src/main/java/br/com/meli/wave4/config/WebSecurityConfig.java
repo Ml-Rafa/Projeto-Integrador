@@ -24,7 +24,7 @@ import java.util.Arrays;
 
 @EnableWebSecurity
 @Configuration
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private AuthenticationService authenticationService;
@@ -60,16 +60,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .antMatchers(
-                        "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html/**", "/swagger-resources/**", "/webjars/**","/").permitAll()
+                        "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html/**", "/swagger-resources/**", "/webjars/**", "/").permitAll()
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/fresh-products/inboundorder/register-inbound-order/**")
                 .hasAnyAuthority("REPRESENTATIVE")
                 .antMatchers(HttpMethod.PUT, "/api/v1/fresh-products/inboundorder/update-inbound-order/**")
                 .hasAnyAuthority("REPRESENTATIVE")
-                .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/list/**").hasAnyAuthority("SELLER", "CLIENT","REPRESENTATIVE")
+                .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/list/**").hasAnyAuthority("SELLER", "CLIENT", "REPRESENTATIVE")
                 .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/due-date/**").hasAnyAuthority("REPRESENTATIVE")
                 .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/due-date-all/**").hasAnyAuthority("REPRESENTATIVE")
                 .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/warehouse/**").hasAnyAuthority("REPRESENTATIVE")
+                .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/clear/car/**").hasAnyAuthority("REPRESENTATIVE")
                 .antMatchers(HttpMethod.GET, "/api/v1/fresh-products/**").hasAnyAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST, "/api/v1/fresh-products/**").hasAnyAuthority("CLIENT")
                 .antMatchers(HttpMethod.PUT, "/api/v1/fresh-products/**").hasAnyAuthority("CLIENT")

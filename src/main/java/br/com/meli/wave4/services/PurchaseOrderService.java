@@ -13,6 +13,8 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -63,7 +65,7 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     }
 
     @Override
-    public PurchaseOrderDTO order(PurchaseOrder purchaseOrder){
+    public PurchaseOrderDTO order(PurchaseOrder purchaseOrder) {
 
         List<ArticlesPurchase> products = new ArrayList<>();
         List<String> mensagem = new ArrayList<>();
@@ -77,20 +79,20 @@ public class PurchaseOrderService implements IPurchaseOrderService {
                 .totalPrice(new BigDecimal(0))
                 .build();
 
-        for(ArticlesPurchase a: purchaseOrder.getArticlesPurchases()){
+        for (ArticlesPurchase a : purchaseOrder.getArticlesPurchases()) {
 
             Product p = this.productService.findById(a.getProductArticle().getId());
 
-            User client =this.authenticationService.authenticated();
+            User client = this.authenticationService.authenticated();
             try {
                 Boolean haveStock =
-                        this.productService.verifyStock(p.getId(),a.getQuantity(),a.getBatchCode());
+                        this.productService.verifyStock(p.getId(), a.getQuantity(), a.getBatchCode());
                 Boolean lessThan3weak = this.productService.verifyIfDueDateLessThan3Weeks(p);
 
-                if(haveStock && !lessThan3weak
-                ){
+                if (haveStock && !lessThan3weak
+                ) {
                     products.add(a);
-                    this.batchService.updateStock(p.getId(),a.getQuantity(),a.getBatchCode());
+                    this.batchService.updateStock(p.getId(), a.getQuantity(), a.getBatchCode());
 
                 }
 
@@ -107,9 +109,9 @@ public class PurchaseOrderService implements IPurchaseOrderService {
         purchaseOrder.setTotalPrice(this.articlesPurchaseService.calcTotalPrice(products));
         purchaseOrder.setArticlesPurchases(products);
 
-        if(!products.isEmpty()) {
+        if (!products.isEmpty()) {
             purchaseOrderPersistence = this.purchaseOrderRepository.save(purchaseOrder);
-            for(ArticlesPurchase a: purchaseOrderPersistence.getArticlesPurchases()){
+            for (ArticlesPurchase a : purchaseOrderPersistence.getArticlesPurchases()) {
                 a.setPurchaseOrder(purchaseOrderPersistence);
                 articlesPurchaseService.save(a);
             }
@@ -130,16 +132,16 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     public PurchaseOrder update(PurchaseOrder purchaseOrder) {
 
         PurchaseOrder purchaseOrderUpdated = purchaseOrderRepository.findById(purchaseOrder.getId()).orElse(null);
-        if(purchaseOrder.getOrderStatus().equals(OrderStatus.CANCELED)){
+        if (purchaseOrder.getOrderStatus().equals(OrderStatus.CANCELED)) {
             assert purchaseOrderUpdated != null;
             return cancelPurchaseOrder(purchaseOrder, purchaseOrderUpdated);
         }
 
         List<ArticlesPurchase> products = new ArrayList<>();
         assert purchaseOrderUpdated != null;
-        for(ArticlesPurchase a : purchaseOrderUpdated.getArticlesPurchases()) {
+        for (ArticlesPurchase a : purchaseOrderUpdated.getArticlesPurchases()) {
             Batch batch = batchService.findByBatchNumber(a.getBatchCode());
-            for(ArticlesPurchase article : purchaseOrder.getArticlesPurchases()) {
+            for (ArticlesPurchase article : purchaseOrder.getArticlesPurchases()) {
                 if (article.getId().equals(a.getId())) {
                     Boolean haveStock = this.productService.verifyStock(article.getProductArticle().getId(), article.getQuantity(), article.getBatchCode());
                     Boolean lessThan2Week = this.productService.verifyIfDueDateLessThan3Weeks(article.getProductArticle());
@@ -156,7 +158,7 @@ public class PurchaseOrderService implements IPurchaseOrderService {
         purchaseOrderUpdated.setOrderStatus(purchaseOrder.getOrderStatus());
         purchaseOrderUpdated.setArticlesPurchases(products);
         PurchaseOrder purchaseOrderPersistence = this.purchaseOrderRepository.saveAndFlush(purchaseOrderUpdated);
-        for(ArticlesPurchase a: purchaseOrder.getArticlesPurchases()){
+        for (ArticlesPurchase a : purchaseOrder.getArticlesPurchases()) {
             a.setPurchaseOrder(purchaseOrderPersistence);
             articlesPurchaseService.save(a);
         }
@@ -164,9 +166,9 @@ public class PurchaseOrderService implements IPurchaseOrderService {
         return purchaseOrderPersistence;
     }
 
-    private PurchaseOrder cancelPurchaseOrder(PurchaseOrder purchaseOrder, PurchaseOrder purchaseOrderUpdated) {
+    public PurchaseOrder cancelPurchaseOrder(PurchaseOrder purchaseOrder, PurchaseOrder purchaseOrderUpdated) {
         assert purchaseOrderUpdated != null;
-        for(ArticlesPurchase a : purchaseOrderUpdated.getArticlesPurchases()) {
+        for (ArticlesPurchase a : purchaseOrderUpdated.getArticlesPurchases()) {
             Batch batch = batchService.findByBatchNumber(a.getBatchCode());
             batchService.reverseStock(batch.getCurrentQuantity() + a.getQuantity(), a.getBatchCode());
         }
@@ -178,12 +180,32 @@ public class PurchaseOrderService implements IPurchaseOrderService {
         purchaseOrderUpdated.setOrderStatus(purchaseOrder.getOrderStatus());
 
         PurchaseOrder purchaseOrderPersistence = this.purchaseOrderRepository.saveAndFlush(purchaseOrderUpdated);
-        for(ArticlesPurchase a: purchaseOrder.getArticlesPurchases()){
+        for (ArticlesPurchase a : purchaseOrder.getArticlesPurchases()) {
             a.setPurchaseOrder(purchaseOrderPersistence);
             articlesPurchaseService.save(a);
         }
         return purchaseOrderUpdated;
     }
+
+    public List<PurchaseOrder> verifyTimePurchasesOrder() {
+
+        List<PurchaseOrder> listPurchaseOrder = purchaseOrderRepository.findAll();
+
+
+        listPurchaseOrder.forEach(p -> {
+
+
+            if (p.getOrderStatus().getCode().equals(1) && p.getDate().plusDays(1).equals(LocalDate.now())) {
+
+                update(p);
+
+            }
+
+        });
+        return listPurchaseOrder;
+
+    }
+
 }
 
 
