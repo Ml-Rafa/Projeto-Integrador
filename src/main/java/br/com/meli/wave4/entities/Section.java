@@ -23,7 +23,7 @@ public class Section {
     private Double maxCapacity;
     private Double availableCapacity;
     @ManyToOne
-    @JoinColumn(name = "warehouse_id", nullable = false)
+    @JoinColumn(name = "warehouse_id", nullable = true)
     private Warehouse warehouse;
     @JsonIgnore
     @OneToMany(mappedBy = "section")

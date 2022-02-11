@@ -173,7 +173,7 @@ public class ProductService implements IProductService {
         List<WarehouseProductInfo> warehouseProductInfoList = new ArrayList<>();
 
         warehouseList.stream().forEach(warehouse -> {
-            Integer quantityProduct = warehouse.getSectionSet().stream().mapToInt(section -> {
+            Integer quantityProduct = warehouse.getSectionList().stream().mapToInt(section -> {
                 return section.getBatchList().stream().mapToInt(batch -> {
                     if (batch.getProduct().getId().equals(productId)) {
                         return batch.getCurrentQuantity();
@@ -202,7 +202,7 @@ public class ProductService implements IProductService {
         List<ProductNearExpireDate> productNearExpireDateList = new ArrayList<>();
         LocalDate today = LocalDate.now();
 
-        warehouseList.forEach(w -> w.getSectionSet().forEach(s -> {
+        warehouseList.forEach(w -> w.getSectionList().forEach(s -> {
             generateListProductsNearOfExpirationDate(days, productNearExpireDateList, today, s);
         }));
 

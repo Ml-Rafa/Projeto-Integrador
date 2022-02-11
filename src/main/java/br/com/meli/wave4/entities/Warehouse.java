@@ -5,9 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Builder
@@ -34,11 +32,12 @@ public class Warehouse {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "warehouse")
-    Set<Section> sectionSet = new HashSet<>();
+    List<Section> sectionList = new ArrayList<>();
 
 //    @ManyToMany(mappedBy = "warehouse")
 //    private Set<DeliveryTimeByStateInHours> deliveryTimeByStateInDays = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "warehouse")
     private Set<DeliveryTimeByStateInHours> deliveryTimeByStateInDays = new HashSet<>();
+
 
 }

@@ -122,9 +122,10 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     }
 
 
+    @Override
     public PurchaseOrder findById(Integer id) {
-        PurchaseOrder purchaseOrder = purchaseOrderRepository.findById(id).orElse(null);
-        return purchaseOrder;
+        return purchaseOrderRepository.findById(id).orElse(null);
+
     }
 
     public PurchaseOrder update(PurchaseOrder purchaseOrder) {

@@ -28,7 +28,7 @@ public class WarehouseServiceTest {
 
     Warehouse warehouse;
 
-    Set<Section> sectionList = new HashSet<>();
+    List<Section> sectionList = new ArrayList<>();
 
     User representative;
 
@@ -50,7 +50,7 @@ public class WarehouseServiceTest {
                 .id(123)
                 .geographicArea("testes")
                 .representative(new User())
-                .sectionSet(this.sectionList)
+                .sectionList(this.sectionList)
                 .build();
     }
 

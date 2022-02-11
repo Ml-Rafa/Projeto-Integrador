@@ -231,12 +231,12 @@ public class ProductServiceTest {
         warehouseList.add(
                 Warehouse.builder()
                         .id(9)
-                        .sectionSet(Set.of(this.section))
+                        .sectionList(Arrays.asList(this.section))
                         .build());
         warehouseList.add(
                 Warehouse.builder()
                         .id(7)
-                        .sectionSet(Set.of(this.section))
+                        .sectionList(Arrays.asList(this.section))
                         .build());
 
         when(this.warehouseService.findAll()).thenReturn(warehouseList);

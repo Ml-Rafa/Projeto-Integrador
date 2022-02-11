@@ -7,4 +7,6 @@ public interface IPurchaseOrderService {
 
 
     PurchaseOrderDTO order(PurchaseOrder purchaseOrder);
+
+    PurchaseOrder findById(Integer id);
 }
