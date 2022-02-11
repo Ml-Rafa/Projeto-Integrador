@@ -33,16 +33,12 @@ public class BatchService implements IBatchService {
     @Autowired
     private UserRepository userRepository;
 
-//    @Autowired
-//    private InboundOrderService inboundOrderService;
-
     public BatchService(BatchRepository batchRepository) {
         this.batchRepository = batchRepository;
     }
 
     @Override
     public Batch findByBatchNumber(Integer batchNumber) {
-//        return batchRepository.findByBatchNumber(batchNumber);
         Batch batch = batchRepository.findByBatchNumber(batchNumber);
         if(batch == null)
             throw new NotFoundException("Não foi localizado nenhum lote com o número informado.");
@@ -68,11 +64,9 @@ public class BatchService implements IBatchService {
                 .product(productRepository.findById(batch.getProductId()).orElse(null))
                 .currentTemperature(batch.getCurrentTemperature())
                 .minimumTemperature(batch.getMinimumTemperature())
-//                .representative(userRepository.findById(batch.getRepresentativeId()).stream().findFirst().orElse(null))
                 .dueDate(batch.getDueDate())
                 .manufacturingDate(batch.getManufacturingDate())
                 .manufacturingTime(batch.getManufacturingTime())
-//                 .inboundOrder(this.inboundOrderService.findyById(batch.getInboundOrderId()))
                 .build();
     }
 

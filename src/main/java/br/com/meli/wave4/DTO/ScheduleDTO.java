@@ -29,7 +29,7 @@ public class ScheduleDTO {
     @FutureOrPresent(message = "A data de entrega não pode ser pretérita.")
     private LocalDateTime deliveryDateTime;
 
-    private BigDecimal shippingValue; //não vem na request.
+    private BigDecimal shippingValue;
 }
 
 

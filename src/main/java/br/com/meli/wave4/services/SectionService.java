@@ -23,7 +23,6 @@ public class SectionService implements ISectionService {
 
     @Override
     public Section findBySectionCode(Integer sectionCode){
-//        return sectionRepository.findBySectionCode(sectionCode);
         Section section = sectionRepository.findBySectionCode(sectionCode);
         if(section == null)
             throw new NotFoundException("Setor não localizado.");

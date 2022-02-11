@@ -51,12 +51,5 @@ public class ClientService implements IClientService {
         return this.userRepository.findById(clientId).orElse(null);
     }
 
-//    @Autowired
-//    ClientRepository clientRepository;
-//
-//    @Override
-//    public Client findById(Integer clientId){
-//        return this.clientRepository.findById(clientId).orElse(null);
-//    }
 
 }

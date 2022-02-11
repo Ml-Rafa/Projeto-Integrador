@@ -18,5 +18,4 @@ public interface DeliveryTimeByStateInHoursRepository extends JpaRepository<Deli
     List<DeliveryTimeByStateInHours> findAllByState(String state);
 
     DeliveryTimeByStateInHours findByStateAndWarehouse(String state, Warehouse warehouse);
-//    DeliveryTimeByStateInHours findByStateAndWarehouse(String state, Set<Warehouse> warehouse);
 }

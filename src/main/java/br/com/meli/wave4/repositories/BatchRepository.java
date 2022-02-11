@@ -12,7 +12,6 @@ import java.util.Optional;
 @Repository
 public interface BatchRepository extends JpaRepository<Batch, Integer> {
 
-//    Optional<Batch> findByBatchNumber(Integer batchNumber);
     Batch findByBatchNumber(Integer batchNumber);
 
     @Modifying

@@ -65,20 +65,4 @@ public class ArticlesPurchaseService implements IArticlesPurchaseService {
     public ArticlesPurchase findById(Integer articlesPurchaseId){
             return articlesPurchaseRepository.findById(articlesPurchaseId).orElse(null);
     }
-
-//    public void update(ArticlesPurchase articlesPurchase){
-//            ArticlesPurchase articlesPurchasePersistence = articlesPurchaseRepository.findById(articlesPurchase.getId()).orElse(null);
-//
-//                articlesPurchasePersistence.setProductArticle(articlesPurchase.getProductArticle());
-//                articlesPurchasePersistence.setBatchCode(articlesPurchase.getBatchCode());
-//                articlesPurchasePersistence.setQuantity(articlesPurchase.getQuantity());
-//                articlesPurchasePersistence.setPurchaseOrder(articlesPurchase.getPurchaseOrder());
-//
-//                articlesPurchaseRepository.saveAndFlush(articlesPurchasePersistence);
-//
-//
-//
-//
-//    }
-
 }

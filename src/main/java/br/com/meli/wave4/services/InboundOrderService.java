@@ -117,18 +117,13 @@ public class InboundOrderService implements IInboundOrderService {
     @Override
     public InboundOrder create(InboundOrder inboundOrder) {
 
-//      O ARMAZEM É VÁLIDO
         Warehouse warehouse = this.getWarehouse(inboundOrder);
-
-//      É VALIDADO SE O SETOR É VÁLIDO
         Section section = this.getSection(inboundOrder);
 
         this.checkSectionOfWarehouse(warehouse, section);
 
-        //    VERIFICA SE O ID DO PRODUTO ESTÁ REGISTRADO EM NOME DO VENDEDOR
             inboundOrder.getBatchStock().forEach(batch -> sellerService.productBelongToTheSeller(inboundOrder, batch));
 
-//      VALIDA SE O PRODUTO ESTÁ NO SETOR CORRETO E O REPRESENTANTE
             inboundOrder.getBatchStock().forEach(batch -> {
                 User representative = authenticationService.authenticated();
                 representativeService.checkRepresentativeOfWarehouse(warehouse, representative);
@@ -137,17 +132,13 @@ public class InboundOrderService implements IInboundOrderService {
                 batch.setSection(section);
             });
 
-//      VALIDA O ESPAÇO
             Integer totalItens = this.getTotalProductsInSection(inboundOrder.getBatchStock());
             verifyAvailableArea(totalItens, section);
 
-//      REGISTRA INBOUND ORDER
             InboundOrder i = this.inboundOrderRepository.save(inboundOrder);
 
-//      REGISTRA O LOTE
             registerBatch(inboundOrder.getBatchStock(), i);
 
-            //busca novamente porque a lista já está atualizada
             Section sectionAfterInsert = sectionService.findBySectionCode(inboundOrder.getSection().getSectionCode());
             Set<Product> productSet = new HashSet<>();
             inboundOrder.getBatchStock().forEach(batch -> {

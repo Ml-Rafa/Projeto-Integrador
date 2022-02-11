@@ -37,10 +37,6 @@ public class Batch {
     @JsonBackReference
     @ManyToOne
     private User representative;
-//    @JsonBackReference
-//    @ManyToOne
-//    private Representative representative;
-
     private Double currentTemperature;
     private Double minimumTemperature;;
     private Integer initialQuantity;
