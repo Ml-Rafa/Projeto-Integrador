@@ -31,3 +31,10 @@ public class ScheduleDTO {
 
     private BigDecimal shippingValue; //não vem na request.
 }
+
+
+
+
+
+
+

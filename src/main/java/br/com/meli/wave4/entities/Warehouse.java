@@ -34,8 +34,6 @@ public class Warehouse {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "warehouse")
     List<Section> sectionList = new ArrayList<>();
 
-//    @ManyToMany(mappedBy = "warehouse")
-//    private Set<DeliveryTimeByStateInHours> deliveryTimeByStateInDays = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "warehouse")
     private Set<DeliveryTimeByStateInHours> deliveryTimeByStateInDays = new HashSet<>();
 
