@@ -2,6 +2,9 @@ package br.com.meli.wave4.unit_tests;
 
 import br.com.meli.wave4.DTO.ScheduleDTO;
 import br.com.meli.wave4.entities.*;
+import br.com.meli.wave4.exceptions.NotFoundException;
+import br.com.meli.wave4.exceptions.UnavailableDateException;
+import br.com.meli.wave4.exceptions.UnavailableSpaceException;
 import br.com.meli.wave4.repositories.*;
 import br.com.meli.wave4.services.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -74,7 +77,7 @@ public class ScheduleServiceTest {
     ArticlesPurchase articlesPurchase;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         MockitoAnnotations.openMocks(this);
         this.client = User
                 .builder()
@@ -115,7 +118,7 @@ public class ScheduleServiceTest {
 
         this.inboundOrderList.add(inboundOrder);
 
-        this.product=
+        this.product =
                 Product.builder()
                         .id(2)
                         .name("Pao de Queijo Congelado")
@@ -175,7 +178,7 @@ public class ScheduleServiceTest {
                 .batchList(this.batchList)
                 .build();
 
-        this.warehouse =  Warehouse.builder()
+        this.warehouse = Warehouse.builder()
                 .id(1)
                 .geographicArea("São Paulo")
                 .representative(this.representative)
@@ -306,32 +309,38 @@ public class ScheduleServiceTest {
         assertEquals(this.schedule.getId(), scheduleRegister.getId());
     }
 
-//    @Test
-//    public void update(){
-//
-//        when(this.purchaseOrderRepository.findById(any())).thenReturn(java.util.Optional.ofNullable(this.purchaseOrder));
-//        when(this.productService.findById(any())).thenReturn(this.product);
-//        when(this.productService.verifyStock(any(),any(),any())).thenReturn(true);
-//        when(this.productService.verifyIfDueDateLessThan3Weeks(any())).thenReturn(true);
-//        when(this.purchaseOrderRepository.saveAndFlush(any())).thenReturn(this.purchaseOrder);
-//
-//
-//        assertNotNull(this.purchaseOrderService.update(this.purchaseOrder));
-//    }
+    @Test
+    public void shouldTryUpdateAScheduleAndReturnAUnavailableDateException() throws IOException {
+
+        when(this.purchaseOrderService.findById(any())).thenReturn(this.purchaseOrder);
+        when(this.batchService.findByBatchNumber(any())).thenReturn(this.batch);
+        when(this.deliveryTimeByStateInHoursRepository.findByStateAndWarehouse(any(), any())).thenReturn(this.deliveryTimeByStateInHour);
+        when(this.deliveryDatesRepository.findAllByDeliveryLocationAndDateIsAvailable(any(), any())).thenReturn(new ArrayList<>());
+        when(this.scheduleRepository.saveAndFlush(this.schedule)).thenThrow(UnavailableDateException.class);
+
+        UnavailableDateException exceptionExpected = assertThrows(
+                UnavailableDateException.class,
+                () -> {
+                    scheduleService.updateSchedule(this.schedule);
+                }
+        );
+        assertEquals(UnavailableDateException.class, exceptionExpected.getClass());
+    }
+
 
     @Test
-    void shouldReturnScheduleDTO(){
+    void shouldReturnScheduleDTO() {
         assertInstanceOf(ScheduleDTO.class, scheduleService.convertToDTO(this.schedule));
     }
 
     @Test
-    public void shouldReturnScheduleEntity(){
+    public void shouldReturnScheduleEntity() {
         when(this.purchaseOrderRepository.findById(any())).thenReturn(Optional.of(this.purchaseOrder));
         assertInstanceOf(Schedule.class, this.scheduleService.convertToEntity(this.scheduleDTO));
     }
 
     @Test
-    void ShouldReturnDeliveryDatesList(){
+    void ShouldReturnDeliveryDatesList() {
 
         when(this.purchaseOrderService.findById(any())).thenReturn(this.purchaseOrder);
         when(this.batchService.findByBatchNumber(any())).thenReturn(batch);
@@ -341,6 +350,40 @@ public class ScheduleServiceTest {
         assertEquals(1, this.scheduleService.getAvailableDates(this.purchaseOrder.getId()).size());
     }
 
+    @Test
+    void shouldDeleteScheduling() {
+        when(scheduleRepository.findById(any())).thenReturn(Optional.of(schedule));
+        assertTrue(this.scheduleService.cancelScheduling(schedule.getId()).contains("Schedule deletada com sucesso."));
+    }
+
+    @Test
+    void shouldTryCancelSchedulingAndReturnANotFoundException() {
+        NotFoundException exceptionExpected = assertThrows(
+                NotFoundException.class,
+                () -> {
+                    scheduleService.cancelScheduling(this.schedule.getId());
+                }
+        );
+        assertTrue(exceptionExpected.getMessage().contains("Schedule não encontrada no sistema."));
+    }
+
+    @Test
+    public void shouldTryRegisterAScheduleAndReturnAUnavailableDateException() throws IOException {
+
+        when(this.purchaseOrderService.findById(any())).thenReturn(this.purchaseOrder);
+        when(this.batchService.findByBatchNumber(any())).thenReturn(this.batch);
+        when(this.deliveryTimeByStateInHoursRepository.findByStateAndWarehouse(any(), any())).thenReturn(this.deliveryTimeByStateInHour);
+        when(this.deliveryDatesRepository.findAllByDeliveryLocationAndDateIsAvailable(any(), any())).thenReturn(new ArrayList<>());
+        when(this.scheduleRepository.save(this.schedule)).thenThrow(UnavailableDateException.class);
+
+        UnavailableDateException exceptionExpected = assertThrows(
+                UnavailableDateException.class,
+                () -> {
+                    scheduleService.registerSchedule(this.schedule);
+                }
+        );
+        assertEquals(UnavailableDateException.class, exceptionExpected.getClass());
+    }
+
+
 }
-
-

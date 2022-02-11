@@ -65,8 +65,8 @@ public class ApiExceptionControllerAdvice {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<StandardError> notFound(NotFoundException e, HttpServletRequest request){
         StandardError err = new StandardError(System.currentTimeMillis(),
-                HttpStatus.BAD_REQUEST.value(), "Not Found Error", e.getMessage(), request.getRequestURI());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+                HttpStatus.NOT_FOUND.value(), "Not Found Error", e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
     }
     @ExceptionHandler(DueDateLessThan3WeeksException.class)
     public ResponseEntity<StandardError> dueDateLessThan3WeeksException(DueDateLessThan3WeeksException e, HttpServletRequest request) {

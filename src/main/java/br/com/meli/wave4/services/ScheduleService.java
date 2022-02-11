@@ -191,12 +191,15 @@ public class ScheduleService implements IScheduleService {
     }
 
     @Override
-    public void cancelScheduling(Integer scheduleId){
+    public String cancelScheduling(Integer scheduleId){
         Schedule schedulePersistence = scheduleRepository.findById(scheduleId).orElse(null);
-        if(schedulePersistence != null)
-            scheduleRepository.delete(schedulePersistence);
-        else
+        if(schedulePersistence == null)
             throw new NotFoundException("Schedule não encontrada no sistema.");
+        else{
+            scheduleRepository.delete(schedulePersistence);
+            return "Schedule deletada com sucesso.";
+        }
+
     }
 
     @Override

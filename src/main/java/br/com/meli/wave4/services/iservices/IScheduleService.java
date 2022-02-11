@@ -13,7 +13,7 @@ public interface IScheduleService {
     BigDecimal calculateShipping(Integer purchaseOrderId);
     Schedule registerSchedule(Schedule schedule);
     Schedule updateSchedule (Schedule schedule);
-    void cancelScheduling(Integer scheduleId);
+    String cancelScheduling(Integer scheduleId);
     List<Schedule> findAll();
     Schedule getById(Integer scheduleId);
 
