@@ -293,6 +293,33 @@ public class ScheduleServiceTest {
     }
 
     @Test
+    public void shouldUpdateASchedule() throws IOException {
+        when(scheduleRepository.findById(any())).thenReturn(Optional.of(this.schedule));
+        when(this.purchaseOrderService.findById(any())).thenReturn(this.purchaseOrder);
+        when(this.batchService.findByBatchNumber(any())).thenReturn(this.batch);
+        when(this.deliveryTimeByStateInHoursRepository.findByStateAndWarehouse(any(), any())).thenReturn(this.deliveryTimeByStateInHour);
+        when(this.deliveryDatesRepository.findAllByDeliveryLocationAndDateIsAvailable(any(), any())).thenReturn(this.deliveryDates);
+        when(this.scheduleRepository.saveAndFlush(this.schedule)).thenReturn(this.schedule);
+
+        Schedule scheduleRegister = this.scheduleService.updateSchedule(this.schedule);
+
+        assertEquals(this.schedule.getId(), scheduleRegister.getId());
+    }
+
+//    @Test
+//    public void update(){
+//
+//        when(this.purchaseOrderRepository.findById(any())).thenReturn(java.util.Optional.ofNullable(this.purchaseOrder));
+//        when(this.productService.findById(any())).thenReturn(this.product);
+//        when(this.productService.verifyStock(any(),any(),any())).thenReturn(true);
+//        when(this.productService.verifyIfDueDateLessThan3Weeks(any())).thenReturn(true);
+//        when(this.purchaseOrderRepository.saveAndFlush(any())).thenReturn(this.purchaseOrder);
+//
+//
+//        assertNotNull(this.purchaseOrderService.update(this.purchaseOrder));
+//    }
+
+    @Test
     void shouldReturnScheduleDTO(){
         assertInstanceOf(ScheduleDTO.class, scheduleService.convertToDTO(this.schedule));
     }

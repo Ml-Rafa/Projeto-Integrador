@@ -132,7 +132,6 @@ public class ScheduleService implements IScheduleService {
         List<DeliveryTimeByStateInHours> deliveryTimeByStateInHours = deliveryTimeByStateInHoursRepository
                 .findAllByState(stateClientDelivery);
 
-        //VERIFICAR A WAREHOUSE/TEMPO MAIS LONGE QUE FOI FEITA A COMPRA. VERIFICAR O FRETE DE ENTREGA
         Set<Warehouse> warehouses = new HashSet<>();
         purchaseOrderPersistence.getArticlesPurchases().forEach(
                 a -> {
