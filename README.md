@@ -80,6 +80,14 @@ Os resultados a seguir serão adicionados de acordo com cada nível.
     6. Documentação por meio do Swagger.
 _________
 
+
+## User Story desenvolvida
+
+
+COMO comprador, QUERO realizar o agendamento da entrega dos produtos frescos que irei comprar PARA que eu possa estar em casa para recebê-los e armazená-los corretamente.
+
+
+
 ## 🛠 Tecnologias
 
 As seguintes ferramentas foram usadas na construção do Back-end:
