@@ -127,6 +127,8 @@ cadeira.
 
 * Diagrama de classes completo (UML) do projeto final.
 
+* Diagrama DER
+
 https://drive.google.com/drive/folders/1b7LJW4t7y09eerMJqdYQ_LZNGdI1rzi6?usp=sharing
 _________
 
