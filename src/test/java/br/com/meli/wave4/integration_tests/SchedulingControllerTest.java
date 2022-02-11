@@ -12,37 +12,34 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class SchedulingControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private MockMvc mock;
-
-    @Test
-    void loginClientShouldReturnStatusOk() throws Exception {
-
-        String payloadJson = "{\n" +
-                "    \"username\": \"gabriela\",\n" +
-                "    \"password\": \"123\"" +
-                "}\n";
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/auth")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(payloadJson))
-                .andDo(print())
-                .andReturn().getResponse();
-    }
-
-    @Test
-    void loginFail() throws Exception {
-        String payloadJson = "{\n" +
-                "    \"username\": \"rodrigo\",\n" +
-                "    \"password\": \"451\"" +
-                "}\n";
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/auth")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(payloadJson))
-                .andDo(print())
-                .andExpect(status().isForbidden());
-    }
+//    @Autowired
+//    private MockMvc mockMvc;
+//
+//    @Test
+//    void loginClientShouldReturnStatusOk() throws Exception {
+//
+//        String payloadJson = "{\n" +
+//                "    \"username\": \"gabriela\",\n" +
+//                "    \"password\": \"123\"" +
+//                "}\n";
+//        this.mockMvc.perform(MockMvcRequestBuilders.post("/auth")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(payloadJson))
+//                .andDo(print())
+//                .andReturn().getResponse();
+//    }
+//
+//    @Test
+//    void loginFail() throws Exception {
+//        String payloadJson = "{\n" +
+//                "    \"username\": \"rodrigo\",\n" +
+//                "    \"password\": \"451\"" +
+//                "}\n";
+//        this.mockMvc.perform(MockMvcRequestBuilders.post("/auth")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(payloadJson))
+//                .andDo(print())
+//                .andExpect(status().isForbidden());
+//    }
 
 }
