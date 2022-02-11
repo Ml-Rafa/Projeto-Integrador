@@ -119,6 +119,15 @@ http://localhost:8081/swagger-ui/index.html
 
 https://www.getpostman.com/collections/203186a267b11f00a442
 
+
+## Link com os arquivos: 
+
+* Documentação com formato de histórico do usuário fornecido pela
+cadeira.
+
+* Diagrama de classes completo (UML) do projeto final.
+
+https://drive.google.com/drive/folders/1b7LJW4t7y09eerMJqdYQ_LZNGdI1rzi6?usp=sharing
 _________
 
 
