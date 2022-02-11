@@ -120,7 +120,7 @@ O desafio foi divido em 6 requisitos listados abaixo <img src="https://img.icons
 
  ## Coleção de casos de teste do Postman.
 
- https://www.postman.com/collections/461c1cb1ec4a8ba14921
+ https://www.getpostman.com/collections/860f27688c6e4436ce79
     
  ## Colaboradores 
  
