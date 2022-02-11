@@ -114,6 +114,11 @@ A documentação oficial da API por meio do SWAGGER encontra-se no seguinte link
 http://localhost:8081/swagger-ui/index.html
 
 
+
+## Coleção de casos de teste do Postman para cada endpoint.
+
+https://www.getpostman.com/collections/203186a267b11f00a442
+
 _________
 
 
